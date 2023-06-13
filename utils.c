@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_pipe.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/06 15:13:48 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/09 09:27:05 by anaji            ###   ########.fr       */
+/*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
+/*   Updated: 2023/06/10 12:54:53 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buffer.h"
 
-// int	ft_ispipe(char c, t_delim *delim)
-// {
-// 	if (c == '|')
-// 	{
-// 		// ft_init_redection(delim);
-// 		delim -> type  = PIPE;
-// 		return (1);
-// 	}
-// 	return (0);
-// }
+// end paramtere for end of expanding
+// type to specify if taht str well be expandable or not
+
+int	*create_tab(int end, int type)
+{
+	int	*tab;
+
+	tab = malloc(2 * sizeof(int));
+	tab[0] = end;
+	tab[1] = type;
+	return (tab);
+}
