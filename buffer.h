@@ -6,7 +6,7 @@
 # include <unistd.h>
 
 # define CMD 1
-# define arg 1
+# define arg 2
 # define IN 3
 # define OUT_WRITE 4
 # define OUT_APP 5
@@ -49,15 +49,15 @@ typedef struct s_quote
 }	t_quote;
 
 t_buffer	*new_buffer(char *str, int type);
-void		insert_buffer(t_list **head, t_list *node, t_list *n_node);
+void		insert_node(t_list **head, t_list *node, t_list *n_node);
 
 //parsing utils
 void	ft_skip_space(char *str, int *i);
 
 
 //expanding utils
-int		get_dollar(char *str, int *index, int *quote);
-t_list	*expand(t_list **head, t_list *node, char **env);
+//int		get_dollar(char *str, int *index, int *quote);
+t_list	*expand(t_buffer *node, char **env);
 
 //check for delemiter
 int	ft_is_heredoc(char c, char c_plus, int *type);

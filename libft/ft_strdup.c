@@ -6,9 +6,10 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:27:03 by anaji             #+#    #+#             */
-/*   Updated: 2022/10/22 15:34:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/14 11:36:39 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strdup(const char *s1)
@@ -17,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	char	*s2;
 
 	i = 0;
+	if (!s1)
+		return ("\0");
 	s2 = malloc(ft_strlen(s1) + 1);
 	if (!s2)
 		return (NULL);
