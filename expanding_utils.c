@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 14:44:13 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/16 18:29:44 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 #include "expand.h"
 
 
-int	get_dollar(char *str)
+int	get_dollar(char *str, int *end)
 {
 	int	i;
 
+	*end = 0;
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
-			break ;
+			return (1);
 		i++;
+		*end += 1;
 	}
-	return (i);
+	return (0);
 }
 
 char	*get_var_value(char **env, char *key)

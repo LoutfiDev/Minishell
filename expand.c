@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:43:10 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 14:57:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/16 19:02:50 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_list	*expand(t_buffer *node, char **env)
 	}
 	res = join_all(node->str, lst);
 	lst = NULL;
-	get_splited_parts(res, &lst, node->type);
+	get_splited_parts(ft_strtrim(res, " \t"), &lst, node->type);
 	return (lst);
 }
 
@@ -62,6 +62,8 @@ char	*ft_join(char *str, t_list *lst)
 	return (res);
 }
 
+//get_dollar function need a fix
+
 char	*join_all(char *str, t_list *data)
 {
 	char	*tmp;
@@ -74,20 +76,27 @@ char	*join_all(char *str, t_list *data)
 	i = 0;
 	while (str[i])
 	{
-		end = get_dollar(str + i);
-		tmp = ft_substr(str + i, 0, end);
-		delim = is_expandable(str + i, end);
-		if (delim == '"' || delim == 1)
+		if (get_dollar(str + i, &end))
 		{
-			join = ft_strjoin(join, ft_join(tmp, data));
-			data = data -> next;
-			get_var(str, &i);
+			tmp = ft_substr(str + i, 0, end);
+			delim = is_expandable(str + i, end);
+			if (delim == '"' || delim == 1)
+			{
+				join = ft_strjoin(join, ft_join(tmp, data));
+				data = data -> next;
+				get_var(str, &i);
+			}
+			else
+				join = ft_strjoin(join, ft_strjoin(tmp,  get_var(str, &i)));
+			end = get_next_var(str + i, delim);
+			tmp = ft_substr(str + i, 0, end);
+			join = ft_strjoin(join, tmp);
 		}
 		else
-			join = ft_strjoin(join, ft_strjoin(tmp,  get_var(str, &i)));
-		end = get_next_var(str + i, delim);
-		tmp = ft_substr(str + i, 0, end);
-		join = ft_strjoin(join, tmp);
+		{
+			tmp = ft_substr(str + i, 0, end);
+			join = ft_strjoin(join, tmp);
+		}
 		i += end;
 	}
 	return (join);

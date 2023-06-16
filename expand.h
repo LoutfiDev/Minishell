@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:53:06 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 14:53:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/16 18:29:32 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 int		get_end(int type, char *str);
 int		check_type(char *str);
 char	*get_var_value(char **env, char *key);
-int		get_dollar(char *str);
+int		get_dollar(char *str, int *end);
 
 t_list	*expand(t_buffer *node, char **env);
 char	*join_all(char *str, t_list *data);

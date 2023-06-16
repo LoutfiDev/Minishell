@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 10:42:26 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/16 17:00:21 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ void	fix_types(t_list *lst)
 	}
 }
 
+void	lst_addfront(t_list **head, t_list *n_node)
+{
+	t_list	*last;
+
+	last = ft_lstlast(n_node);
+	last -> next = *head;
+	*head = n_node;
+}
+
 void	insert_node(t_list **head, t_list *node, t_list *n_node)
 {
 	t_list	*last;
@@ -53,7 +62,9 @@ void	insert_node(t_list **head, t_list *node, t_list *n_node)
 	last = ft_lstlast(n_node);
 	if (tmp == node)
 	{
-		head[0] = n_node;
+		lst_addfront(head, n_node);
+		last -> next = node-> next;
+		free(node);
 		fix_types(*head);
 		return ;
 	}

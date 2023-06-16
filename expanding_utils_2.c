@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 15:06:56 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/16 17:13:10 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,22 @@ int	is_expand_delim(char c)
 int	is_expandable(char *str, int len)
 {
 	int i;
+	static int	d_quote;
+	static int	s_quote;
 
 	i = 0;
 	while (i < len)
 	{
-		if (str[i] == '"')
+		if (str[i] == '"' && s_quote % 2 == 0)
+		{
+			d_quote++;
 			return ('"');
-		else if (str[i] == '\'')
+		}
+		else if (str[i] == '\'' && d_quote % 2 == 0)
+		{
+			s_quote++;
 			return ('\'');
+		}
 		i++;
 	}
 	return (1);
