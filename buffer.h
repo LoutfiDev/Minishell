@@ -1,7 +1,7 @@
 #	ifndef BUFFER_H
 # define BUFFER_H
 
-#include <readline/readline.h>
+# include <readline/readline.h>
 # include "libft/libft.h"
 # include <unistd.h>
 
@@ -12,10 +12,6 @@
 # define OUT_APP 5
 # define HERE_DOC 6
 # define PIPE 7
-
-#define ONE_ARG 1
-#define MANY_ARG 2
-#define NO_ARG 3
 
 // # include "readline/readline.h"
 
