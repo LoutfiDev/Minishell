@@ -6,12 +6,28 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:31:52 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/16 11:30:58 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:22:45 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	ft_lstfree(t_list *env)
+{
+	t_list	*tmp;
+	t_env	*env_node;
+	
+	tmp = env;
+	while (tmp)
+	{
+		env_node = (t_env *)tmp->content;
+		free(env_node->key);
+		if (env_node->value)
+			free(env_node->value);
+		free(env_node);
+		ft_lstdelone(&tmp);
+	}
+}
 char	*get_path(char *str, t_list *env)
 {
 	t_env	*env_node;
@@ -42,15 +58,16 @@ t_env	*create_env_node(char *content)
 	char	**array;
 
 	env_node = malloc(sizeof(t_env));
-	array = ft_split(content, '=');
+	array = split(content, '=');
 	env_node->key = array[0];
 	if (ft_strchr(content, '=') && !array[1])
 	{
 		free(array[1]);
-		env_node->value = "\0";
+		env_node->value = ft_strdup("");
 	}
 	else
 		env_node->value = array[1];
+	free(array);
 	return (env_node);
 }
 

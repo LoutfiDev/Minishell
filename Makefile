@@ -6,7 +6,7 @@
 #    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
-#    Updated: 2023/06/17 12:07:25 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/06/17 16:34:34 by yloutfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC = gcc -g #cc
 
 SRCS = ./execution/exec_test.c
 
-HELPERS = ./execution/helpers.c
+HELPERS = ./execution/helpers.c ./execution/split.c
 
 BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 		./execution/builtins/cd.c ./execution/builtins/export.c		\
@@ -27,7 +27,7 @@ BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 
 OBJS = ./execution/exec_test.o
 
-OBJS_HELPERS = ./execution/helpers.o
+OBJS_HELPERS = ./execution/helpers.o ./execution/split.o
 
 OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 		./execution/builtins/cd.o ./execution/builtins/export.o			\

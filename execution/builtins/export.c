@@ -6,43 +6,12 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 12:14:45 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/17 17:10:38 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// void	new_env(t_list **env, char *new_var, int to_join)
-// {
-// 	t_env	*env_node;
-// 	t_list	*tmp;
-// 	char	*value;
-// 	int		len;
-
-// 	len = ft_strlen(new_var);
-// 	value = ft_strchr(new_var, '=');
-// 	if (!value)
-// 		return ;
-// 	len = ft_strlen(new_var) - ft_strlen(value);
-// 	tmp = (*env);
-// 	while (tmp)
-// 	{
-// 		env_node = (t_env *)tmp->content;
-// 		if (!ft_strncmp(env_node->key, new_var, len))
-// 		{
-// 			if (!value)
-// 				return ;
-// 			free(env_node);
-// 			env_node = create_env_node(new_var);
-// 			return ;
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// 	env_node = create_env_node(new_var);
-// 	ft_lstadd_back(env, ft_lstnew(env_node));
-// }
-
-//args a+=hello;
 t_env	*create_node(char *key, char *value)
 {
 	t_env	*env_node;
@@ -64,6 +33,7 @@ void	_joined(t_list **env, char *key, char *value, int is_join)
 		env_node = (t_env *)tmp->content;
 		if (!ft_strncmp(env_node->key, key, ft_strlen(key)))
 		{
+			free(key);
 			if (is_join)
 				env_node->value = ft_strjoin(env_node->value, value);
 			else
@@ -85,24 +55,24 @@ void	new_env(t_list **env, char *new_var)
 
 	if (ft_strchr(new_var, '+'))
 	{
-		array = ft_split(new_var, '+');
+		array = split(new_var, '+');
 		if (ft_strchr(new_var, '=') && ft_strlen(array[1]) == 1)
-		{
-			free(array[1]);
-			array[1] = ft_strdup("\0");
-		}
-		_joined(env, array[0], array[1] + 1, 1);
+			_joined(env, array[0], ft_strdup(""), 1);
+		else
+			_joined(env, array[0], ft_strdup(array[1] + 1), 1);
+		free(array[1]);
 	}
 	else
 	{
-		array = ft_split(new_var, '=');
+		array = split(new_var, '=');
 		if (ft_strchr(new_var, '=') && !array[1])
 		{
 			free(array[1]);
-			array[1] = ft_strdup("\0");
+			array[1] = ft_strdup("");
 		}
 		_joined(env, array[0], array[1], 0);
 	}
+	free(array);
 }
 
 int	exec_export(char **args, t_list **env, int *exit_status)
@@ -119,7 +89,7 @@ int	exec_export(char **args, t_list **env, int *exit_status)
 		else
 		{
 			j = 0;
-			while (args[i][j] && args[i][j] != '=' && PLUS_EQUAL)
+			while (args[i][j] && args[i][j] != '=' && !(args[i][j] == '+' && args[i][j + 1] == '='))
 			{
 				if (!ft_isalnum(args[i][j++]))
 				{

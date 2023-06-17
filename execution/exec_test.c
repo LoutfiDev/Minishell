@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 11:20:28 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/17 17:13:41 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int main (int ac, char **av, char **env)
 	// env = NULL;
 	// (void)ac;
 	// int fd = open("test.txt", O_WRONLY | O_TRUNC);
-	t_list	*_env = NULL;
-	_env = create_env(env);
+	// t_list	*_env = NULL;
+	// _env = create_env(env);
 	// char *str[] = {"/bin/ls", NULL};
 	// while (_env)
 	// {
@@ -30,14 +30,13 @@ int main (int ac, char **av, char **env)
 	// exec_cd(av+2, _env);
 	// execve("/bin/ls",  str, env);
 	// exec_pwd(1);
-	ac = 0;
-	exec_export(av+2, &_env, &ac);
+	// ac = 0;
+	// exec_export(av+2, &_env, &ac);
 	// exec_unset(av+2, &_env);
-	printf("*************************************************\n");
-	exec_env(_env, 0);
-	printf("*************************************************\n");
-	exec_env(_env, 1);
+	// printf("*************************************************\n");
+	// exec_env(_env, 0);
 	// exec_exit(av+2, &ac);
+	// ft_lstfree(_env);
 	// while (1)
 	// ;
 	return (0);

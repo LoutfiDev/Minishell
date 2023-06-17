@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 10:45:57 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 11:00:48 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/17 17:12:35 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		*res++ = s2[i++];
 	*res = '\0';
 	free(s1);
+	free(s2);
 	return (q);
 }

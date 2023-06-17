@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 12:14:33 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/17 16:42:06 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # define PIPE 7
 
 # define EXP_ERR ": not a valid identifier\n"
-# define PLUS_EQUAL "!(args[i][j] == '+' && args[i][j + 1] == '=')"
 
 typedef struct s_buffer
 {
@@ -49,6 +48,8 @@ int		print_error(char *cmd, char *arg, char *msg, int exit_status);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
+void	ft_lstfree(t_list *env);
+char	**split(char const *s, char c);
 
 //builtins commands
 void	exec_echo(char **args, int write_end);
