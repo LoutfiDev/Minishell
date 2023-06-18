@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:31:52 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 16:22:45 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/17 17:54:37 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_lstfree(t_list *env)
 {
 	t_list	*tmp;
 	t_env	*env_node;
-	
+
 	tmp = env;
 	while (tmp)
 	{
@@ -28,6 +28,7 @@ void	ft_lstfree(t_list *env)
 		ft_lstdelone(&tmp);
 	}
 }
+
 char	*get_path(char *str, t_list *env)
 {
 	t_env	*env_node;

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/16 10:22:03 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/18 12:11:56 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	exec_cd(char **args, t_list *env)
 		if (!directory)
 			return (print_error("cd: ", args[0], ": Not a directory\n", 1));
 		chdir(args[0]);
+		closedir(directory);
 	}
 	return (0);
 }

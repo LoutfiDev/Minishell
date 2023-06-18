@@ -6,7 +6,7 @@
 #    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
-#    Updated: 2023/06/17 16:34:34 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/06/18 12:42:25 by yloutfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ DFLAGS = -Llibft -lft
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
 
-SRCS = ./execution/exec_test.c
+SRCS = exec_test.c
 
 HELPERS = ./execution/helpers.c ./execution/split.c
 
@@ -25,7 +25,7 @@ BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 		./execution/builtins/unset.c ./execution/builtins/env.c		\
 		./execution/builtins/exit.c
 
-OBJS = ./execution/exec_test.o
+OBJS = exec_test.o
 
 OBJS_HELPERS = ./execution/helpers.o ./execution/split.o
 

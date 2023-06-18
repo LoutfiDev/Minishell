@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:13:30 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/16 10:20:44 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/18 12:35:39 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	env_delhead(char *arg, t_list **env)
 	env_node = (t_env *)(*env)->content;
 	if (!ft_strncmp(env_node->key, arg, ft_strlen(env_node->key)))
 	{
+		free(env_node->key);
+		if (env_node->value)
+			free(env_node->value);
+		free(env_node);
 		ft_lstdelone(env);
 		return (0);
 	}
@@ -37,6 +41,10 @@ int	env_delnode(char *arg, t_list **env)
 		env_node = (t_env *)tmp->next->content;
 		if (!ft_strncmp(env_node->key, arg, ft_strlen(env_node->key)))
 		{
+			free(env_node->key);
+			if (env_node->value)
+				free(env_node->value);
+			free(env_node);
 			tmp_node = tmp->next;
 			tmp->next = tmp->next->next;
 			free(tmp_node);

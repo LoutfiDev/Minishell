@@ -6,24 +6,24 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:03:11 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 16:33:27 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/18 11:52:49 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*ft_fill_array(const char *str, char c, int *j)
+static char	*ft_fill_array(char *str, char c, int *j)
 {
 	int		start;
 	int		length;
 
 	start = *j;
 	length = 0;
-		while (str[*j] != c && str[*j])
-		{
-			(*j)++;
-			length++;
-		}
+	while (str[*j] != c && str[*j])
+	{
+		(*j)++;
+		length++;
+	}
 	return (ft_substr(str, start, length));
 }
 
@@ -41,7 +41,7 @@ static char	**ft_free_tab(char **big_array)
 	return (NULL);
 }
 
-char	**split(char const *s, char c)
+char	**split(char *s, char c)
 {
 	char	**big_array;
 	int		i;
@@ -50,8 +50,11 @@ char	**split(char const *s, char c)
 	i = 0;
 	j = 0;
 	big_array = ft_calloc(3, sizeof(char *));
-	if (big_array == NULL)
-		return (0);
+	if (!ft_strchr(s, '='))
+	{
+		big_array[0] = ft_strdup(s);
+		return (big_array);
+	}
 	while (i < 2)
 	{
 		if (i == 0)
