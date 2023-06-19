@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 17:13:10 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/17 19:41:36 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*get_var(char *str , int *i)
 	int		start;
 	int		dolar;
 	char	*res;
-	char	*var;
 
 	dolar = 0;
 	while (str[*i])
@@ -36,16 +35,14 @@ char	*get_var(char *str , int *i)
 	return (res);
 }
 
-int	get_next_var(char *str, char c)
+int	get_next_var(char *str)
 {
 	int	i;
 
 	i = 0;
-	if (c == 1)
-		return (i);
 	while (str[i])
 	{
-		if (str[i] == c)
+		if (str[i] == ' ' || str[i] == '"' || str[i] == '\'')
 			return (i + 1);
 		if (str[i] == '$')
 			return (i);

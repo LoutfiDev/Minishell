@@ -44,6 +44,12 @@ typedef struct s_quote
 	int	type;
 }	t_quote;
 
+typedef struct s_env
+{
+	char	*key;
+	char	*value;
+}	t_env;
+
 t_buffer	*new_buffer(char *str, int type);
 void		insert_node(t_list **head, t_list *node, t_list *n_node);
 
@@ -53,7 +59,7 @@ void	ft_skip_space(char *str, int *i);
 
 //expanding utils
 //int		get_dollar(char *str, int *index, int *quote);
-t_list	*expand(t_buffer *node, char **env);
+t_list	*expand(t_buffer *node, t_list *env);
 
 //check for delemiter
 int	ft_is_heredoc(char c, char c_plus, int *type);
@@ -63,4 +69,9 @@ int	ft_is_write(char c, int *type);
 
 //general utils function
 int	*create_tab(int end, int type);
+char	**split(char const *s, char c);
+
+t_list	*create_env(char **env);
+
+void sh(t_list *lst);
 #	endif

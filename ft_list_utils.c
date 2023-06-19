@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 17:00:21 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/18 17:06:31 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	fix_types(t_list *lst)
 	while (lst)
 	{
 		bf = (t_buffer *)lst->content;
-		if (bf -> type == 2)
+		if (bf -> type == 1)
 		{
 			bf -> type = c;
 			if (c > 1)

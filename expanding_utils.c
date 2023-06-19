@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/16 18:29:44 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/18 16:49:44 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,26 @@ int	get_dollar(char *str, int *end)
 	return (0);
 }
 
-char	*get_var_value(char **env, char *key)
+char	*get_var_value(t_list *env, char *key)
 {
-	int		i;
 	int		len;
 	char	*tmp;
+	t_env	*v_env;
 
-	tmp = ft_strjoin(key + 1, "=");
+	tmp = ft_strdup(key + 1);
 	len = ft_strlen(tmp);
-	i = 0;
-	while (env[i])
+	while (env)
 	{
-		if (!ft_strncmp(env[i], tmp, len))
+		v_env = env -> content;
+		if (!ft_strncmp(v_env -> key, tmp, len))
 		{
 			free(tmp);
-			return (env[i] + len);
+			return (v_env -> value);
 		}
-		i++;
+		env = env -> next;
 	}
 	free(tmp);
-	return (NULL);
+	return (ft_strdup("\0"));
 }
 
 int		check_type(char *str)
