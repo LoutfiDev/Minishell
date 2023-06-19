@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/18 11:52:58 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/19 12:15:39 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		print_error(char *cmd, char *arg, char *msg, int exit_status);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
+t_env	*create_node(char *key, char *value);
 void	ft_lstfree(t_list *env);
 char	**split(char *s, char c);
 
