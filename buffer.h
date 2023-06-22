@@ -4,6 +4,7 @@
 # include <readline/readline.h>
 # include "libft/libft.h"
 # include <unistd.h>
+# include "parsing.h"
 
 # define CMD 1
 # define arg 2
@@ -15,21 +16,6 @@
 
 // # include "readline/readline.h"
 
-typedef struct s_file
-{
-	char	*path;
-	int		mode;
-}			t_file;
-
-//my to mess with
-typedef struct s_data
-{
-	char	*str;
-	char	**args;
-	t_file	*in_file;
-	t_file	*out_file;
-}			t_data;
-
 //send to ft_ylouuuuuuuuuuuuuufi
 typedef struct s_buffer
 {
@@ -37,12 +23,6 @@ typedef struct s_buffer
 	int		type;
 }	t_buffer;
 
-typedef struct s_quote
-{
-	int	num_squote;
-	int	num_dquote;
-	int	type;
-}	t_quote;
 
 typedef struct s_env
 {
@@ -68,10 +48,13 @@ int	ft_is_append(char c, char c_plus, int *type);
 int	ft_is_write(char c, int *type);
 
 //general utils function
-int	*create_tab(int end, int type);
 char	**split(char const *s, char c);
+void	clear_buffer(void *bf);
+void	fix_types(t_list *lst);
 
 t_list	*create_env(char **env);
 
 void sh(t_list *lst);
+
+void	ft_strappend(char **s1, char *s2);
 #	endif

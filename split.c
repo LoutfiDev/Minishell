@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:03:11 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/18 16:37:23 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/22 13:05:05 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static char	*ft_fill_array(const char *str, char c, int *j)
 
 	start = *j;
 	length = 0;
-		while (str[*j] != c && str[*j])
-		{
-			(*j)++;
-			length++;
-		}
+	while (str[*j] != c && str[*j])
+	{
+		(*j)++;
+		length++;
+	}
 	return (ft_substr(str, start, length));
 }
 

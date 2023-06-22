@@ -5,127 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 10:43:10 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/18 17:02:43 by anaji            ###   ########.fr       */
+/*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
+/*   Updated: 2023/06/22 11:42:59 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buffer.h"
 #include "expand.h"
 #include "libft/libft.h"
-#include <sys/_types/_null.h>
 
-void sh(t_list *head)
+void	sh(t_list *head)
 {
-	t_buffer *bf;
+	t_buffer	*bf;
+
 	while (head)
 	{
 		bf = (t_buffer *) head -> content;
-		printf("str = %s\t type = %d\n",bf->str, bf->type);
+		printf("str = %s\t type = %d\n", bf->str, bf->type);
 		head = head ->next;
 	}
 }
 
-char	*ft_join(char *str, t_list *lst)
-{
-	t_buffer	*bf;
-	char		*res;
+/*	algorithm	*/
 
-	bf = (t_buffer *)lst -> content;
-	res = ft_strjoin(str, bf -> str);
-	free(str);
-	return (res);
-}
-
-int	get_expand_type(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			return ('\'');
-		else if (str[i] == '"')
-			return ('"');
-		i++;
-	}
-	return ('$');
-}
-
-void	skip_to_next(char *str, int *i, int delim)
-{
-	int	num;
-
-	num = 0;
-	while (str[*i])
-	{
-		if (str[*i] == delim)
-			num++;
-		else if (num >= 2)
-			break ;
-		if (delim == '$' && num >= 2)
-			break ;
-		*i += 1;
-	}
-}
-
-int	to_next(char *str, int *i)
-{
-	while (str[*i])
-	{
-		if (str[*i] == '"' || str[*i] == '\'' | str[*i] == ' ')
-			return (*i + 1);
-		if (str[*i] == '$')
-			break ;
-		*i +=  1;
-	}
-	return (*i);
-}
+// 1 - expand all the strings that have a dollar in a new listw list
+// 2 - join the original str with the data (content) based on type:
+// 2 - 1 - if (') is before dollar then skip
+// 2 - 2 - if (" / $) then join one str (before '$') with the item in list 
+//		eg :"$USER" => "anaji"
+// 3 - split that resault in a new list based on type 
+// 3 - 1 - if (' / ") is found nothing to be done 
+// 3 - 2 - if nothing is found then split that resault str based on space 
+//		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
 
 char	*join_str(char *str, char type, t_list **lst)
 {
-	int		start;
 	char	*tmp;
 	char	*join;
 	int		i;
 
 	i = 0;
 	join = NULL;
-	start = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '$')
 		{
-			tmp = ft_substr(str, start, i - start);
+			tmp = ft_substr(str, 0, i);
 			join = ft_strjoin(join, tmp);
-			join = ft_join(join, *lst);
-			*lst = (*lst) -> next;
+			join = ft_join(join, lst);
 			i++;
 			to_next(str, &i);
-			join = ft_strjoin(join, join_str(str + i, type, lst));
+			tmp = join_str(str + i, type, lst);
+			join = ft_strjoin(join, tmp);
 			return (join);
 		}
 		i++;
 	}
-	join = ft_strjoin(join, str);
-	return (join);
+	return (ft_strdup(str));
 }
 
-// 1 - check for dollar (get his index) => int d_index
-// 2 - check if there is a (' / ") before that dollar (while i < d_index)
-// 3 - skip to next delim (' / ")
-// 3 - expand based on type
-
-char	*join_all(char *str, t_list *lst)
+char	*join_all(char *str, t_list *lst, int i)
 {
-	int		i;
 	int		d_index;
 	char	*res;
 	char	*join;
 	char	type;
+	char	*tmp;
 
-	i = 0;
 	d_index = 0;
 	join = NULL;
 	while (str[i])
@@ -136,9 +82,14 @@ char	*join_all(char *str, t_list *lst)
 		if (type == '\'')
 			join = ft_strjoin(join, res);
 		else
-			join = ft_strjoin(join, join_str(res, type, &lst));
+		{
+			tmp = join_str(res, type, &lst);
+			join = ft_strjoin(join, tmp);
+			free(res);
+		}
 		i += d_index;
 	}
+	ft_lstclear(&lst, clear_buffer);
 	return (join);
 }
 
@@ -161,7 +112,9 @@ void	get_splited_parts(char *str, t_list **head, int type)
 			s_quotes++;
 		i++;
 	}
-	buff = new_buffer(ft_substr(str, 0, i), type);
+	tmp = ft_substr(str, 0, i);
+	buff = new_buffer(tmp, type);
+	free(tmp);
 	ft_lstadd_back(head, ft_lstnew(buff));
 	ft_skip_space(str, &i);
 	if (!str[i])
@@ -175,20 +128,23 @@ t_list	*expand(t_buffer *node, t_list *env)
 	char	*tmp;
 	t_list	*lst;
 	char	*res;
-	t_list *head;
+	t_list	*head;
 
 	i = 0;
 	lst = NULL;
 	while (node ->str[i])
 	{
 		tmp = get_var(node->str, &i);
-		head = ft_lstnew(new_buffer(get_var_value(env, tmp), 0));
+		tmp = get_var_value(env, tmp);
+		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);
 		ft_lstadd_back(&lst, head);
 	}
-	res = join_all(node->str, lst);
+	res = join_all(node->str, lst, 0);
 	lst = NULL;
-	get_splited_parts(ft_strtrim(res, " \t"), &lst, node->type);
+	tmp = ft_strtrim(res, " \t");
 	free(res);
+	get_splited_parts(tmp, &lst, node->type);
+	free(tmp);
 	return (lst);
 }

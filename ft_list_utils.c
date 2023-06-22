@@ -6,13 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/18 17:06:31 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/22 11:51:08 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "buffer.h"
 #include "libft/libft.h"
 #include <readline/readline.h>
+#include <unistd.h>
 
 t_buffer	*new_buffer(char *str, int type)
 {
@@ -24,33 +25,32 @@ t_buffer	*new_buffer(char *str, int type)
 	return (buff);
 }
 
-void	fix_types(t_list *lst)
+void	clear_buffer(void *bf)
 {
-	t_buffer	*bf;
-	int			c;
+	t_buffer	*tmp_bf;
 
-	c = 1;
-	while (lst)
-	{
-		bf = (t_buffer *)lst->content;
-		if (bf -> type == 1)
-		{
-			bf -> type = c;
-			if (c > 1)
-				bf -> type = 2;
-		}
-		c++;
-		lst = lst -> next;
-	}
+	tmp_bf = (t_buffer *)bf;
+	free(tmp_bf->str);
+	free(tmp_bf);
 }
 
-void	lst_addfront(t_list **head, t_list *n_node)
+int	check_redirection(t_list **head, t_list *lst, t_list *node)
 {
-	t_list	*last;
+	t_buffer	*bf;
+	t_buffer	*bf_node;
+	int			size;
 
-	last = ft_lstlast(n_node);
-	last -> next = *head;
-	*head = n_node;
+	size = ft_lstsize(lst);
+	bf = lst -> content;
+	bf_node = node ->content;
+	if (bf -> type >= 3 && bf -> type <= 5 && size > 1)
+	{
+		write(2, bf_node->str, ft_strlen(bf_node->str));
+		write(2, ": ambiguous redirect\n", 22);
+		ft_lstclear(head, clear_buffer);
+		return (1);
+	}
+	return (0);
 }
 
 void	insert_node(t_list **head, t_list *node, t_list *n_node)
@@ -59,12 +59,14 @@ void	insert_node(t_list **head, t_list *node, t_list *n_node)
 	t_list	*tmp;
 
 	tmp = *head;
+	if (check_redirection(head, n_node, node))
+		exit(1);
 	last = ft_lstlast(n_node);
 	if (tmp == node)
 	{
-		lst_addfront(head, n_node);
+		ft_lstadd_front(head, n_node);
 		last -> next = node-> next;
-		free(node);
+		ft_lstdelone(node, clear_buffer);
 		fix_types(*head);
 		return ;
 	}
@@ -74,7 +76,7 @@ void	insert_node(t_list **head, t_list *node, t_list *n_node)
 		{
 			tmp -> next = n_node;
 			last -> next = node -> next;
-			free(node);
+			ft_lstdelone(node, clear_buffer);
 		}
 		tmp = tmp -> next;
 	}

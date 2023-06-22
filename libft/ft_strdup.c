@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 20:27:03 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/14 11:36:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/06/20 12:45:33 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *s1)
 
 	i = 0;
 	if (!s1)
-		return ("\0");
+		return (ft_calloc(1, sizeof(char)));
 	s2 = malloc(ft_strlen(s1) + 1);
 	if (!s2)
 		return (NULL);
