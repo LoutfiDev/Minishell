@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/19 12:15:39 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/06/24 11:08:05 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,27 @@ typedef struct s_env
 	char	*key;
 	char	*value;
 }	t_env;
+
+typedef struct s_pipe
+{
+	int				mask;
+	struct s_pipe	*left;
+	struct s_pipe	*right;
+}	t_pipe;
+
+typedef struct s_exec
+{
+	int		mask;
+	char	*cmd;
+	char	**opt;
+	int		infile;
+	int		outfile;
+}	t_exec;
+
+typedef struct s_mask
+{
+	int	mask;
+}	t_mask;
 
 //helpers function
 int		print_error(char *cmd, char *arg, char *msg, int exit_status);
