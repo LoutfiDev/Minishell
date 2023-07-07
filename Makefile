@@ -6,7 +6,7 @@
 #    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
-#    Updated: 2023/06/18 12:42:25 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/07/07 11:57:22 by yloutfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,18 +16,18 @@ DFLAGS = -Llibft -lft
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
 
-SRCS = exec_test.c
+SRCS = exec_test.c ./execution/build_tree.c ./execution/execution.c
 
-HELPERS = ./execution/helpers.c ./execution/split.c
+HELPERS = ./execution/helpers.c ./execution/split.c ./execution/ft_argsjoin.c
 
 BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 		./execution/builtins/cd.c ./execution/builtins/export.c		\
 		./execution/builtins/unset.c ./execution/builtins/env.c		\
 		./execution/builtins/exit.c
 
-OBJS = exec_test.o
+OBJS = exec_test.o ./execution/build_tree.o ./execution/execution.o
 
-OBJS_HELPERS = ./execution/helpers.o ./execution/split.o
+OBJS_HELPERS = ./execution/helpers.o ./execution/split.o ./execution/ft_argsjoin.o
 
 OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 		./execution/builtins/cd.o ./execution/builtins/export.o			\

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/24 11:24:05 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/07 11:59:25 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,34 @@ t_list	*create_buff(t_list *buffer, char *str, int type)
 		ft_lstadd_back(&buffer, ft_lstnew(buff_node(str, type)));
 	return(buffer);
 }
+
+void	printTree(t_mask *node, int space)
+{
+	t_pipe *pipe_node;
+	t_exec *exec_node;
+	if (!node)
+		return ;
+	if (node->mask == PIPE_NODE)
+	{
+		pipe_node = (t_pipe *)node;
+		space += 10;
+		printTree(pipe_node->left, space);
+		printf("\n");
+		for (int i = 10; i < space; i++)
+			printf(" ");
+		printf("%s", "P");
+		printTree(pipe_node->right, space);
+	}
+	else if (node->mask == EXEC_NODE)
+	{
+		exec_node = (t_exec *)node;
+		space += 10;
+		printf("\n");
+		for (int i = 10; i < space; i++)
+			printf(" ");
+		printf("%s", exec_node->cmd);
+	}
+}
 int main (int ac, char **av, char **env)
 {
 	// env = NULL;
@@ -38,15 +66,20 @@ int main (int ac, char **av, char **env)
 	// int fd = open("test.txt", O_WRONLY | O_TRUNC);
 	t_list	*_env = NULL;
 	t_list	*_buffer = NULL;
+	t_mask	*_tree = NULL;
 	_env = create_env(env);
 	_buffer = create_buff(_buffer, "cat", 1);
 	_buffer = create_buff(_buffer, "test.txt", 3);
-	_buffer = create_buff(_buffer, "|", 7);
-	_buffer = create_buff(_buffer, "grep", 1);
-	_buffer = create_buff(_buffer, "include", 2);
-	_buffer = create_buff(_buffer, "|", 7);
-	_buffer = create_buff(_buffer, "wc", 1);
-	_buffer = create_buff(_buffer, "-w", 2);
+	// _buffer = create_buff(_buffer, "|", 7);
+	// _buffer = create_buff(_buffer, "grep", 1);
+	// _buffer = create_buff(_buffer, "include", 2);
+	// _buffer = create_buff(_buffer, "|", 7);
+	// _buffer = create_buff(_buffer, "wc", 1);
+	// _buffer = create_buff(_buffer, "-w", 2);
+	_tree = build_tree(_buffer);
+	execution(_tree, _env);
+	// printTree(_tree, 0);
+	// printf("\n");
 	// char *str[] = {"/bin/ls", NULL};
 	// while (_buffer)
 	// {

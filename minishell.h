@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/24 11:08:05 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/07 11:56:15 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@
 # define HERE_DOC 6
 # define PIPE 7
 
+# define PIPE_NODE 124
+# define EXEC_NODE 126
+
+# define SUCCESS 0
+# define ERROR 1
+# define READ_END 0
+# define WRITE_END 1
+
 # define EXP_ERR ": not a valid identifier\n"
 
 typedef struct s_buffer
@@ -43,26 +51,26 @@ typedef struct s_env
 	char	*value;
 }	t_env;
 
+typedef struct s_mask
+{
+	int	mask;
+}	t_mask;
+
 typedef struct s_pipe
 {
-	int				mask;
-	struct s_pipe	*left;
-	struct s_pipe	*right;
+	int		mask;
+	t_mask	*left;
+	t_mask	*right;
 }	t_pipe;
 
 typedef struct s_exec
 {
 	int		mask;
 	char	*cmd;
-	char	**opt;
+	char	*opt;
 	int		infile;
 	int		outfile;
 }	t_exec;
-
-typedef struct s_mask
-{
-	int	mask;
-}	t_mask;
 
 //helpers function
 int		print_error(char *cmd, char *arg, char *msg, int exit_status);
@@ -72,6 +80,7 @@ t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
 void	ft_lstfree(t_list *env);
 char	**split(char *s, char c);
+char	*ft_argsjoin(char *s1, char	*s2);
 
 //builtins commands
 void	exec_echo(char **args, int write_end);
@@ -81,5 +90,9 @@ int		exec_export(char **args, t_list **env, int *exit_status);
 void	exec_unset(char **args, t_list **env);
 void	exec_env(t_list *env, int export);
 void	exec_exit(char **args, int *exit_code);
+
+//execution functions
+t_mask	*build_tree(t_list *_buffer);
+void	execution(t_mask *mask, t_list *_env);
 
 #endif
