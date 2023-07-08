@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/07 11:59:25 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/08 20:50:59 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,18 @@ int main (int ac, char **av, char **env)
 	t_list	*_buffer = NULL;
 	t_mask	*_tree = NULL;
 	_env = create_env(env);
-	_buffer = create_buff(_buffer, "cat", 1);
-	_buffer = create_buff(_buffer, "test.txt", 3);
-	// _buffer = create_buff(_buffer, "|", 7);
-	// _buffer = create_buff(_buffer, "grep", 1);
-	// _buffer = create_buff(_buffer, "include", 2);
-	// _buffer = create_buff(_buffer, "|", 7);
-	// _buffer = create_buff(_buffer, "wc", 1);
-	// _buffer = create_buff(_buffer, "-w", 2);
-	_tree = build_tree(_buffer);
-	execution(_tree, _env);
+	_buffer = create_buff(_buffer, "echo", 1);
+	_buffer = create_buff(_buffer, "salam", 2);
+	_buffer = create_buff(_buffer, "|", 7);
+	_buffer = create_buff(_buffer, "grep", 1);
+	_buffer = create_buff(_buffer, "s", 2);
+	_buffer = create_buff(_buffer, "|", 7);
+	_buffer = create_buff(_buffer, "wc", 1);
+	_buffer = create_buff(_buffer, "-c", 2);
+	// execution(_tree, _env);
 	// printTree(_tree, 0);
 	// printf("\n");
-	// char *str[] = {"/bin/ls", NULL};
+	// char *str[] = {"/bin/cat", NULL};
 	// while (_buffer)
 	// {
 	// 	t_buffer *test = (t_buffer *)_buffer->content;
@@ -97,7 +96,7 @@ int main (int ac, char **av, char **env)
 	// exec_env(_env, 1);
 	// printf("*************************************************\n");
 	// exec_cd(av+2, _env);
-	// execve("/bin/ls",  str, env);
+	// execve("/bin/cat",  str, NULL);
 	// exec_pwd(1);
 	// ac = 0;
 	// exec_export(av+2, &_env, &ac);
@@ -105,7 +104,7 @@ int main (int ac, char **av, char **env)
 	// exec_env(_env, 1);
 	// exec_unset(av+2, &_env);
 	// exec_exit(av+2, &ac);
-	ft_lstfree(_env);
+	// ft_lstfree(_env);
 	// while (1)
 	// ;
 	return (0);

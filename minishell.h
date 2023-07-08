@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/07 11:56:15 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/08 20:19:54 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	exec_exit(char **args, int *exit_code);
 
 //execution functions
 t_mask	*build_tree(t_list *_buffer);
+int		ft_fork();
 void	execution(t_mask *mask, t_list *_env);
 
 #endif
