@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/22 11:42:59 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/08 15:12:30 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	sh(t_list *head)
 // 3 - 2 - if nothing is found then split that resault str based on space 
 //		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
 
-char	*join_str(char *str, char type, t_list **lst)
+char	*join_expanded_str(char *str, char type, t_list **lst)
 {
 	char	*tmp;
 	char	*join;
@@ -55,7 +55,7 @@ char	*join_str(char *str, char type, t_list **lst)
 			join = ft_join(join, lst);
 			i++;
 			to_next(str, &i);
-			tmp = join_str(str + i, type, lst);
+			tmp = join_expanded_str(str + i, type, lst);
 			join = ft_strjoin(join, tmp);
 			return (join);
 		}
@@ -80,10 +80,10 @@ char	*join_all(char *str, t_list *lst, int i)
 		skip_to_next(str + i, &d_index, type);
 		res = ft_substr(str + i, 0, d_index);
 		if (type == '\'')
-			join = ft_strjoin(join, res);
+			join = join_str(join, res, &lst);
 		else
 		{
-			tmp = join_str(res, type, &lst);
+			tmp = join_expanded_str(res, type, &lst);
 			join = ft_strjoin(join, tmp);
 			free(res);
 		}

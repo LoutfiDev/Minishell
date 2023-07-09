@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/22 13:41:56 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/08 15:15:33 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,31 @@ void	expanding(t_list **head, t_list *_env)
 		node = node -> next;
 	}
 }
-/*
+
+void	write_out(int p, char **env, char **av)
+{
+	int pid, a;
+	char *h;
+	//close(p[1]);
+	h = malloc(10000);
+	a = read(p, h, 10000);
+	printf("str = %s\n", h);
+	/*while (a > 0)
+	{
+		free(h);
+		h = malloc(100);
+		a = read(p, h, 100);
+		printf("a = %d",a);
+		printf("%s\n",h);
+	}*/
+}
+
+// 1 - parse
+// 2 - expand
+// 3 - remove quotes
+// 4 - rearange
+// 5 - send
+
 int	main(int ac, char *av[], char **env)
 {
 	char	*trim; 	
@@ -116,6 +140,9 @@ int	main(int ac, char *av[], char **env)
 	t_buffer *bf;;
 	t_quote *n_quote;
 	t_list	*_env;
+	int		*here_doc;
+	char *h;
+	int pid;
 
 	_env = create_env(env);
 	n_quote = malloc(sizeof(t_quote));
@@ -132,15 +159,31 @@ int	main(int ac, char *av[], char **env)
 			add_history(buff); 
 		free(buff);
 		expanding(&head, _env);
+		handle_quote(head);
 		tmp = head;
 		while (tmp)
+		{
+			bf = (t_buffer *)tmp -> content;
+			if (bf ->type == 6)
+			{
+				//here_doc = malloc(2 * sizeof(int));
+				//pipe(here_doc);
+				here_doc = read_here_doc(bf->str, here_doc, is_herdoc_expandable(bf->str), _env);
+				close(here_doc[1]);
+				write_out(here_doc[0], env, av+1);
+				close(here_doc[0]);
+				close(here_doc[1]);
+			}
+			tmp = tmp-> next;
+		}
+		/*while (tmp)
 		{
 			bf = (t_buffer *) tmp -> content;
 			printf("str = %s\t type = %d\n",bf->str, bf->type);
 			tmp = tmp ->next;
-		}
-		ft_lstclear(&head, clear_buffer);
+		}*/
 		//printf("sQ = %d dQ = %d\n", n_quote->num_squote, n_quote->num_dquote);
+		ft_lstclear(&head, clear_buffer);
 	}
 		
-}*/
+}
