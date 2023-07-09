@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/08 20:19:54 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/09 16:41:51 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define CMD 1
 # define ARGS 2
 # define IN 3
-# define OUT_WRITE 4
+# define OUT 4
 # define OUT_APP 5
 # define HERE_DOC 6
 # define PIPE 7
@@ -68,8 +68,9 @@ typedef struct s_exec
 	int		mask;
 	char	*cmd;
 	char	*opt;
-	int		infile;
-	int		outfile;
+	char	*infile;
+	char	*outfile;
+	int		out_mode;
 }	t_exec;
 
 //helpers function

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/07 16:41:57 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/09 16:41:36 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_exec	*init_exec()
 	exec_node = malloc(sizeof(t_exec));
 	ft_memset(exec_node, 0, sizeof(t_exec));
 	exec_node->mask = EXEC_NODE;
-	exec_node->infile = 0;
-	exec_node->outfile = 1;
 	return (exec_node);
 }
 t_mask	*build_pipe(t_mask *left, t_mask *right)
@@ -50,9 +48,11 @@ t_mask	*build_exec(t_list *_buffer)
 		else if (buff_node->type == 2)
 			exec_node->opt = ft_argsjoin(exec_node->opt, buff_node->str);
 		else if (buff_node->type == 3)
-			exec_node->infile = ft_atoi(buff_node->str);
+			exec_node->infile = ft_strdup(buff_node->str);
 		else if (buff_node->type == 4)
-			exec_node->outfile = ft_atoi(buff_node->str);
+			exec_node->outfile = ft_strdup(buff_node->str);
+		else if (buff_node->type == 5)
+			exec_node->out_mode = 1;
 		_buffer = _buffer->next;
 	}
 	return ((t_mask *)exec_node);

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/08 20:23:13 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/09 17:04:00 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,66 @@ char	*join_path(char *cmd, t_list *_env)
 	ft_free_array(array, i);
 	return (NULL);
 }
+int	open_infile(char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1 && !access(filename, F_OK))
+	{
+		close(fd);
+		exit(print_error(filename, NULL, ": permission denied\n", 1));
+	}
+	else if (fd == -1)
+	{
+		close(fd);
+		exit(print_error(filename, NULL, ": No such file or directory\n", 1));
+	}
+	return (fd);
+}
+
+int	open_outfile(char *filename, int mode)
+{
+	int	fd;
+
+	fd = open(filename, O_CREAT, 0644);
+	if (fd == -1)
+	{
+		perror(filename);
+		exit(ERROR);
+	}
+	close(fd);
+	if (!mode)
+		fd = open(filename, O_WRONLY | O_TRUNC);
+	else
+		fd = open(filename, O_WRONLY | O_APPEND);
+	if (fd == -1)
+		exit(print_error(filename, NULL, ": permission denied\n", 1));
+	return (fd);
+}
 
 void	_exec(t_exec *node, t_list *_env)
 {
 	char	**array;
+	int		fd;
 
+	if (node->outfile)
+	{
+		fd = open_outfile(node->outfile, node->out_mode);
+		close(WRITE_END);
+		dup(fd);	
+	}
 	array = ft_split(ft_argsjoin(node->cmd, node->opt), ' ');
 	if (array[0][0] != '/')
 		node->cmd = join_path(array[0], _env);
+	if (!node->cmd)
+		exit(print_error(array[0], NULL, ": command not found\n", 127));
+	if (node->infile)
+	{
+		fd = open_infile(node->infile);
+		close(READ_END);
+		dup(fd);
+	}
 	execve(node->cmd, array, NULL);
 	exit (ERROR);
 }

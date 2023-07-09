@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/08 20:50:59 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/09 18:42:29 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,18 @@ int main (int ac, char **av, char **env)
 	t_list	*_buffer = NULL;
 	t_mask	*_tree = NULL;
 	_env = create_env(env);
-	_buffer = create_buff(_buffer, "echo", 1);
-	_buffer = create_buff(_buffer, "salam", 2);
+	_buffer = create_buff(_buffer, "cat", 1);
+	_buffer = create_buff(_buffer, "test.txt", 3);
 	_buffer = create_buff(_buffer, "|", 7);
 	_buffer = create_buff(_buffer, "grep", 1);
 	_buffer = create_buff(_buffer, "s", 2);
 	_buffer = create_buff(_buffer, "|", 7);
 	_buffer = create_buff(_buffer, "wc", 1);
 	_buffer = create_buff(_buffer, "-c", 2);
-	// execution(_tree, _env);
+	_buffer = create_buff(_buffer, "outfile", 4);
+	_buffer = create_buff(_buffer, "append", 5);
+	_tree = build_tree(_buffer);
+	execution(_tree, _env);
 	// printTree(_tree, 0);
 	// printf("\n");
 	// char *str[] = {"/bin/cat", NULL};
@@ -104,7 +107,7 @@ int main (int ac, char **av, char **env)
 	// exec_env(_env, 1);
 	// exec_unset(av+2, &_env);
 	// exec_exit(av+2, &ac);
-	// ft_lstfree(_env);
+	ft_lstfree(_env);
 	// while (1)
 	// ;
 	return (0);
