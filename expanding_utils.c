@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/24 15:27:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/10 12:40:04 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*join_str(char *to_join, char *str, t_list **lst)
 	tmp = *lst;
 	bf = tmp -> content;
 	to_join = ft_strjoin(to_join, str);
-	(*lst) = (*lst) -> next;
+	(*lst) = (*lst)-> next;
 	free(bf -> str);
 	free(bf);
 	free(tmp);

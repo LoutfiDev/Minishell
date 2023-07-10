@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/08 18:31:40 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/10 12:44:11 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,34 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+int	get_key(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '$' || str[i] == '\'' || str[i] == '"')
+			break ;
+		i++;
+	}
+	return (i);
+}
+
 char	*var_value(char *name, t_list *env, int *len)
 {
 	t_env	*values;
 	char	*key;		
 	int		i;
 
-	i = 0;
-	while (name[i])
-	{
-		if (name[i] == ' ' || name[i] == '$'
-				|| name[i] == '"' || name[i] == '\'')
-			break ;
-		i++;
-	}
+	i = get_key(name);
 	key = ft_substr(name, 0, i);
 	*len = i;
 	while (env)
 	{
 		values = env -> content;
 		if (!ft_strncmp(key, values -> key, ft_strlen(key)
-			+ ft_strlen(values->key)))
+				+ ft_strlen(values->key)))
 		{
 			free(key);
 			return (ft_strdup(values -> value));
@@ -50,29 +57,24 @@ char	*var_value(char *name, t_list *env, int *len)
 	return (ft_strdup("\0"));
 }
 
-char	*expand_in_heredoc(char *str, int expandable, t_list *env)
+char	*expand_in_heredoc(char *tmp, int expandable, t_list *env)
 {
 	int		i;
-	char	*tmp;
 	char	*res;
-	char	*var;
 	int		start;
 	int		len;
 
 	i = 0;
-	res = NULL;
 	start = 0;
-	if (!expandable)
-		return (str);
-	tmp = ft_strdup(str);
-	free(str);
+	res = NULL;
+	if (!expandable || !has_dollar(tmp))
+		return (tmp);
 	while (tmp[i])
 	{
 		if (tmp[i] == '$')
 		{
 			res = ft_strjoin(res, ft_substr(tmp, start, i - start));
-			var = var_value(tmp + i + 1, env, &len);
-			res = ft_strjoin(res, var);
+			res = ft_strjoin(res, var_value(tmp + i + 1, env, &len));
 			i += len + 1;
 			start = i;
 		}
@@ -84,7 +86,7 @@ char	*expand_in_heredoc(char *str, int expandable, t_list *env)
 	return (res);
 }
 
-int	*read_here_doc(char *lim, int *h_pipe, int expand, t_list *env)
+int	*read_here_doc(char *lim, int expand, t_list *env)
 {
 	char	*in;
 	int		len;
@@ -110,22 +112,4 @@ int	*read_here_doc(char *lim, int *h_pipe, int expand, t_list *env)
 	}
 	waitpid(pid, NULL, 0);
 	return (pip);
-}
-
-int is_herdoc_expandable(char *hd_lim)
-{
-	int	i;
-
-	i = 0;
-	while (hd_lim[i])
-	{
-		if (hd_lim[i] == '\'' || hd_lim[i] == '"')
-		{
-			remove_quote(&hd_lim);
-			return (0);
-		}
-		i++;
-	}
-	remove_quote(&hd_lim);
-	return (1);
 }

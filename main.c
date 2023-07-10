@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/08 15:15:33 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/10 12:37:26 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,6 @@ void	parsing(char *str, int delim, t_quote *quote, t_list **head)
 	}
 }
 
-int	has_dollar(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 void	expanding(t_list **head, t_list *_env)
 {
@@ -115,6 +102,7 @@ void	write_out(int p, char **env, char **av)
 	h = malloc(10000);
 	a = read(p, h, 10000);
 	printf("str = %s\n", h);
+	free(h);
 	/*while (a > 0)
 	{
 		free(h);
@@ -166,22 +154,25 @@ int	main(int ac, char *av[], char **env)
 			bf = (t_buffer *)tmp -> content;
 			if (bf ->type == 6)
 			{
-				//here_doc = malloc(2 * sizeof(int));
-				//pipe(here_doc);
-				here_doc = read_here_doc(bf->str, here_doc, is_herdoc_expandable(bf->str), _env);
+			//	printf("buff = %s\n", bf->str);
+				here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str), _env);
 				close(here_doc[1]);
 				write_out(here_doc[0], env, av+1);
-				close(here_doc[0]);
-				close(here_doc[1]);
+				free(bf->str);
+				bf->str = ft_itoa(here_doc[0]);
+				//close(here_doc[0]);
+				//close(here_doc[1]);
+				free(here_doc);
 			}
 			tmp = tmp-> next;
 		}
-		/*while (tmp)
+		tmp = head;
+		while (tmp)
 		{
 			bf = (t_buffer *) tmp -> content;
 			printf("str = %s\t type = %d\n",bf->str, bf->type);
 			tmp = tmp ->next;
-		}*/
+		}
 		//printf("sQ = %d dQ = %d\n", n_quote->num_squote, n_quote->num_dquote);
 		ft_lstclear(&head, clear_buffer);
 	}

@@ -40,6 +40,7 @@ void	ft_skip_space(char *str, int *i);
 //expanding utils
 //int		get_dollar(char *str, int *index, int *quote);
 t_list	*expand(t_buffer *node, t_list *env);
+int	has_dollar(char *str);
 
 //check for delemiter
 int	ft_is_heredoc(char c, char c_plus, int *type);
@@ -64,6 +65,6 @@ void	remove_quote(char **str);
 
 //HERE_DOC
 
-int	*read_here_doc(char *lim, int *h_pipe, int expand, t_list *env);
+int	*read_here_doc(char *lim, int expand, t_list *env);
 int is_herdoc_expandable(char *hd_lim);
 #	endif

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/08 13:19:03 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/10 13:21:11 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include "libft/libft.h"
 #include <stdio.h>
 
-
-int		get_tmp_len(char *str)
+int	get_tmp_len(char *str)
 {
 	int	i;
-	int s_quote;
-	int d_quote;
-	int len;
+	int	s_quote;
+	int	d_quote;
+	int	len;
 
 	s_quote = 0;
 	d_quote = 0;
@@ -30,7 +29,7 @@ int		get_tmp_len(char *str)
 	{
 		if (str[i] == '\'' && d_quote % 2 == 0)
 			s_quote++;
-		else if(str[i] == '"' && s_quote % 2 == 0)
+		else if (str[i] == '"' && s_quote % 2 == 0)
 			d_quote++;
 		else
 			len ++;
@@ -39,7 +38,7 @@ int		get_tmp_len(char *str)
 	return (len);
 }
 
-char *ft_cpy_new(char *old, int len)
+char	*ft_cpy_new(char *old, int len)
 {
 	int		i;
 	char	*res;
@@ -56,7 +55,7 @@ char *ft_cpy_new(char *old, int len)
 	{
 		if (old[i] == '\'' && d_quote % 2 == 0)
 			s_quote++;
-		else if(old[i] == '"' && s_quote % 2 == 0)
+		else if (old[i] == '"' && s_quote % 2 == 0)
 			d_quote++;
 		else
 		{
@@ -67,7 +66,6 @@ char *ft_cpy_new(char *old, int len)
 	}
 	return (res);
 }
-	
 
 void	remove_quote(char **str)
 {
@@ -96,4 +94,3 @@ void	handle_quote(t_list *lst)
 		lst = lst -> next;
 	}
 }
-
