@@ -55,3 +55,7 @@ minishell
 rdln
 test*
 out*
+<<<<<<< HEAD
+=======
+*.old
+>>>>>>> AI
