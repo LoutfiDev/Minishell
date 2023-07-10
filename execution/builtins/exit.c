@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/16 10:20:25 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 09:05:13 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ void	exec_exit(char **args, int *exit_code)
 		exit(0);
 	}
 	else if (!ft_atoi(args[0]))
-		*exit_code = print_error("exit\nexit: ", args[0],
+		*exit_code = print_error("exit\nexit: ", NULL, args[0],
 				": numeric argument required\n", 255);
 	else if (nbr_args(args) > 1)
-		*exit_code = print_error("exit\nexit: ", NULL, "too many arguments\n", 1);
+		*exit_code = print_error("exit\nexit: ", NULL, NULL,
+				"too many arguments\n", 1);
 	else
 	{
 		*exit_code = ft_atoi(args[0]) % 256;

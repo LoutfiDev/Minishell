@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/09 17:04:00 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:56:10 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*join_path(char *cmd, t_list *_env)
 	ft_free_array(array, i);
 	return (NULL);
 }
-int	open_infile(char *filename)
+int	open_infile(char *filename, char *cmd)
 {
 	int	fd;
 
@@ -61,17 +61,17 @@ int	open_infile(char *filename)
 	if (fd == -1 && !access(filename, F_OK))
 	{
 		close(fd);
-		exit(print_error(filename, NULL, ": permission denied\n", 1));
+		exit(print_error(cmd, ": ", filename, ": permission denied\n", 1));
 	}
 	else if (fd == -1)
 	{
 		close(fd);
-		exit(print_error(filename, NULL, ": No such file or directory\n", 1));
+		exit(print_error(cmd, ": ", filename, ": No such file or directory\n", 1));
 	}
 	return (fd);
 }
 
-int	open_outfile(char *filename, int mode)
+int	open_outfile(char *filename, char *cmd, int mode)
 {
 	int	fd;
 
@@ -87,7 +87,7 @@ int	open_outfile(char *filename, int mode)
 	else
 		fd = open(filename, O_WRONLY | O_APPEND);
 	if (fd == -1)
-		exit(print_error(filename, NULL, ": permission denied\n", 1));
+		exit(print_error(cmd, ": ", filename, ": permission denied\n", 1));
 	return (fd);
 }
 
@@ -98,7 +98,7 @@ void	_exec(t_exec *node, t_list *_env)
 
 	if (node->outfile)
 	{
-		fd = open_outfile(node->outfile, node->out_mode);
+		fd = open_outfile(node->outfile, node->cmd, node->out_mode);
 		close(WRITE_END);
 		dup(fd);	
 	}
@@ -106,10 +106,10 @@ void	_exec(t_exec *node, t_list *_env)
 	if (array[0][0] != '/')
 		node->cmd = join_path(array[0], _env);
 	if (!node->cmd)
-		exit(print_error(array[0], NULL, ": command not found\n", 127));
+		exit(print_error("minishell", ": ", array[0], ": command not found\n", 127));
 	if (node->infile)
 	{
-		fd = open_infile(node->infile);
+		fd = open_infile(node->infile, array[0]);
 		close(READ_END);
 		dup(fd);
 	}
@@ -122,14 +122,14 @@ int	ft_fork()
 
 	pid = fork();
 	if (pid < 0)
-		exit(print_error(NULL, NULL, "fork failed\n", ERROR));
+		exit(print_error(NULL, NULL, NULL, "fork failed\n", ERROR));
 	return (pid);
 }
 
 void	_pipe(t_pipe *node, int *p, t_list *_env)
 {
 	if (pipe(p) < 0)
-		exit(print_error(NULL, NULL, "pipe failed\n", ERROR));
+		exit(print_error(NULL, NULL, NULL, "pipe failed\n", ERROR));
 	if (ft_fork() == 0)
 	{
 		close(WRITE_END);
@@ -145,6 +145,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 		close(p[READ_END]);
 		close(p[WRITE_END]);
 		execution(node->right, _env);
+		exit(0);
 	}
 	close(p[READ_END]);
 	close(p[WRITE_END]);

@@ -6,11 +6,23 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:13:30 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/18 12:35:39 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:27:59 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	delone(t_list **lst)
+{
+	t_list	*tmp;
+
+	if (!lst)
+		return ;
+	tmp = (*lst);
+	*lst = (*lst)->next;
+	free(tmp);
+	return ;
+}
 
 int	env_delhead(char *arg, t_list **env)
 {
@@ -23,7 +35,7 @@ int	env_delhead(char *arg, t_list **env)
 		if (env_node->value)
 			free(env_node->value);
 		free(env_node);
-		ft_lstdelone(env);
+		delone(env);
 		return (0);
 	}
 	return (1);

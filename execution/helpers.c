@@ -6,28 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:31:52 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 17:54:37 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:51:02 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_lstfree(t_list *env)
-{
-	t_list	*tmp;
-	t_env	*env_node;
-
-	tmp = env;
-	while (tmp)
-	{
-		env_node = (t_env *)tmp->content;
-		free(env_node->key);
-		if (env_node->value)
-			free(env_node->value);
-		free(env_node);
-		ft_lstdelone(&tmp);
-	}
-}
 
 char	*get_path(char *str, t_list *env)
 {
@@ -45,9 +28,10 @@ char	*get_path(char *str, t_list *env)
 	return (NULL);
 }
 
-int	print_error(char *cmd, char *arg, char *msg, int exit_status)
+int	print_error(char *cmd, char *delim, char *arg, char *msg, int exit_status)
 {
 	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(delim, 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(msg, 2);
 	return (exit_status);

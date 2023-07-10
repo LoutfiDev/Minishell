@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/09 16:41:51 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:12:48 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_exec
 }	t_exec;
 
 //helpers function
-int		print_error(char *cmd, char *arg, char *msg, int exit_status);
+int		print_error(char *cmd, char *delim, char *arg, char *msg, int exit_status);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/09 18:42:29 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 15:49:48 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,61 @@ void	printTree(t_mask *node, int space)
 		printf("%s", exec_node->cmd);
 	}
 }
-int main (int ac, char **av, char **env)
+void	freeExec(t_exec *exec_node)
+{
+	if (exec_node->cmd)
+		free(exec_node->cmd);
+	if (exec_node->opt)
+		free(exec_node->opt);
+	if (exec_node->infile)
+		free(exec_node->infile);
+	if (exec_node->outfile)
+		free(exec_node->outfile);
+	free(exec_node);
+}
+
+void	freeTree(t_mask *root)
+{
+	t_pipe *pipe_node;
+	t_exec *exec_node;
+	
+	if (!root)
+		return ;
+	if (root->mask == PIPE_NODE)
+	{
+		pipe_node = (t_pipe *)root;
+		freeTree((t_mask *)pipe_node->left);
+		freeTree((t_mask *)pipe_node->right);
+		free(pipe_node);
+	}
+	else if (root->mask == EXEC_NODE)
+	{
+		exec_node = (t_exec *)root;
+		freeExec(exec_node);
+	}
+}
+
+void	clear_buffer(void *content)
+{
+	t_buffer	*buffer;
+
+	buffer = (t_buffer *)content;
+	free(buffer->str);
+	free(buffer);
+}
+
+void	clear_env(void *content)
+{
+	t_env	*env_node;
+
+	env_node = (t_env *)content;
+	free(env_node->key);
+	if (env_node->value)
+		free(env_node->value);
+	free(env_node);
+}
+
+int run(int ac, char **av, char **env)
 {
 	// env = NULL;
 	(void)ac;
@@ -103,12 +157,20 @@ int main (int ac, char **av, char **env)
 	// exec_pwd(1);
 	// ac = 0;
 	// exec_export(av+2, &_env, &ac);
-	// printf("*************************************************\n");
 	// exec_env(_env, 1);
 	// exec_unset(av+2, &_env);
+	// printf("*************************************************\n");
 	// exec_exit(av+2, &ac);
-	ft_lstfree(_env);
-	// while (1)
-	// ;
+	// ft_lstfree(_env);
+	freeTree(_tree);
+	ft_lstclear(&_env, clear_env);
+	ft_lstclear(&_buffer, clear_buffer);
 	return (0);
+}
+int main (int ac, char **av, char **env)
+{
+	int a = run(ac, av, env);
+	while (1)
+	;
+	return (a);
 }
