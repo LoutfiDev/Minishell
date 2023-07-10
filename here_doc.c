@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 12:44:11 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/10 14:59:21 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	*read_here_doc(char *lim, int expand, t_list *env)
 		in = readline("> ");
 		while (ft_strncmp(lim, in, ft_strlen(in) + len))
 		{
-			in = expand_in_heredoc(in, expand, env);
+			in = ft_strjoin(expand_in_heredoc(in, expand, env), ft_strdup("\n"));
 			write(pip[1], in, ft_strlen(in));
 			free(in);
 			in = readline("> ");

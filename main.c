@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 12:37:26 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/10 15:00:44 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	write_out(int p, char **env, char **av)
 	//close(p[1]);
 	h = malloc(10000);
 	a = read(p, h, 10000);
-	printf("str = %s\n", h);
+	printf("str = %s", h);
 	free(h);
 	/*while (a > 0)
 	{
