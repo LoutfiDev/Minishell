@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 10:45:57 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/17 17:12:35 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 16:53:47 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*q;
 
 	if (!s1)
-		return (ft_strdup(s2));
+		return (s2);
 	if (!s2)
-		return (ft_strdup(s1));
+		return (s1);
 	q = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (q == NULL)
 		return (0);

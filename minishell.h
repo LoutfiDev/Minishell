@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 15:12:48 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 16:39:48 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ typedef struct s_exec
 }	t_exec;
 
 //helpers function
-int		print_error(char *cmd, char *delim, char *arg, char *msg, int exit_status);
+int		print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
-void	ft_lstfree(t_list *env);
 char	**split(char *s, char c);
 char	*ft_argsjoin(char *s1, char	*s2);
 
@@ -94,7 +93,13 @@ void	exec_exit(char **args, int *exit_code);
 
 //execution functions
 t_mask	*build_tree(t_list *_buffer);
-int		ft_fork();
+int		ft_fork(void);
 void	execution(t_mask *mask, t_list *_env);
+
+//free functions
+void	ft_free_array(char **array, int index);
+void	clear_env(void *content);
+void	clear_buffer(void *content);
+void	free_tree(t_mask *root);
 
 #endif

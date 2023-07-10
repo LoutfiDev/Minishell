@@ -6,26 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 15:56:10 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/10 16:43:33 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_free_array(char **array, int index)
-{
-	int	i;
-	int	len;
-
-	i = index;
-	len = 0;
-	while (array[len])
-		len++;
-	while (i <= len)
-		free(array[i++]);
-	free(array);
-	return ;
-}
 
 char	*join_path(char *cmd, t_list *_env)
 {
@@ -53,6 +38,7 @@ char	*join_path(char *cmd, t_list *_env)
 	ft_free_array(array, i);
 	return (NULL);
 }
+
 int	open_infile(char *filename, char *cmd)
 {
 	int	fd;
@@ -66,7 +52,8 @@ int	open_infile(char *filename, char *cmd)
 	else if (fd == -1)
 	{
 		close(fd);
-		exit(print_error(cmd, ": ", filename, ": No such file or directory\n", 1));
+		exit(print_error(cmd, ": ", filename,
+				": No such file or directory\n", 1));
 	}
 	return (fd);
 }
@@ -100,13 +87,14 @@ void	_exec(t_exec *node, t_list *_env)
 	{
 		fd = open_outfile(node->outfile, node->cmd, node->out_mode);
 		close(WRITE_END);
-		dup(fd);	
+		dup(fd);
 	}
 	array = ft_split(ft_argsjoin(node->cmd, node->opt), ' ');
 	if (array[0][0] != '/')
 		node->cmd = join_path(array[0], _env);
 	if (!node->cmd)
-		exit(print_error("minishell", ": ", array[0], ": command not found\n", 127));
+		exit(print_error("minishell", ": ", array[0],
+				": command not found\n", 127));
 	if (node->infile)
 	{
 		fd = open_infile(node->infile, array[0]);
@@ -116,7 +104,8 @@ void	_exec(t_exec *node, t_list *_env)
 	execve(node->cmd, array, NULL);
 	exit (ERROR);
 }
-int	ft_fork()
+
+int	ft_fork(void)
 {
 	int	pid;
 
@@ -153,7 +142,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 	wait(0);
 }
 
-int	*_init_pipe()
+int	*_init_pipe(void)
 {
 	int	*p;
 
@@ -165,7 +154,7 @@ int	*_init_pipe()
 
 void	execution(t_mask *root, t_list *_env)
 {
-	int *p;
+	int	*p;
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
