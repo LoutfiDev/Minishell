@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 16:32:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 16:39:38 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/exec.h"
 
 void	ft_free_array(char **array, int index)
 {
@@ -50,8 +50,8 @@ void	free_tree(t_mask *root)
 	if (root->mask == PIPE_NODE)
 	{
 		pipe_node = (t_pipe *)root;
-		freeTree((t_mask *)pipe_node->left);
-		freeTree((t_mask *)pipe_node->right);
+		free_tree((t_mask *)pipe_node->left);
+		free_tree((t_mask *)pipe_node->right);
 		free(pipe_node);
 	}
 	else if (root->mask == EXEC_NODE)
@@ -61,22 +61,11 @@ void	free_tree(t_mask *root)
 	}
 }
 
-void	clear_buffer(void *content)
-{
-	t_buffer	*buffer;
+// void	clear_buffer(void *content)
+// {
+// 	t_buffer	*buffer;
 
-	buffer = (t_buffer *)content;
-	free(buffer->str);
-	free(buffer);
-}
-
-void	clear_env(void *content)
-{
-	t_env	*env_node;
-
-	env_node = (t_env *)content;
-	free(env_node->key);
-	if (env_node->value)
-		free(env_node->value);
-	free(env_node);
-}
+// 	buffer = (t_buffer *)content;
+// 	free(buffer->str);
+// 	free(buffer);
+// }

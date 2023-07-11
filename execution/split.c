@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 16:03:11 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/18 11:52:49 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/exec.h"
 
 static char	*ft_fill_array(char *str, char c, int *j)
 {

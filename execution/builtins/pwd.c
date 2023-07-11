@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:25:13 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/16 10:13:45 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/exec.h"
 
 void	exec_pwd(int fd)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_list_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/22 11:51:08 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:51:08 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
-#include "libft/libft.h"
+#include "../includes/buffer.h"
 #include <readline/readline.h>
 #include <unistd.h>
 

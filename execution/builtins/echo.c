@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:10:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/06/19 12:28:03 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/exec.h"
 
 int	is_valid_option(char **args, int *index)
 {

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 12:40:04 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:32:52 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
-#include "libft/libft.h"
-#include "expand.h"
+
+#include "../includes/buffer.h"
+#include "../includes/expand.h"
 
 int	get_dollar(char *str, int *end)
 {

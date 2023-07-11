@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 16:39:48 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:32:52 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXEC_H
+# define EXEC_H
 
-# include "libft/libft.h"
+
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/types.h>
 # include <dirent.h>
-
-# define CMD 1
-# define ARGS 2
-# define IN 3
-# define OUT 4
-# define OUT_APP 5
-# define HERE_DOC 6
-# define PIPE 7
+# include "struct.h"
 
 # define PIPE_NODE 124
 # define EXEC_NODE 126
@@ -39,47 +32,12 @@
 
 # define EXP_ERR ": not a valid identifier\n"
 
-typedef struct s_buffer
-{
-	char			*str;
-	int				type;
-}	t_buffer;
-
-typedef struct s_env
-{
-	char	*key;
-	char	*value;
-}	t_env;
-
-typedef struct s_mask
-{
-	int	mask;
-}	t_mask;
-
-typedef struct s_pipe
-{
-	int		mask;
-	t_mask	*left;
-	t_mask	*right;
-}	t_pipe;
-
-typedef struct s_exec
-{
-	int		mask;
-	char	*cmd;
-	char	*opt;
-	char	*infile;
-	char	*outfile;
-	int		out_mode;
-}	t_exec;
-
 //helpers function
 int		print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
-char	**split(char *s, char c);
 char	*ft_argsjoin(char *s1, char	*s2);
 
 //builtins commands

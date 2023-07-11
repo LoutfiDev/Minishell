@@ -3,29 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/08 15:12:30 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 09:05:45 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
-#include "expand.h"
-#include "libft/libft.h"
 
-void	sh(t_list *head)
+#include "../includes/buffer.h"
+#include "../includes/expand.h"
+
+void	expanding(t_list **head, t_list *_env)
 {
-	t_buffer	*bf;
+	t_buffer	*tmp;
+	t_list		*node;
+	t_list		*expanded_node;
+	int			index;
 
-	while (head)
+	node = *head;
+	while (node)
 	{
-		bf = (t_buffer *) head -> content;
-		printf("str = %s\t type = %d\n", bf->str, bf->type);
-		head = head ->next;
+		tmp = (t_buffer *) node -> content;
+		if (tmp->type != 6 && has_dollar(tmp->str))
+		{
+			expanded_node = expand((t_buffer *)node ->content, _env);
+			insert_node(head, node, expanded_node);
+		}
+		node = node -> next;
 	}
 }
-
 /*	algorithm	*/
 
 // 1 - expand all the strings that have a dollar in a new listw list

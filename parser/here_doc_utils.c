@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 12:35:39 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 12:37:45 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:24:29 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
+#include "../includes/buffer.h"
 
 int	has_dollar(char *str)
 {

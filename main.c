@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 15:00:44 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 09:29:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,107 +19,41 @@
 #include <sys/unistd.h>
 #include <sys/wait.h>
 #include <unistd.h>
-#include "buffer.h"
-#include "libft/get_next_line.h"
-#include "libft/libft.h"
-#include "parsing.h"
+#include "includes/buffer.h"
+#include "includes/parsing.h"
+#include "includes/exec.h"
 #include <errno.h>
 
-//1 -> find the start delim 
-//1.1 -> no delim go to 1 (pretend that we hav a delim 
-//		(with his own type(no delim means a cmd ha sbeen founded)))
-//1.2 -> have a delim go to 2
-//2 -> skip all spces (that endicar-te end of that argument)
-//3 -> get next arg type (find end delim and copy)
-//4 -> repeat 1 tell '\0'
-
-void	create_pipe(char *str, int type, t_quote *quote, t_list **lst)
+void	printTree(t_mask *node, int space)
 {
-	char	*tmp;
-	t_list	*buf;
+	t_pipe	*pipe_node;
+	t_exec	*exec_node;
 
-	tmp = ft_strdup("|");
-	buf = ft_lstnew(new_buffer(tmp, type));
-	free(tmp);
-	ft_lstadd_back(lst, buf);
-	parsing(str, 1, quote, lst);
-}
-
-void	parsing(char *str, int delim, t_quote *quote, t_list **head)
-{
-	int		i[2];
-	int		cmd;
-	int		type;
-	char	*tmp;
-	t_list	*buf;
-
-	i[0] = 0;
-	cmd = 0;
-	while (str && str[i[0]])
+	if (!node)
+		return ;
+	if (node->mask == PIPE_NODE)
 	{
-		type = 0;
-		ft_skip_space(str, &i[0]);
-		i[0] += get_start_delim(str, i[0], &type, &delim);
-		ft_skip_space(str, &i[0]);
-		type = get_type(str, type, i[0], &cmd);
-		if (type == PIPE)
-			return (create_pipe(str + i[0] + 1, type, quote, head));
-		i[1] = i[0];
-		i[0] = get_next_delim(str, i[0], &delim, quote);
-		tmp = ft_substr(str, i[1], i[0] - i[1]);
-		buf = ft_lstnew(new_buffer(tmp, type));
-		free(tmp);
-		ft_lstadd_back(head, buf);
+		pipe_node = (t_pipe *)node;
+		space += 10;
+		printTree(pipe_node->left, space);
+		printf("\n");
+		for (int i = 10; i < space; i++)
+			printf(" ");
+		printf("%s", "P");
+		printTree(pipe_node->right, space);
+	}
+	else if (node->mask == EXEC_NODE)
+	{
+		exec_node = (t_exec *)node;
+		space += 10;
+		printf("\n");
+		for (int i = 10; i < space; i++)
+			printf(" ");
+		printf("%s", exec_node->cmd);
 	}
 }
 
-
-void	expanding(t_list **head, t_list *_env)
-{
-	t_buffer	*tmp;
-	t_list		*node;
-	t_list		*expanded_node;
-	int			index;
-
-	node = *head;
-	while (node)
-	{
-		tmp = (t_buffer *) node -> content;
-		if (tmp->type != 6 && has_dollar(tmp->str))
-		{
-			expanded_node = expand((t_buffer *)node ->content, _env);
-			insert_node(head, node, expanded_node);
-		}
-		node = node -> next;
-	}
-}
-
-void	write_out(int p, char **env, char **av)
-{
-	int pid, a;
-	char *h;
-	//close(p[1]);
-	h = malloc(10000);
-	a = read(p, h, 10000);
-	printf("str = %s", h);
-	free(h);
-	/*while (a > 0)
-	{
-		free(h);
-		h = malloc(100);
-		a = read(p, h, 100);
-		printf("a = %d",a);
-		printf("%s\n",h);
-	}*/
-}
-
-// 1 - parse
-// 2 - expand
-// 3 - remove quotes
-// 4 - rearange
-// 5 - send
-
-int	main(int ac, char *av[], char **env)
+int	main_c(int ac, char *av[], char **env)
 {
 	char	*trim; 	
 	char	*buff;
@@ -129,13 +63,14 @@ int	main(int ac, char *av[], char **env)
 	t_quote *n_quote;
 	t_list	*_env;
 	int		*here_doc;
+	t_mask	*_tree = NULL;
 	char *h;
 	int pid;
 
 	_env = create_env(env);
 	n_quote = malloc(sizeof(t_quote));
-	while (1)
-	{
+	// while (1)
+	// {
 		head = NULL;
 		n_quote->num_squote = 0;
 		n_quote->num_dquote = 0;
@@ -157,7 +92,7 @@ int	main(int ac, char *av[], char **env)
 			//	printf("buff = %s\n", bf->str);
 				here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str), _env);
 				close(here_doc[1]);
-				write_out(here_doc[0], env, av+1);
+				//write_out(here_doc[0], env, av+1);
 				free(bf->str);
 				bf->str = ft_itoa(here_doc[0]);
 				//close(here_doc[0]);
@@ -167,14 +102,28 @@ int	main(int ac, char *av[], char **env)
 			tmp = tmp-> next;
 		}
 		tmp = head;
-		while (tmp)
-		{
-			bf = (t_buffer *) tmp -> content;
-			printf("str = %s\t type = %d\n",bf->str, bf->type);
-			tmp = tmp ->next;
-		}
+		_tree = build_tree(head);
+		printTree(_tree, 0);
+		printf("\n");
+		execution(_tree, _env);
+		// while (tmp)
+		// {
+		// 	bf = (t_buffer *) tmp -> content;
+		// 	printf("str = %s\t type = %d\n",bf->str, bf->type);
+		// 	tmp = tmp ->next;
+		// }
 		//printf("sQ = %d dQ = %d\n", n_quote->num_squote, n_quote->num_dquote);
+		free_tree(_tree);
+		free(n_quote);
+		ft_lstclear(&_env, clear_env);
 		ft_lstclear(&head, clear_buffer);
-	}
-		
+	// }
+	return (0);
 }
+	int main (int ac, char **av, char **env)
+	{
+		int a = main_c(ac, av, env);
+		while (1)
+		;
+		return (a);
+	}

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 13:21:11 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:51:05 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
-#include "libft/libft.h"
+#include "../includes/buffer.h"
+
 #include <stdio.h>
 
 int	get_tmp_len(char *str)

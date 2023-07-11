@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/10 14:59:21 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:51:05 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
-#include "libft/libft.h"
+#include "../includes/buffer.h"
+
 #include <readline/readline.h>
 #include <stdio.h>
 #include <stdlib.h>

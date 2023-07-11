@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 11:52:20 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 16:40:09 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/exec.h"
 
 char	*ft_argsjoin(char *s1, char	*s2)
 {

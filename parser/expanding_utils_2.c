@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/08 15:26:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:22:54 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
-#include "expand.h"
+#include "../includes/buffer.h"
+#include "../includes/expand.h"
 
 char	*get_var(char *str, int *i)
 {

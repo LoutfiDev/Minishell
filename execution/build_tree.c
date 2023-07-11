@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 16:37:38 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:32:54 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/exec.h"
 
 t_exec	*init_exec(void)
 {

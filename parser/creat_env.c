@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   creat_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:35:22 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/18 16:42:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:54:18 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
+#include "../includes/buffer.h"
+
 
 t_env	*create_env_node(char *content)
 {
@@ -49,4 +50,15 @@ t_list	*create_env(char **env)
 		i--;
 	}
 	return (_env);
+}
+
+void	clear_env(void *content)
+{
+	t_env	*env_node;
+
+	env_node = (t_env *)content;
+	free(env_node->key);
+	if (env_node->value)
+		free(env_node->value);
+	free(env_node);
 }

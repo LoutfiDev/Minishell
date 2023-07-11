@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-all:
-<<<<<<< HEAD
-=======
-	make -C libft bonus
->>>>>>> AI
-	gcc -g -lreadline -lcurses libft/libft.a *.c -o minishell
-=======
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
@@ -14,7 +6,7 @@ all:
 #    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/07 11:57:22 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/07/11 08:30:40 by yloutfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +16,10 @@ DFLAGS = -Llibft -lft
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
 
-SRCS = exec_test.c ./execution/build_tree.c ./execution/execution.c
+SRCS = ./execution/build_tree.c ./execution/execution.c
 
-HELPERS = ./execution/helpers.c ./execution/split.c ./execution/ft_argsjoin.c
+HELPERS = ./execution/helpers.c ./execution/split.c ./execution/ft_argsjoin.c \
+		./execution/ft_free.c
 
 BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 		./execution/builtins/cd.c ./execution/builtins/export.c		\
@@ -35,14 +28,17 @@ BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 
 OBJS = exec_test.o ./execution/build_tree.o ./execution/execution.o
 
-OBJS_HELPERS = ./execution/helpers.o ./execution/split.o ./execution/ft_argsjoin.o
+OBJS_HELPERS = ./execution/helpers.o ./execution/split.o ./execution/ft_argsjoin.o \
+		./execution/ft_free.o
 
 OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 		./execution/builtins/cd.o ./execution/builtins/export.o			\
 		./execution/builtins/unset.o ./execution/builtins/env.o			\
 		./execution/builtins/exit.o
 
-all: libft $(NAME)
+# all: libft $(NAME)
+all: libft
+	$(CC) $(RDLFLAGS) $(DFLAGS) parser/*.c $(SRCS) $(HELPERS) main.c -o minishell
 
 libft:
 	@$(MAKE) -C libft -s
@@ -62,4 +58,3 @@ fclean: clean
 re: fclean all
 
 .PHONY : all libft bonus clean fclean re
->>>>>>> c97890288ce0397463610f7dcfd8cbacacb7136e

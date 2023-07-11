@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:02:48 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/22 13:29:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:25:42 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buffer.h"
+#include "../includes/buffer.h"
 
 void	ft_skip_space(char *str, int *i)
 {

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:53:06 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/24 15:27:59 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:50:03 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	ifndef EXPAND_H
+#ifndef EXPAND_H
 # define EXPAND_H
 
-# include "libft/libft.h"
+# include "struct.h"
 
 char	*get_var(char *str, int *i);
 char	*get_var_value(t_list *env, char *key);

@@ -3,24 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 12:56:49 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/22 13:29:23 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 08:50:09 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #	ifndef PARSING_H
 # define PARSING_H
 
-# include "libft/libft.h"
-
-typedef struct s_quote
-{
-	int	num_squote;
-	int	num_dquote;
-	int	type;
-}	t_quote;
+# include "struct.h"
 
 void	ft_skip_space(char *str, int *i);
 int		get_start_delim(char *str, int i, int *type, int *delim);

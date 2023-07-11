@@ -6,11 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/10 16:33:21 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:12:35 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 
 // void	printTree(t_mask *node, int space)
 // {
