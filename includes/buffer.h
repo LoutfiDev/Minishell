@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 12:24:54 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 16:25:02 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		insert_node(t_list **head, t_list *node, t_list *n_node);
 
 //parsing utils
 void		parsing(char *str, int delim, t_quote *quote, t_list **head);
+t_list	    *main_parse(t_list *env);
 void		ft_skip_space(char *str, int *i);
 
 //expanding utils
@@ -43,7 +44,6 @@ int			ft_is_append(char c, char c_plus, int *type);
 int			ft_is_write(char c, int *type);
 
 //general utils function
-char		**split(char *s, char c);
 void		clear_buffer(void *bf);
 void		fix_types(t_list *lst);
 

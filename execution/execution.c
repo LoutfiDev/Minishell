@@ -6,11 +6,12 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 22:06:06 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
+#include "../includes/buffer.h"
 
 char	*join_path(char *cmd, t_list *_env)
 {
@@ -152,14 +153,65 @@ int	*_init_pipe(void)
 	return (p);
 }
 
+char	*ft_update(char *old, char *new)
+{
+	if (old)
+		free(old);
+	return (ft_strdup(new));
+}
+
+t_exec *update_node(t_exec *node, t_list *expanded_buff)
+{
+	t_buffer	*buff_node;
+	
+	while (expanded_buff)
+	{
+		buff_node = (t_buffer *)expanded_buff->content;
+		if (buff_node->type == 7)
+			break ;
+		else if (buff_node->type == 1)
+			node->cmd = ft_update(node->cmd, buff_node->str);
+		else if (buff_node->type == 2)
+			node->opt = ft_argsjoin(node->opt, buff_node->str);
+		else if (buff_node->type == 3)
+			node->infile = ft_update(node->infile, buff_node->str);
+		else if (buff_node->type == 4)
+			node->outfile = ft_update(node->outfile, buff_node->str);
+		else if (buff_node->type == 5)
+			node->out_mode = 1;
+		expanded_buff = expanded_buff->next;
+	}
+	return (node);
+}
+t_mask	*expanded(t_exec *node, t_list *_env)
+{
+	t_exec	*new_node;
+	t_list	*expanded_buff;
+	
+	expanded_buff = NULL;
+	if (has_dollar(node->cmd))
+		expanded_buff = expanding(node->cmd, _env, 1);
+	if (has_dollar(node->opt))
+		expanded_buff = expanding(node->opt, _env, 2);
+	if (has_dollar(node->infile))
+		expanded_buff = expanding(node->infile, _env, 3);
+	if (has_dollar(node->outfile))
+		expanded_buff = expanding(node->outfile, _env, 4);
+	new_node = update_node(node, expanded_buff);
+	return ((t_mask *)new_node);
+}
+
 void	execution(t_mask *root, t_list *_env)
 {
-	int	*p;
+	int		*p;
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
 		_pipe((t_pipe *)root, p, _env);
 	else if (root->mask == EXEC_NODE)
+	{
+		root = expanded((t_exec *)root, _env);
 		_exec((t_exec *)root, _env);
+	}
 	free(p);
 }

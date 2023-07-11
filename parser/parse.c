@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 13:31:02 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 22:06:51 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,47 @@
 //2 -> skip all spces (that endicar-te end of that argument)
 //3 -> get next arg type (find end delim and copy)
 //4 -> repeat 1 tell '\0'
+void	open_heredoc(t_list *head, t_list *_env)
+{
+	t_buffer	*bf;
+	int			*here_doc;
+
+	while (head)
+	{
+		bf = (t_buffer *)head -> content;
+		if (bf ->type == 6)
+		{
+			here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str),
+					_env);
+			close(here_doc[1]);
+			free(bf->str);
+			bf->str = ft_itoa(here_doc[0]);
+			free(here_doc);
+		}
+		head = head -> next;
+	}
+}
+
+t_list	*main_parse(t_list *env)
+{
+	char	*line;
+	t_list	*buffer;
+	t_quote	*quotes;
+	int		pid;
+
+	quotes = malloc(sizeof(t_quote));
+	quotes -> num_dquote = 0;
+	quotes -> num_squote = 0;
+	buffer = NULL;
+	line = ft_strtrim(readline("MINISHELL : "), " \t");
+	parsing(line, 1, quotes, &buffer);
+	if (buffer)
+		add_history(line);
+	free(line);
+	open_heredoc(buffer, env);
+	free(quotes);
+	return (buffer);
+}
 
 void	create_pipe(char *str, int type, t_quote *quote, t_list **lst)
 {

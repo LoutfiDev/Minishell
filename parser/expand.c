@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 12:28:42 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 22:07:16 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_list	*expanding(char *str, t_list *_env, int type)
 		c++;
 		tmp = tmp -> next;
 	}
+	handle_quote(expanded_node);
 	return (expanded_node);
 }
 
@@ -151,7 +152,6 @@ t_list	*expand(char *str, t_list *env, int type)
 	res = join_all(str, lst, 0);
 	lst = NULL;
 	tmp = ft_strtrim(res, " \t");
-	free(res);
 	get_splited_parts(tmp, &lst, type);
 	free(tmp);
 	return (lst);
