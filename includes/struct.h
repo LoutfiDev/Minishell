@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 09:32:06 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 10:31:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
+
 # include "../libft/libft.h"
 
 typedef struct s_quote
