@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main_tst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 10:30:48 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 13:29:07 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,106 +24,59 @@
 #include "../includes/exec.h"
 #include <errno.h>
 
-void	printTree(t_mask *node, int space)
+void	open_heredoc(t_list *head, t_list *_env)
 {
-	t_pipe	*pipe_node;
-	t_exec	*exec_node;
+	t_buffer	*bf;
+	int			*here_doc;
 
-	if (!node)
-		return ;
-	if (node->mask == PIPE_NODE)
+	while (head)
 	{
-		pipe_node = (t_pipe *)node;
-		space += 10;
-		printTree(pipe_node->left, space);
-		printf("\n");
-		for (int i = 10; i < space; i++)
-			printf(" ");
-		printf("%s", "P");
-		printTree(pipe_node->right, space);
-	}
-	else if (node->mask == EXEC_NODE)
-	{
-		exec_node = (t_exec *)node;
-		space += 10;
-		printf("\n");
-		for (int i = 10; i < space; i++)
-			printf(" ");
-		printf("%s", exec_node->cmd);
+		bf = (t_buffer *)head -> content;
+		if (bf ->type == 6)
+		{
+			here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str),
+					_env);
+			close(here_doc[1]);
+			free(bf->str);
+			bf->str = ft_itoa(here_doc[0]);
+			free(here_doc);
+		}
+		head = head -> next;
 	}
 }
 
-int main()
+t_list	*main_parse(t_list *env)
 {
-	char *line;
+	char	*line;
 	t_list	*buffer;
-	t_list	*_env;
-	t_quote *quotes;
+	t_quote	*quotes;
 	int		pid;
 
-	_env = create_env(env);
-
+	quotes = malloc(sizeof(t_quote));
+	quotes -> num_dquote = 0;
+	quotes -> num_squote = 0;
+	buffer = NULL;
+	line = ft_strtrim(readline("MINISHELL : "), " \t");
+	parsing(line, 1, quotes, &buffer);
+	if (buffer)
+		add_history(line);
+	free(line);
+	handle_quote(buffer);
+	open_heredoc(buffer, env);
+	free(quotes);
+	return (buffer);
 }
 
-int	main_c(int ac, char *av[], char **env)
+int	main(int ac, char **av, char **env)
 {
-	char	*trim; 	
-	char	*buff;
-	t_list *head, *tmp;
-	int delim;
-	t_buffer *bf;;
-	t_quote *n_quote;
+	t_list	*head;
 	t_list	*_env;
-	int		*here_doc;
-	t_mask	*_tree = NULL;
-	char *h;
-	int pid;
 
 	_env = create_env(env);
-	n_quote = malloc(sizeof(t_quote));
-	// while (1)
-	// {
-		head = NULL;
-		n_quote->num_squote = 0;
-		n_quote->num_dquote = 0;
-		buff  = readline("token here : ");
-		trim  = ft_strtrim(buff, " \t");
-		parsing(trim, delim, n_quote, &head);
-		free(trim);
-		if (head)
-			add_history(buff); 
-		free(buff);
-		expanding(&head, _env);
-		handle_quote(head);
-		tmp = head;
-		while (tmp)
-		{
-			bf = (t_buffer *)tmp -> content;
-			if (bf ->type == 6)
-			{
-			//	printf("buff = %s\n", bf->str);
-				here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str), _env);
-				close(here_doc[1]);
-				//write_out(here_doc[0], env, av+1);
-				free(bf->str);
-				bf->str = ft_itoa(here_doc[0]);
-				//close(here_doc[0]);
-				//close(here_doc[1]);
-				free(here_doc);
-			}
-			tmp = tmp-> next;
-		}
-		tmp = head;
-		// while (tmp)
-		// {
-		// 	bf = (t_buffer *) tmp -> content;
-		// 	printf("str = %s\t type = %d\n",bf->str, bf->type);
-		// 	tmp = tmp ->next;
-		// }
-		//printf("sQ = %d dQ = %d\n", n_quote->num_squote, n_quote->num_dquote);
-		free(n_quote);
-		ft_lstclear(&_env, clear_env);
+	while (1)
+	{
+		head = main_parse(_env);
 		ft_lstclear(&head, clear_buffer);
-	// }
+	}
 	return (0);
 }
