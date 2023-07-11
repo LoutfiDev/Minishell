@@ -6,9 +6,10 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 08:57:09 by anaji             #+#    #+#             */
-/*   Updated: 2022/10/30 22:37:07 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/11 13:34:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 size_t	start_of_text(const char *s1, const char *set)
@@ -67,7 +68,7 @@ size_t	end_of_text(const char *s1, const char *set)
 	return (i_end);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	char	*s;
 	size_t	start_txt;
@@ -75,14 +76,15 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	len;
 
 	if (!s1)
-		return (NULL);
+		return (free(s1), NULL);
 	if (!set)
 		return (ft_strdup(s1));
 	start_txt = start_of_text(s1, set);
 	if (start_txt == ft_strlen(s1))
-		return (ft_strdup(""));
+		return (free(s1), ft_strdup(""));
 	end_txt = end_of_text(s1, set);
 	len = end_txt - start_txt + 1;
 	s = ft_substr(s1, start_txt, len);
+	free(s1);
 	return (s);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 09:11:04 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:24:54 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void		parsing(char *str, int delim, t_quote *quote, t_list **head);
 void		ft_skip_space(char *str, int *i);
 
 //expanding utils
-void		expanding(t_list **head, t_list *_env);
-t_list		*expand(t_buffer *node, t_list *env);
+t_list		*expanding(char *str, t_list *_env, int type);
+t_list		*expand(char *str, t_list *env, int type);
 int			has_dollar(char *str);
 int			ft_is_heredoc(char c, char c_plus, int *type);
 int			ft_is_read(char c, int *type);

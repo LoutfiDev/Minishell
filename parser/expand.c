@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 09:05:45 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/11 12:28:42 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
 
-void	expanding(t_list **head, t_list *_env)
-{
-	t_buffer	*tmp;
-	t_list		*node;
-	t_list		*expanded_node;
-	int			index;
-
-	node = *head;
-	while (node)
-	{
-		tmp = (t_buffer *) node -> content;
-		if (tmp->type != 6 && has_dollar(tmp->str))
-		{
-			expanded_node = expand((t_buffer *)node ->content, _env);
-			insert_node(head, node, expanded_node);
-		}
-		node = node -> next;
-	}
-}
 /*	algorithm	*/
 
 // 1 - expand all the strings that have a dollar in a new listw list
@@ -44,6 +25,26 @@ void	expanding(t_list **head, t_list *_env)
 // 3 - 1 - if (' / ") is found nothing to be done 
 // 3 - 2 - if nothing is found then split that resault str based on space 
 //		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
+
+t_list	*expanding(char *str, t_list *_env, int type)
+{
+	t_list	*expanded_node;
+	t_list	*tmp;
+	int		c;
+
+	c = 0;
+	expanded_node = expand(str, _env, type);
+	fix_types(expanded_node);
+	tmp = expanded_node;
+	while (tmp)
+	{
+		if (c && type > 2 && type < 6)
+			printf("error");
+		c++;
+		tmp = tmp -> next;
+	}
+	return (expanded_node);
+}
 
 char	*join_expanded_str(char *str, char type, t_list **lst)
 {
@@ -129,7 +130,7 @@ void	get_splited_parts(char *str, t_list **head, int type)
 	return (get_splited_parts(str + i, head, type));
 }
 
-t_list	*expand(t_buffer *node, t_list *env)
+t_list	*expand(char *str, t_list *env, int type)
 {
 	int		i;
 	char	*tmp;
@@ -139,19 +140,19 @@ t_list	*expand(t_buffer *node, t_list *env)
 
 	i = 0;
 	lst = NULL;
-	while (node ->str[i])
+	while (str[i])
 	{
-		tmp = get_var(node->str, &i);
+		tmp = get_var(str, &i);
 		tmp = get_var_value(env, tmp);
 		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);
 		ft_lstadd_back(&lst, head);
 	}
-	res = join_all(node->str, lst, 0);
+	res = join_all(str, lst, 0);
 	lst = NULL;
 	tmp = ft_strtrim(res, " \t");
 	free(res);
-	get_splited_parts(tmp, &lst, node->type);
+	get_splited_parts(tmp, &lst, type);
 	free(tmp);
 	return (lst);
 }
