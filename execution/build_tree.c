@@ -34,6 +34,42 @@ t_mask	*build_pipe(t_mask *left, t_mask *right)
 	return ((t_mask *)pipe_node);
 }
 
+// int	nbr_opt(t_list *_buffer)
+// {
+// 	int	nbr;
+// 	t_buffer	*buff_node;
+
+// 	nbr = 0;
+// 	while (_buffer)
+// 	{
+// 		buff_node = (t_buffer *)_buffer->content;
+// 		if (buff_node->type == 2)
+// 			nbr++;
+// 		_buffer = _buffer->next;
+// 	}
+// 	return (nbr);
+// }
+
+// char	**fill_array(t_list -_buffer)
+// {
+// 	char	**opt;
+// 	int		nbr;
+// 	t_buffer	*buff_node;
+
+// 	nbr = nbr_opt(_buffer);
+// 	opt = malloc((nbr + 2) * sizeof(char *));
+// 	ft_memset(opt, 0, sizeof(opt));
+// 	nbr = 1;
+// 	while (_buffer)
+// 	{
+// 		buff_node = (t_buffer *)_buffer->content;
+// 		if (buff_node->type == 2)
+// 			opt[nbr++] = buff_node->str;
+// 		_buffer = _buffer->next;
+// 	}
+// 	return (opt);
+// }
+
 t_mask	*build_exec(t_list *_buffer)
 {
 	t_exec		*exec_node;

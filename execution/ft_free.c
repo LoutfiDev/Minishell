@@ -19,6 +19,8 @@ void	ft_free_array(char **array, int index)
 
 	i = index;
 	len = 0;
+	if (!array)
+		return ;
 	while (array[len])
 		len++;
 	while (i <= len)

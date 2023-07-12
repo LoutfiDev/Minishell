@@ -79,6 +79,34 @@ int	open_outfile(char *filename, char *cmd, int mode)
 	return (fd);
 }
 
+char	**create_array(char *cmd, char *opt)
+{
+	char	**array;
+	char	**opts;
+	int		i;
+	int		j;
+	int		nbr;
+
+	i = 0;
+	j = 0;
+	nbr = 0;
+	opts = ft_split(opt, ' ');
+	while (opts && opts[nbr])
+		nbr++;
+	if (cmd)
+		nbr += 1;
+	array = malloc((nbr + 1) * sizeof(char *));
+	if (cmd)
+	{
+		array[i] = ft_strdup(cmd);
+		i++;
+	}
+	while (i < nbr)
+		array[i++] = ft_strdup(opts[j++]);
+	ft_free_array(opts, 0);
+	return (array);
+}
+
 void	_exec(t_exec *node, t_list *_env)
 {
 	char	**array;
@@ -90,7 +118,7 @@ void	_exec(t_exec *node, t_list *_env)
 		close(WRITE_END);
 		dup(fd);
 	}
-	array = ft_split(ft_argsjoin(node->cmd, node->opt), ' ');
+	array = create_array(node->cmd, node->opt);
 	if (array[0][0] != '/')
 		node->cmd = join_path(array[0], _env);
 	if (!node->cmd)
@@ -160,7 +188,18 @@ char	*ft_update(char *old, char *new)
 	return (ft_strdup(new));
 }
 
-t_exec *update_node(t_exec *node, t_list *expanded_buff)
+char	*ft_opt_update(char *opt, char *buff)
+{
+	char	*new_opt;
+
+	if (!opt)
+		new_opt = ft_strdup(buff);
+	else
+		new_opt = ft_argsjoin(opt, buff);
+	return (new_opt);
+}
+
+void	update_node(t_exec **node, t_list *expanded_buff)
 {
 	t_buffer	*buff_node;
 	
@@ -170,35 +209,46 @@ t_exec *update_node(t_exec *node, t_list *expanded_buff)
 		if (buff_node->type == 7)
 			break ;
 		else if (buff_node->type == 1)
-			node->cmd = ft_update(node->cmd, buff_node->str);
+			(*node)->cmd = ft_update((*node)->cmd, buff_node->str);
 		else if (buff_node->type == 2)
-			node->opt = ft_argsjoin(node->opt, buff_node->str);
+			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str);
 		else if (buff_node->type == 3)
-			node->infile = ft_update(node->infile, buff_node->str);
+			(*node)->infile = ft_update((*node)->infile, buff_node->str);
 		else if (buff_node->type == 4)
-			node->outfile = ft_update(node->outfile, buff_node->str);
+			(*node)->outfile = ft_update((*node)->outfile, buff_node->str);
 		else if (buff_node->type == 5)
-			node->out_mode = 1;
+			(*node)->out_mode = 1;
 		expanded_buff = expanded_buff->next;
 	}
-	return (node);
 }
-t_mask	*expanded(t_exec *node, t_list *_env)
+
+void	expanded(t_exec *node, t_list *_env)
 {
-	t_exec	*new_node;
+	// t_exec	*new_node;
 	t_list	*expanded_buff;
 	
 	expanded_buff = NULL;
 	if (has_dollar(node->cmd))
+	{
 		expanded_buff = expanding(node->cmd, _env, 1);
+		update_node(&node, expanded_buff);
+	}
 	if (has_dollar(node->opt))
+	{
 		expanded_buff = expanding(node->opt, _env, 2);
+		update_node(&node, expanded_buff);
+	}
 	if (has_dollar(node->infile))
+	{
 		expanded_buff = expanding(node->infile, _env, 3);
+		update_node(&node, expanded_buff);
+	}
 	if (has_dollar(node->outfile))
+	{
 		expanded_buff = expanding(node->outfile, _env, 4);
-	new_node = update_node(node, expanded_buff);
-	return ((t_mask *)new_node);
+		update_node(&node, expanded_buff);
+	}
+	// return ((t_mask *)new_node);
 }
 
 void	execution(t_mask *root, t_list *_env)
@@ -210,7 +260,7 @@ void	execution(t_mask *root, t_list *_env)
 		_pipe((t_pipe *)root, p, _env);
 	else if (root->mask == EXEC_NODE)
 	{
-		root = expanded((t_exec *)root, _env);
+		expanded((t_exec *)root, _env);
 		_exec((t_exec *)root, _env);
 	}
 	free(p);
