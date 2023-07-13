@@ -97,13 +97,11 @@ char	**create_array(char *cmd, char *opt)
 		nbr += 1;
 	array = malloc((nbr + 1) * sizeof(char *));
 	if (cmd)
-	{
-		array[i] = ft_strdup(cmd);
-		i++;
-	}
+		array[i++] = ft_strdup(cmd);
 	while (i < nbr)
 		array[i++] = ft_strdup(opts[j++]);
 	ft_free_array(opts, 0);
+	array[i] = NULL;
 	return (array);
 }
 
@@ -119,7 +117,7 @@ void	_exec(t_exec *node, t_list *_env)
 		dup(fd);
 	}
 	array = create_array(node->cmd, node->opt);
-	if (array[0][0] != '/')
+	if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
 		node->cmd = join_path(array[0], _env);
 	if (!node->cmd)
 		exit(print_error("minishell", ": ", array[0],
@@ -251,7 +249,6 @@ void	expanded(t_exec *node, t_list *_env)
 void	execution(t_mask *root, t_list *_env)
 {
 	int		*p;
-	// t_exec	*test;
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
@@ -259,8 +256,6 @@ void	execution(t_mask *root, t_list *_env)
 	else if (root->mask == EXEC_NODE)
 	{
 		expanded((t_exec *)root, _env);
-		// test = (t_exec *)root;
-		// printf("%s\t%s\n", test->cmd, test->opt);
 		_exec((t_exec *)root, _env);
 	}
 	free(p);

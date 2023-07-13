@@ -33,13 +33,13 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		buffer = main_parse(_env);
-		// if (fork() == 0)
-		// {
+		if (fork() == 0)
+		{
 			tree = build_tree(buffer);
 			execution(tree, _env);
 			free_tree(tree);
-		// }
-		// wait(0);
+		}
+		wait(0);
 		ft_lstclear(&buffer, clear_buffer);
 	}
 	ft_lstclear(&_env, clear_env);
