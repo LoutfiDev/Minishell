@@ -12,6 +12,8 @@
 
 #include "../includes/buffer.h"
 
+extern int exit_status;
+
 void	ft_exit(int exit_state)
 {
 	exit_status = exit_state;

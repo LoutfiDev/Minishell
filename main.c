@@ -25,6 +25,8 @@
 #include "libft/libft.h"
 #include <errno.h>
 
+int	exit_status;
+
 void	sh(t_list *lst)
 {
 
@@ -58,7 +60,7 @@ int	main(int ac, char **av, char **env)
 			buffer = main_parse(_env);
 			ft_lstclear(&buffer, clear_buffer);
 			buffer = NULL;
-			buffer = expanding("$USER $?", _env, 1);
+			buffer = expanding("$USER\"$USER\"'$USER'", _env, 1);
 			sh(buffer);
 			tree = build_tree(buffer);
 			execution(tree, _env);

@@ -13,7 +13,7 @@
 #include "../includes/buffer.h"
 #include <unistd.h>
 
-//void	add_history(char *str);
+void	add_history(char *str);
 
 // 1 - parse
 // 2 - send

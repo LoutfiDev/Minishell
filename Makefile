@@ -12,7 +12,7 @@
 
 
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-CFLAGS = -fsanitize=address -g
+CFLAGS = #-fsanitize=address -g
 DFLAGS = -Llibft -lft
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
@@ -44,7 +44,7 @@ all: libft
 libft:
 	@$(MAKE) -C libft -s
 	@$(MAKE) -C libft bonus -s
-	
+
 $(NAME): $(OBJS) $(OBJS_HELPERS) $(OBJS_BUILTINS)
 	$(CC) $(CFLAGS) $(DFLAGS) $(RDLFLAGS) $(OBJS_HELPERS) $(OBJS_BUILTINS) $(OBJS) -o $(NAME)
 

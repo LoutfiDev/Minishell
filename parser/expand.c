@@ -19,11 +19,11 @@
 // 1 - expand all the strings that have a dollar in a new listw list
 // 2 - join the original str with the data (content) based on type:
 // 2 - 1 - if (') is before dollar then skip
-// 2 - 2 - if (" / $) then join one str (before '$') with the item in list 
+// 2 - 2 - if (" / $) then join one str (before '$') with the item in list
 //		eg :"$USER" => "anaji"
-// 3 - split that resault in a new list based on type 
-// 3 - 1 - if (' / ") is found nothing to be done 
-// 3 - 2 - if nothing is found then split that resault str based on space 
+// 3 - split that resault in a new list based on type
+// 3 - 1 - if (' / ") is found nothing to be done
+// 3 - 2 - if nothing is found then split that resault str based on space
 //		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
 
 t_list	*expanding(char *str, t_list *_env, int type)

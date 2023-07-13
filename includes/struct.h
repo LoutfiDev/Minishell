@@ -15,7 +15,7 @@
 
 # include "../libft/libft.h"
 
-int	exit_status;
+extern int	exit_status;
 
 typedef struct s_quote
 {

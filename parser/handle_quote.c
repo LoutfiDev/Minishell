@@ -37,10 +37,9 @@ int	get_tmp_len(char *str)
 	return (len);
 }
 
-char	*ft_cpy_new(char *old, int len)
+void 	ft_cpy_new(char *old, char **res, int len)
 {
 	int		i;
-	char	*res;
 	int		d_quote;
 	int		s_quote;
 	int		j;
@@ -49,7 +48,7 @@ char	*ft_cpy_new(char *old, int len)
 	j = 0;
 	d_quote = 0;
 	s_quote = 0;
-	res = malloc(len);
+	res[0] = malloc(len + 1);
 	while (old[i])
 	{
 		if (old[i] == '\'' && d_quote % 2 == 0)
@@ -58,12 +57,12 @@ char	*ft_cpy_new(char *old, int len)
 			d_quote++;
 		else
 		{
-			res[j] = old[i];
+			res[0][j] = old[i];
 			j++;
 		}
 		i++;
 	}
-	return (res);
+	res[0][j] = '\0';
 }
 
 void	remove_quote(char **str)
@@ -75,9 +74,9 @@ void	remove_quote(char **str)
 	i = 0;
 	tmp = ft_strdup(*str);
 	free(*str);
-	ft_memset(*str, 0, ft_strlen(tmp));
+	//ft_memset(*str, 0, ft_strlen(tmp));
 	len = get_tmp_len(tmp);
-	str[0] = ft_cpy_new(tmp, len);
+	ft_cpy_new(tmp, str, len);
 	free(tmp);
 }
 
