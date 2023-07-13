@@ -44,3 +44,24 @@ int	is_herdoc_expandable(char *hd_lim)
 	}
 	return (1);
 }
+
+void	open_heredoc(t_list *head, t_list *_env)
+{
+	t_buffer	*bf;
+	int			*here_doc;
+
+	while (head)
+	{
+		bf = (t_buffer *)head -> content;
+		if (bf ->type == 6)
+		{
+			here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str),
+					_env);
+			close(here_doc[1]);
+			free(bf->str);
+			bf->str = ft_itoa(here_doc[0]);
+			free(here_doc);
+		}
+		head = head -> next;
+	}
+}

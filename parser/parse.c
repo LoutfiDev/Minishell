@@ -11,39 +11,39 @@
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+#include <unistd.h>
 
+void	add_history(char *str);
 
 // 1 - parse
-// 2 - expand
-// 3 - remove quotes
-// 4 - rearange
-// 5 - send
+// 2 - send
+// 3 - build tree
+// 4 - expand
+// 5 - remove quotes
+// 6 - execute
 
-//1 -> find the start delim 
-//1.1 -> no delim go to 1 (pretend that we hav a delim 
-//		(with his own type(no delim means a cmd ha sbeen founded)))
+/*
+ * parsing algorithm
+ * */
+//1 -> find the start delim
+//1.1 -> no delim go to 1 (pretend that we hav a delim
+//		(with his own type(no delim means a cmd ha sbeen found)))
 //1.2 -> have a delim go to 2
-//2 -> skip all spces (that endicar-te end of that argument)
+//2 -> skip all spces (that endicate end of that argument)
 //3 -> get next arg type (find end delim and copy)
 //4 -> repeat 1 tell '\0'
-void	open_heredoc(t_list *head, t_list *_env)
-{
-	t_buffer	*bf;
-	int			*here_doc;
 
-	while (head)
+void	check_pipe_node(t_list *lst)
+{
+	t_buffer	*bf_start;
+	t_buffer	*bf_last;
+
+	bf_start = lst -> content;
+	bf_last = ft_lstlast(lst) -> content;
+	if (bf_start -> type == 7 || bf_last ->type == 7)
 	{
-		bf = (t_buffer *)head -> content;
-		if (bf ->type == 6)
-		{
-			here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str),
-					_env);
-			close(here_doc[1]);
-			free(bf->str);
-			bf->str = ft_itoa(here_doc[0]);
-			free(here_doc);
-		}
-		head = head -> next;
+		write(2, "syntax error near unexpected token `|'\n", 39);
+		exit(2);
 	}
 }
 
@@ -59,11 +59,13 @@ t_list	*main_parse(t_list *env)
 	quotes -> num_squote = 0;
 	buffer = NULL;
 	line = ft_strtrim(readline("MINISHELL : "), " \t");
-	parsing(line, 1, quotes, &buffer);
+	parsing(line, 0, quotes, &buffer);
 	if (buffer)
 		add_history(line);
 	free(line);
+	check_pipe_node(buffer);
 	open_heredoc(buffer, env);
+	check_quotes(quotes);
 	free(quotes);
 	return (buffer);
 }

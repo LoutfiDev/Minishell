@@ -21,23 +21,36 @@
 #include "includes/buffer.h"
 #include "includes/parsing.h"
 #include "includes/exec.h"
+#include "includes/struct.h"
 #include <errno.h>
+
+void	sh(t_list *lst)
+{
+	t_buffer *bf;
+	while (lst)
+	{
+		bf = lst -> content;
+		printf("str = %s type = %d\n",bf -> str, bf -> type);
+		lst = lst -> next;
+	}
+}
 
 int	main(int ac, char **av, char **env)
 {
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
-	
+
 	_env = create_env(env);
 	while (1)
 	{
 		buffer = main_parse(_env);
+		sh(buffer);
 		// if (fork() == 0)
 		// {
-			tree = build_tree(buffer);
-			execution(tree, _env);
-			free_tree(tree);
+			// tree = build_tree(buffer);
+			// execution(tree, _env);
+			// free_tree(tree);
 		// }
 		// wait(0);
 		ft_lstclear(&buffer, clear_buffer);

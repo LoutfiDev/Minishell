@@ -51,6 +51,7 @@ t_list		*create_env(char **env);
 void		clear_env(void *content);
 
 //remove quotes
+void	check_quotes(t_quote *quote);
 void		handle_quote(t_list *lst);
 void		remove_quote(char **str);
 
@@ -58,5 +59,5 @@ void		remove_quote(char **str);
 
 int			*read_here_doc(char *lim, int expand, t_list *env);
 int			is_herdoc_expandable(char *hd_lim);
-
+void		open_heredoc(t_list *lst, t_list *env);
 #	endif

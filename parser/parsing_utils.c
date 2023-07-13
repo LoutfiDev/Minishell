@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+#include <stdlib.h>
 
 void	ft_skip_space(char *str, int *i)
 {
@@ -48,7 +49,11 @@ int	get_next_delim(char *str, int i, int *delim, t_quote *quotes)
 {
 	if ((is_delim(str[i]) && *delim) || !str[i])
 	{
-		printf("syntax error");
+		if (str[i])
+			write(2, "syntax error near unexpected token \n",35 );
+		else
+			write(2, "syntax error near unexpected token `newline'\n", 45);
+		exit(2);
 	}
 	while (str[i])
 	{

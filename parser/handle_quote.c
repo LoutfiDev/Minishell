@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
-
 #include <stdio.h>
 
 int	get_tmp_len(char *str)
@@ -92,5 +91,15 @@ void	handle_quote(t_list *lst)
 		if (bf -> type != 6)
 			remove_quote(&bf -> str);
 		lst = lst -> next;
+	}
+}
+
+void	check_quotes(t_quote *quote)
+{
+	if (quote -> num_dquote % 2 || quote -> num_squote % 2)
+	{
+		write(2, "syntax error (unclosed quote)\n", 31);
+		free(quote);
+		exit(-1);
 	}
 }
