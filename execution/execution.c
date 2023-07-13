@@ -188,24 +188,20 @@ char	*ft_update(char *old, char *new)
 	return (ft_strdup(new));
 }
 
-char	*ft_opt_update(char *opt, char *buff, int *nbr)
+char	*ft_opt_update(char *opt, char *buff, int type)
 {
 	char	*new_opt;
-
-	if (!opt || *nbr == 0)
-		new_opt = ft_strdup(buff);		
+	if (type == 2 && has_dollar(opt))
+		new_opt = ft_strdup(buff);
 	else
 		new_opt = ft_argsjoin(buff, opt);
-	*nbr += 1;
  	return (new_opt);
 }
 
-void	update_node(t_exec **node, t_list *expanded_buff)
+void	update_node(t_exec **node, t_list *expanded_buff, int type)
 {
 	t_buffer	*buff_node;
-	int			nbr;
 	
-	nbr = 0;
 	while (expanded_buff)
 	{
 		buff_node = (t_buffer *)expanded_buff->content;
@@ -214,7 +210,7 @@ void	update_node(t_exec **node, t_list *expanded_buff)
 		else if (buff_node->type == 1)
 			(*node)->cmd = ft_update((*node)->cmd, buff_node->str);
 		else if (buff_node->type == 2)
-			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str, &nbr);
+			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str, type);
 		else if (buff_node->type == 3)
 			(*node)->infile = ft_update((*node)->infile, buff_node->str);
 		else if (buff_node->type == 4)
@@ -227,37 +223,35 @@ void	update_node(t_exec **node, t_list *expanded_buff)
 
 void	expanded(t_exec *node, t_list *_env)
 {
-	// t_exec	*new_node;
 	t_list	*expanded_buff;
 	
 	expanded_buff = NULL;
 	if (has_dollar(node->cmd))
 	{
 		expanded_buff = expanding(node->cmd, _env, 1);
-		update_node(&node, expanded_buff);
+		update_node(&node, expanded_buff, 1);
 	}
 	if (has_dollar(node->opt))
 	{
 		expanded_buff = expanding(node->opt, _env, 2);
-		update_node(&node, expanded_buff);
+		update_node(&node, expanded_buff, 2);
 	}
 	if (has_dollar(node->infile))
 	{
 		expanded_buff = expanding(node->infile, _env, 3);
-		update_node(&node, expanded_buff);
+		update_node(&node, expanded_buff, 3);
 	}
 	if (has_dollar(node->outfile))
 	{
 		expanded_buff = expanding(node->outfile, _env, 4);
-		update_node(&node, expanded_buff);
+		update_node(&node, expanded_buff, 4);
 	}
-	// return ((t_mask *)new_node);
 }
 
 void	execution(t_mask *root, t_list *_env)
 {
 	int		*p;
-	t_exec	*test;
+	// t_exec	*test;
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
@@ -265,8 +259,8 @@ void	execution(t_mask *root, t_list *_env)
 	else if (root->mask == EXEC_NODE)
 	{
 		expanded((t_exec *)root, _env);
-		test = (t_exec *)root;
-		printf("%s\t%s\n", test->cmd, test->opt);
+		// test = (t_exec *)root;
+		// printf("%s\t%s\n", test->cmd, test->opt);
 		_exec((t_exec *)root, _env);
 	}
 	free(p);
