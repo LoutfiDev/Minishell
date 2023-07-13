@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 16:25:02 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:58:35 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int			ft_is_append(char c, char c_plus, int *type);
 int			ft_is_write(char c, int *type);
 
 //general utils function
+void		ft_exit(int exit_state);
 void		clear_buffer(void *bf);
 void		fix_types(t_list *lst);
 

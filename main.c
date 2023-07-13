@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 22:49:39 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:50:53 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,22 @@
 #include "includes/parsing.h"
 #include "includes/exec.h"
 #include "includes/struct.h"
+#include "libft/libft.h"
 #include <errno.h>
 
 void	sh(t_list *lst)
 {
+
+	t_list *tmp;
 	t_buffer *bf;
-	while (lst)
+
+	tmp = lst;
+	while (tmp)
 	{
-		bf = lst -> content;
-		printf("str = %s type = %d\n",bf -> str, bf -> type);
-		lst = lst -> next;
+		if (tmp -> content)
+			bf = (t_buffer *)tmp -> content;
+		printf("str = %s type = %d\n",bf->str, bf->type);
+		tmp = tmp -> next;
 	}
 }
 
@@ -41,20 +47,27 @@ int	main(int ac, char **av, char **env)
 	t_list	*buffer;
 	t_list	*_env;
 
+	(void) ac;
+	(void) av;
 	_env = create_env(env);
-	while (1)
-	{
-		buffer = main_parse(_env);
-		sh(buffer);
-		// if (fork() == 0)
-		// {
-			// tree = build_tree(buffer);
-			// execution(tree, _env);
-			// free_tree(tree);
-		// }
-		// wait(0);
-		ft_lstclear(&buffer, clear_buffer);
-	}
+	// while (1)
+	// {
+	// 	if (fork() == 0)
+	// 	{
+			buffer = NULL;
+			buffer = main_parse(_env);
+			ft_lstclear(&buffer, clear_buffer);
+			buffer = NULL;
+			buffer = expanding("$USER $?", _env, 1);
+			sh(buffer);
+			tree = build_tree(buffer);
+			execution(tree, _env);
+			free_tree(tree);
+			ft_lstclear(&buffer, clear_buffer);
+			char *tst = readline("wait :");
+	// 	}
+	// 	wait(0);
+	// }
 	ft_lstclear(&_env, clear_env);
 	return (0);
 }

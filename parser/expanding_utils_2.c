@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 08:22:54 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:24:33 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ char	*get_var_value(t_list *env, char *key)
 	char	*tmp;
 	t_env	*v_env;
 
+	if (!ft_strncmp(key, "$?", ft_strlen(key) + 2))
+	{
+		free(key);
+		return (ft_itoa(exit_status));
+	}
 	tmp = ft_strdup(key + 1);
 	len = ft_strlen(tmp);
 	free(key);

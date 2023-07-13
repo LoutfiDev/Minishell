@@ -3,15 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: anaji <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/11 08:30:40 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/07/13 13:16:15 by anaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
+
+#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = -fsanitize=address -g
 DFLAGS = -Llibft -lft
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
@@ -38,7 +39,7 @@ OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 
 # all: libft $(NAME)
 all: libft
-	$(CC) parser/*.c $(SRCS) $(HELPERS) main.c $(RDLFLAGS) $(DFLAGS) -o minishell
+	$(CC) parser/*.c $(SRCS) $(HELPERS) main.c $(CFLAGS) $(RDLFLAGS) $(DFLAGS) -o minishell
 
 libft:
 	@$(MAKE) -C libft -s

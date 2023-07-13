@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:02:48 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 08:25:42 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:47:57 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	get_next_delim(char *str, int i, int *delim, t_quote *quotes)
 	if ((is_delim(str[i]) && *delim) || !str[i])
 	{
 		if (str[i])
-			write(2, "syntax error near unexpected token \n",35 );
+			write(2, "syntax error near unexpected token\n", 35);
 		else
 			write(2, "syntax error near unexpected token `newline'\n", 45);
 		exit(2);

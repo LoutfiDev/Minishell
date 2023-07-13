@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 22:06:51 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:57:41 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include <unistd.h>
 
-void	add_history(char *str);
+//void	add_history(char *str);
 
 // 1 - parse
 // 2 - send
@@ -43,7 +43,7 @@ void	check_pipe_node(t_list *lst)
 	if (bf_start -> type == 7 || bf_last ->type == 7)
 	{
 		write(2, "syntax error near unexpected token `|'\n", 39);
-		exit(2);
+		ft_exit(2);
 	}
 }
 
@@ -52,7 +52,7 @@ t_list	*main_parse(t_list *env)
 	char	*line;
 	t_list	*buffer;
 	t_quote	*quotes;
-	int		pid;
+	//int		pid;
 
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
