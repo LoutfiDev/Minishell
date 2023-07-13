@@ -188,21 +188,24 @@ char	*ft_update(char *old, char *new)
 	return (ft_strdup(new));
 }
 
-char	*ft_opt_update(char *opt, char *buff)
+char	*ft_opt_update(char *opt, char *buff, int *nbr)
 {
 	char	*new_opt;
 
-	if (!opt)
-		new_opt = ft_strdup(buff);
+	if (!opt || *nbr == 0)
+		new_opt = ft_strdup(buff);		
 	else
-		new_opt = ft_argsjoin(opt, buff);
-	return (new_opt);
+		new_opt = ft_argsjoin(buff, opt);
+	*nbr += 1;
+ 	return (new_opt);
 }
 
 void	update_node(t_exec **node, t_list *expanded_buff)
 {
 	t_buffer	*buff_node;
+	int			nbr;
 	
+	nbr = 0;
 	while (expanded_buff)
 	{
 		buff_node = (t_buffer *)expanded_buff->content;
@@ -211,7 +214,7 @@ void	update_node(t_exec **node, t_list *expanded_buff)
 		else if (buff_node->type == 1)
 			(*node)->cmd = ft_update((*node)->cmd, buff_node->str);
 		else if (buff_node->type == 2)
-			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str);
+			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str, &nbr);
 		else if (buff_node->type == 3)
 			(*node)->infile = ft_update((*node)->infile, buff_node->str);
 		else if (buff_node->type == 4)
@@ -254,6 +257,7 @@ void	expanded(t_exec *node, t_list *_env)
 void	execution(t_mask *root, t_list *_env)
 {
 	int		*p;
+	t_exec	*test;
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
@@ -261,6 +265,8 @@ void	execution(t_mask *root, t_list *_env)
 	else if (root->mask == EXEC_NODE)
 	{
 		expanded((t_exec *)root, _env);
+		test = (t_exec *)root;
+		printf("%s\t%s\n", test->cmd, test->opt);
 		_exec((t_exec *)root, _env);
 	}
 	free(p);
