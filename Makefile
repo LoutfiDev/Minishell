@@ -38,7 +38,7 @@ OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 
 # all: libft $(NAME)
 all: libft
-	$(CC) $(RDLFLAGS) $(DFLAGS) parser/*.c $(SRCS) $(HELPERS) main.c -o minishell
+	$(CC) parser/*.c $(SRCS) $(HELPERS) main.c $(RDLFLAGS) $(DFLAGS) -o minishell
 
 libft:
 	@$(MAKE) -C libft -s

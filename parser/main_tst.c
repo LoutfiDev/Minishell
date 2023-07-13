@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <strings.h>
-#include <sys/_types/_null.h>
 #include <sys/unistd.h>
 #include <sys/wait.h>
 #include <unistd.h>
