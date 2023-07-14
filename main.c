@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/13 13:50:53 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/14 20:40:16 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int ac, char **av, char **env)
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
+	char *ex;
 
 	(void) ac;
 	(void) av;
@@ -60,7 +61,8 @@ int	main(int ac, char **av, char **env)
 			buffer = main_parse(_env);
 			ft_lstclear(&buffer, clear_buffer);
 			buffer = NULL;
-			buffer = expanding("$USER\"$USER\"'$USER'", _env, 1);
+			ex = readline("ex :");
+			buffer = expanding(ex, _env, 1);
 			sh(buffer);
 			tree = build_tree(buffer);
 			execution(tree, _env);

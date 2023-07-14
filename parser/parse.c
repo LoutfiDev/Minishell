@@ -6,14 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/13 12:57:41 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/14 20:32:19 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include <unistd.h>
 
-void	add_history(char *str);
+int	add_history(const char *str);
 
 // 1 - parse
 // 2 - send

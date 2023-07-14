@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/13 13:37:24 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/14 20:39:00 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*join_all(char *str, t_list *lst, int i)
 	{
 		d_index = 0;
 		type = get_expand_type(str + i);
-		skip_to_next(str, &d_index, type);
+		skip_to_next(str + i, &d_index, type);
 		res = ft_substr(str + i, 0, d_index);
 		if (type == '\'')
 			join = join_str(join, res, &lst);
