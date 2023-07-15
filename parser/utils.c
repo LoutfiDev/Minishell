@@ -6,12 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 12:26:29 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 09:48:30 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
-
+#include <stdio.h>
+#include <sys/fcntl.h>
+#include <unistd.h>
 
 void	fix_types(t_list *lst)
 {
@@ -29,6 +31,48 @@ void	fix_types(t_list *lst)
 				bf -> type = 2;
 		}
 		c++;
+		lst = lst -> next;
+	}
+}
+
+void	open_file(char  **file, int type)
+{
+	int	fd;
+
+	if (type == 3)
+		fd = open(file[0], O_RDONLY);
+	else if (type == 4)
+	{
+		if (access(file[0], F_OK) != -1)
+			fd = open(file[0], O_WRONLY | O_TRUNC);
+		else
+			fd = open(file[0], O_CREAT, 0644);
+	}
+	else if (type == 5)
+	{
+		if (access(file[0], F_OK) != -1)
+			fd = open(file[0], O_APPEND);
+		else
+			fd = open(file[0], O_CREAT, 0644);
+	}
+	if (fd == -1)
+	{
+		perror(file[0]);
+		ft_exit(1);
+	}
+	free(*file);
+	file[0] = ft_itoa(fd);
+}
+
+void	open_files(t_list *lst)
+{
+	t_buffer	*bf;
+
+	while (lst)
+	{
+		bf = (t_buffer *)lst-> content;
+		if (bf -> type > 2 && bf -> type < 6)
+			open_file(&bf -> str, bf -> type);
 		lst = lst -> next;
 	}
 }

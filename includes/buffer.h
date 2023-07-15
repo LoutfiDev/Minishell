@@ -6,14 +6,13 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/13 12:58:35 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 09:03:50 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #	ifndef BUFFER_H
 # define BUFFER_H
 
-# include <readline/readline.h>
 # include <unistd.h>
 # include "parsing.h"
 # include "struct.h"
@@ -31,7 +30,7 @@ void		insert_node(t_list **head, t_list *node, t_list *n_node);
 
 //parsing utils
 void		parsing(char *str, int delim, t_quote *quote, t_list **head);
-t_list	    *main_parse(t_list *env);
+t_list	    *main_parse(t_list *env, char **line);
 void		ft_skip_space(char *str, int *i);
 
 //expanding utils
@@ -52,9 +51,12 @@ t_list		*create_env(char **env);
 void		clear_env(void *content);
 
 //remove quotes
-void	check_quotes(t_quote *quote);
+void		check_num_quotes(t_quote *quote);
 void		handle_quote(t_list *lst);
 void		remove_quote(char **str);
+
+//open files
+void	open_files(t_list *lst);
 
 //HERE_DOC
 

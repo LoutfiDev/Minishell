@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 09:05:31 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:57:43 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define STRUCT_H
 
 # include "../libft/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
-int	exit_status;
+int	g_exit_status;
 
 typedef struct s_quote
 {

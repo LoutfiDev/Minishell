@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   expanding_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 08:32:52 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 08:16:16 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../includes/buffer.h"
 #include "../includes/expand.h"

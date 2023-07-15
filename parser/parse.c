@@ -6,14 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/14 20:32:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 09:03:13 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include <unistd.h>
 
-int	add_history(const char *str);
+//int	add_history(const char *str);
 
 // 1 - parse
 // 2 - send
@@ -33,13 +33,26 @@ int	add_history(const char *str);
 //3 -> get next arg type (find end delim and copy)
 //4 -> repeat 1 tell '\0'
 
+void	remove_normal_quote(t_list *lst)
+{
+	t_buffer	*bf;
+
+	while (lst)
+	{
+		bf = (t_buffer *)lst -> content;
+		if (!has_dollar(bf -> str))
+			remove_quote(&bf -> str);
+		lst = lst -> next;
+	}
+}
+
 void	check_pipe_node(t_list *lst)
 {
 	t_buffer	*bf_start;
 	t_buffer	*bf_last;
 
 	bf_start = lst -> content;
-	bf_last = ft_lstlast(lst) -> content;
+	bf_last = ft_lstlast(lst)-> content;
 	if (bf_start -> type == 7 || bf_last ->type == 7)
 	{
 		write(2, "syntax error near unexpected token `|'\n", 39);
@@ -47,25 +60,24 @@ void	check_pipe_node(t_list *lst)
 	}
 }
 
-t_list	*main_parse(t_list *env)
+t_list	*main_parse(t_list *env, char **line)
 {
-	char	*line;
 	t_list	*buffer;
 	t_quote	*quotes;
-	//int		pid;
 
+	line[0] = ft_strtrim(readline("MINISHELL : "), " \t");
+	if (!ft_strlen (line[0]))
+		return (NULL);
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
 	quotes -> num_squote = 0;
 	buffer = NULL;
-	line = ft_strtrim(readline("MINISHELL : "), " \t");
-	parsing(line, 0, quotes, &buffer);
-	if (buffer)
-		add_history(line);
-	free(line);
+	parsing(line[0], 0, quotes, &buffer);
 	check_pipe_node(buffer);
 	open_heredoc(buffer, env);
-	check_quotes(quotes);
+	open_files(buffer);
+	check_num_quotes(quotes);
+	remove_normal_quote(buffer);
 	free(quotes);
 	return (buffer);
 }

@@ -6,10 +6,11 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 09:55:01 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:58:28 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <readline/history.h>
 #include <readline/readline.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -48,6 +49,7 @@ int	main(int ac, char **av, char **env)
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
+	char	*line;
 
 	(void) ac;
 	(void) av;
@@ -56,9 +58,11 @@ int	main(int ac, char **av, char **env)
 	{
 		if (fork() == 0)
 		{
-			buffer = NULL;
-			buffer = main_parse(_env);
+			buffer = main_parse(_env, &line);
 			sh(buffer);
+			if (!buffer)
+				ft_exit(0);
+			add_history(line);
 			tree = build_tree(buffer);
 			execution(tree, _env);
 			free_tree(tree);
