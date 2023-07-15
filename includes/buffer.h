@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 12:16:41 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 15:06:42 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define PIPE 7
 
 t_buffer	*new_buffer(char *str, int type);
-void		insert_node(t_list **head, t_list *node, t_list *n_node);
+t_list		*insert_node(t_list **head, t_list *node, t_list *n_node);
 
 //parsing utils
 void		parsing(char *str, int delim, t_quote *quote, t_list **head);

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 13:12:35 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 15:09:37 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,13 @@ void	expanding(t_list **head, t_list *_env)
 		if (tmp->type != 6 && has_dollar(tmp->str))
 		{
 			expanded_node = expand(tmp, _env);
-			insert_node(head, node, expanded_node);
+			node = insert_node(head, node, expanded_node);
 			if (check_redirection(expanded_node, var))
 			{
 				ft_lstclear(head, clear_buffer);
 				g_exit_status = 1;
 			}
 		}
-		if (expanded_node)
-			node = ft_lstlast(expanded_node) -> next;
 		else
 			node = node -> next;
 		free(var);

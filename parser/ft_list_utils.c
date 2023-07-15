@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 12:15:48 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 15:07:33 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	check_redirection(t_list *lst, char *str)
 	return (0);
 }
 
-void	insert_node(t_list **head, t_list *node, t_list *n_node)
+t_list	*insert_node(t_list **head, t_list *node, t_list *n_node)
 {
 	t_list	*last;
 	t_list	*tmp;
@@ -71,7 +71,7 @@ void	insert_node(t_list **head, t_list *node, t_list *n_node)
 		last -> next = node-> next;
 		ft_lstdelone(node, clear_buffer);
 		fix_types(*head);
-		return ;
+		return (n_node);
 	}
 	while (tmp && tmp -> next)
 	{
@@ -80,7 +80,9 @@ void	insert_node(t_list **head, t_list *node, t_list *n_node)
 			tmp -> next = n_node;
 			last -> next = node -> next;
 			ft_lstdelone(node, clear_buffer);
+			return (*head);
 		}
 		tmp = tmp -> next;
 	}
+	return (*head);
 }
