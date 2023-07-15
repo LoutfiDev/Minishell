@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 15:01:48 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	set_pwd(t_list **env)
 	return (0);
 }
 
-int	exec_cd(char **args, t_list *env)
+void	exec_cd(char **args, t_list *env)
 {
 	DIR		*directory;
 
@@ -74,23 +74,23 @@ int	exec_cd(char **args, t_list *env)
 	if (!ft_strncmp(args[0], "~", ft_strlen(args[0])))
 	{
 		if (!get_path("HOME", env))
-			return (print_error("cd: ", NULL, "HOME", ": not set\n", 1));
+			ft_exit(print_error("cd: ", NULL, "HOME", ": not set\n", 1));
 		chdir(get_path("HOME", env));
 	}
 	else if (!ft_strncmp(args[0], "-", ft_strlen(args[0])))
 	{
 		if (!get_path("OLDPWD", env))
-			return (print_error("cd: ", NULL, "OLDPWD", ": not set\n", 1));
+			ft_exit(print_error("cd: ", NULL, "OLDPWD", ": not set\n", 1));
 		chdir(get_path("OLDPWD", env));
-		exec_pwd(1);
+		exec_pwd();
 	}
 	else
 	{
 		directory = opendir(args[0]);
 		if (!directory)
-			return (print_error("cd: ", NULL, args[0], ": Not a directory\n", 1));
+			ft_exit(print_error("cd: ", NULL, args[0], ": Not a directory\n", 1));
 		chdir(args[0]);
 		closedir(directory);
 	}
-	return (set_pwd(&env));
+	ft_exit(set_pwd(&env));
 }

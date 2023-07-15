@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:11:38 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 14:45:28 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	exec_env(t_list *env, int export)
 			env = env->next;
 		}
 	}
+	ft_exit(0);
 }
