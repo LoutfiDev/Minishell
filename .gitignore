@@ -52,10 +52,7 @@ Mkfile.old
 dkms.conf
 
 minishell
-rdln
+#rdln
 test*
 out*
-<<<<<<< HEAD
-=======
 *.old
->>>>>>> AI
