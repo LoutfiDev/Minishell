@@ -6,7 +6,11 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/15 10:34:57 by anaji            ###   ########.fr       */
+=======
+/*   Updated: 2023/07/15 11:16:56 by yloutfi          ###   ########.fr       */
+>>>>>>> 65b6d78aeb97b8f9c1de8a1fd8790c4f023a99cd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +63,10 @@ void	ft_free_array(char **array, int index);
 void	clear_env(void *content);
 void	clear_buffer(void *content);
 void	free_tree(t_mask *root);
+<<<<<<< HEAD
 int		ft_close(int fd);
 #endif
+=======
+
+#endif
+>>>>>>> 65b6d78aeb97b8f9c1de8a1fd8790c4f023a99cd

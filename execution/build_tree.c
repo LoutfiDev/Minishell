@@ -6,7 +6,11 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/15 10:40:37 by anaji            ###   ########.fr       */
+=======
+/*   Updated: 2023/07/15 10:47:58 by yloutfi          ###   ########.fr       */
+>>>>>>> 65b6d78aeb97b8f9c1de8a1fd8790c4f023a99cd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +44,7 @@ t_mask	*build_exec(t_list *_buffer)
 	t_buffer	*buff_node;
 
 	exec_node = init_exec();
+	ft_close(_buffer);
 	while (_buffer)
 	{
 		buff_node = (t_buffer *)_buffer->content;
