@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 11:07:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 13:32:43 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	check_pipe_node(t_list *lst)
 	if (bf_start -> type == 7 || bf_last ->type == 7)
 	{
 		write(2, "syntax error near unexpected token `|'\n", 39);
-		ft_exit(2);
+		g_exit_status = 2;
 	}
 }
 

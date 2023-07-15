@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 12:16:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 13:12:35 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	expanding(t_list **head, t_list *_env)
 			if (check_redirection(expanded_node, var))
 			{
 				ft_lstclear(head, clear_buffer);
-				ft_exit(1);
+				g_exit_status = 1;
 			}
 		}
 		if (expanded_node)

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:02:48 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/13 12:47:57 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 13:36:53 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	get_next_delim(char *str, int i, int *delim, t_quote *quotes)
 			write(2, "syntax error near unexpected token\n", 35);
 		else
 			write(2, "syntax error near unexpected token `newline'\n", 45);
-		exit(2);
+		g_exit_status = 2;
 	}
 	while (str[i])
 	{

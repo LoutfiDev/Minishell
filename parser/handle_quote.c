@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 08:17:55 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 13:42:06 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	check_num_quotes(t_quote *quote)
 	if (quote -> num_dquote % 2 || quote -> num_squote % 2)
 	{
 		write(2, "syntax error (unclosed quote)\n", 31);
-		free(quote);
-		exit(-1);
+		g_exit_status = 258;
 	}
 }
