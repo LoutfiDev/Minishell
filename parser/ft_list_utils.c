@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 11:28:25 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 12:15:48 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,27 @@ void	clear_buffer(void *bf)
 	free(tmp_bf);
 }
 
-int	check_redirection(t_list **head, t_list *lst, t_list *node)
+int	check_redirection(t_list *lst, char *str)
 {
-	t_buffer	*bf;
 	t_buffer	*bf_node;
-	int			size;
+	int			c;
 
-	size = ft_lstsize(lst);
-	bf = lst -> content;
-	bf_node = node ->content;
-	if (bf -> type >= 3 && bf -> type <= 5 && size > 1)
+	c = 0;
+	while (lst)
 	{
-		write(2, bf_node->str, ft_strlen(bf_node->str));
-		write(2, ": ambiguous redirect\n", 22);
-		ft_lstclear(head, clear_buffer);
-		return (1);
+		bf_node = lst ->content;
+		if (bf_node -> type >= 3 && bf_node -> type <= 5)
+		{
+			if (c)
+			{
+				write(2, str, ft_strlen(str));
+				write(2, ": ambiguous redirect\n", 22);
+				free(str);
+				return (1);
+			}
+			c++;
+		}
+		lst = lst -> next;
 	}
 	return (0);
 }
@@ -58,8 +64,6 @@ void	insert_node(t_list **head, t_list *node, t_list *n_node)
 	t_list	*tmp;
 
 	tmp = *head;
-	if (check_redirection(head, n_node, node))
-		exit(1);
 	last = ft_lstlast(n_node);
 	if (tmp == node)
 	{

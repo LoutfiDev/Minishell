@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 10:41:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 12:24:56 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,27 @@ void	open_file(char  **file, int type)
 	file[0] = ft_itoa(fd);
 }
 
+void	ft_close(t_buffer *node)
+{
+	close(ft_atoi(node -> str));
+}
+
 void	open_files(t_list *lst)
 {
 	t_buffer	*bf;
+	t_list		*prev;
 
+	prev = NULL;
 	while (lst)
 	{
 		bf = (t_buffer *)lst-> content;
 		if (bf -> type > 2 && bf -> type < 6)
+		{
 			open_file(&bf -> str, bf -> type);
+			if (prev)
+				ft_close(prev -> content);
+		}
+		prev = lst;
 		lst = lst -> next;
 	}
 }

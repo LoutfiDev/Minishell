@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 11:30:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 12:16:39 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,63 +27,37 @@
 // 3 - 2 - if nothing is found then split that resault str based on space
 //		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
 
-// void	check_redirection(t_list *lst)
-// {
-// 	t_buffer	*bf;
-// 	int			c;
-//
-// 	c = 0;
-// 	while (lst)
-// 	{
-// 		bf = (t_buffer *)lst -> content;
-// 		if (c && bf -> type > 2 && bf -> type < 6)
-// 			print_error(bf -> str, ": ", NULL, " ambiguous redirect", 1);
-// 		c++;
-// 		lst = lst -> next;
-// 	}
-// }
-
 void	expanding(t_list **head, t_list *_env)
 {
 	t_buffer	*tmp;
 	t_list		*node;
 	t_list		*expanded_node;
+	char		*var;
 	int			index;
 
+	expanded_node = NULL;
 	node = *head;
 	while (node)
 	{
 		tmp = (t_buffer *) node -> content;
+		var = ft_strdup(tmp -> str);
 		if (tmp->type != 6 && has_dollar(tmp->str))
 		{
 			expanded_node = expand(tmp, _env);
 			insert_node(head, node, expanded_node);
+			if (check_redirection(expanded_node, var))
+			{
+				ft_lstclear(head, clear_buffer);
+				ft_exit(1);
+			}
 		}
-		node = node -> next;
+		if (expanded_node)
+			node = ft_lstlast(expanded_node) -> next;
+		else
+			node = node -> next;
+		free(var);
 	}
-	//check_redirection(*head);
 }
-
-// t_list	*expanding(char *str, t_list *_env, int type)
-// {
-// 	t_list	*expanded_node;
-// 	t_list	*tmp;
-// 	int		c;
-//
-// 	c = 0;
-// 	expanded_node = expand(str, _env, type);
-// 	fix_types(expanded_node);
-// 	tmp = expanded_node;
-// 	while (tmp)
-// 	{
-// 		if (c && type > 2 && type < 6)
-// 			print_error(str, ": ", NULL, " ambiguous redirect", 1);
-// 		c++;
-// 		tmp = tmp -> next;
-// 	}
-// 	handle_quote(expanded_node);
-// 	return (expanded_node);
-// }
 
 char	*join_expanded_str(char *str, char type, t_list **lst)
 {
