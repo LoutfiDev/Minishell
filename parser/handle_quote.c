@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_quote.c                                     :+:      :+:    :+:   */
+/*   handle_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 08:51:05 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 08:17:55 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	get_tmp_len(char *str)
 	return (len);
 }
 
-void 	ft_cpy_new(char *old, char **res, int len)
+void	ft_cpy_new(char *old, char **res, int len)
 {
 	int		i;
 	int		d_quote;
@@ -74,7 +74,6 @@ void	remove_quote(char **str)
 	i = 0;
 	tmp = ft_strdup(*str);
 	free(*str);
-	//ft_memset(*str, 0, ft_strlen(tmp));
 	len = get_tmp_len(tmp);
 	ft_cpy_new(tmp, str, len);
 	free(tmp);
@@ -93,7 +92,7 @@ void	handle_quote(t_list *lst)
 	}
 }
 
-void	check_quotes(t_quote *quote)
+void	check_num_quotes(t_quote *quote)
 {
 	if (quote -> num_dquote % 2 || quote -> num_squote % 2)
 	{

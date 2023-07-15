@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   creat_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 16:35:22 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 08:54:18 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 08:15:45 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
-
 
 t_env	*create_env_node(char *content)
 {

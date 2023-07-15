@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 07:32:58 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:52:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <readline/history.h>
 #include <readline/readline.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -48,21 +49,26 @@ int	main(int ac, char **av, char **env)
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
+	char	*line;
 
 	(void) ac;
 	(void) av;
 	_env = create_env(env);
 	while (1)
 	{
-		buffer = main_parse(_env);
 		if (fork() == 0)
 		{
+			buffer = main_parse(_env, &line);
+			sh(buffer);
+			if (!buffer)
+				ft_exit(0);
+			add_history(line);
 			tree = build_tree(buffer);
 			execution(tree, _env);
 			free_tree(tree);
+			ft_lstclear(&buffer, clear_buffer);
 		}
 		wait(0);
-		ft_lstclear(&buffer, clear_buffer);
 	}
 	ft_lstclear(&_env, clear_env);
 	return (0);
