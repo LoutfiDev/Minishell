@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 16:32:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 10:04:03 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ void	free_exec(t_exec *exec_node)
 		free(exec_node->cmd);
 	if (exec_node->opt)
 		free(exec_node->opt);
-	if (exec_node->infile)
-		free(exec_node->infile);
-	if (exec_node->outfile)
-		free(exec_node->outfile);
 	free(exec_node);
 }
 

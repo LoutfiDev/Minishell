@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 09:57:29 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 10:03:15 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,16 +254,6 @@ void	expanded(t_exec *node, t_list *_env)
 	{
 		expanded_buff = expanding(node->opt, _env, 2);
 		update_node(&node, expanded_buff, 2);
-	}
-	if (has_dollar(node->infile))
-	{
-		expanded_buff = expanding(node->infile, _env, 3);
-		update_node(&node, expanded_buff, 3);
-	}
-	if (has_dollar(node->outfile))
-	{
-		expanded_buff = expanding(node->outfile, _env, 4);
-		update_node(&node, expanded_buff, 4);
 	}
 }
 
