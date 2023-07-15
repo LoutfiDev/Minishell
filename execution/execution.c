@@ -6,18 +6,12 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 11:38:33 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:45:10 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
-
-int	ft_close(int fd)
-{
-	return (fd);
-}
-
 
 char	*join_path(char *cmd, t_list *_env)
 {
