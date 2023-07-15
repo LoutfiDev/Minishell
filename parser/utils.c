@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 09:48:30 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 10:41:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	open_file(char  **file, int type)
 	if (fd == -1)
 	{
 		perror(file[0]);
-		ft_exit(1);
+		g_exit_status = 1;
+		//ft_exit(1);
 	}
 	free(*file);
 	file[0] = ft_itoa(fd);

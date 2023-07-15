@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 10:03:15 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 10:39:21 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
+
+int	ft_close(int fd)
+{
+	return (fd);
+}
+
 
 char	*join_path(char *cmd, t_list *_env)
 {
@@ -113,11 +119,13 @@ void	_exec(t_exec *node, t_list *_env)
 	{
 		close(READ_END);
 		dup(node->infile);
+		close(node -> infile);
 	}
 	if (node->outfile)
 	{	
 		close(WRITE_END);
 		dup(node->outfile);
+		close(node->outfile);
 	}
 	array = create_array(node->cmd, node->opt);
 	if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))

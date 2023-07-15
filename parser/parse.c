@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 09:03:13 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 11:07:32 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ t_list	*main_parse(t_list *env, char **line)
 	quotes -> num_squote = 0;
 	buffer = NULL;
 	parsing(line[0], 0, quotes, &buffer);
+	expanding(&buffer, env);
 	check_pipe_node(buffer);
 	open_heredoc(buffer, env);
 	open_files(buffer);

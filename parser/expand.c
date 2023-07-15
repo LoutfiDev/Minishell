@@ -6,12 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 08:16:01 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 11:30:19 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
+#include "../includes/exec.h"
+#include <stdint.h>
 
 /*	algorithm	*/
 
@@ -25,26 +27,63 @@
 // 3 - 2 - if nothing is found then split that resault str based on space
 //		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
 
-t_list	*expanding(char *str, t_list *_env, int type)
-{
-	t_list	*expanded_node;
-	t_list	*tmp;
-	int		c;
+// void	check_redirection(t_list *lst)
+// {
+// 	t_buffer	*bf;
+// 	int			c;
+//
+// 	c = 0;
+// 	while (lst)
+// 	{
+// 		bf = (t_buffer *)lst -> content;
+// 		if (c && bf -> type > 2 && bf -> type < 6)
+// 			print_error(bf -> str, ": ", NULL, " ambiguous redirect", 1);
+// 		c++;
+// 		lst = lst -> next;
+// 	}
+// }
 
-	c = 0;
-	expanded_node = expand(str, _env, type);
-	fix_types(expanded_node);
-	tmp = expanded_node;
-	while (tmp)
+void	expanding(t_list **head, t_list *_env)
+{
+	t_buffer	*tmp;
+	t_list		*node;
+	t_list		*expanded_node;
+	int			index;
+
+	node = *head;
+	while (node)
 	{
-		if (c && type > 2 && type < 6)
-			printf("error");
-		c++;
-		tmp = tmp -> next;
+		tmp = (t_buffer *) node -> content;
+		if (tmp->type != 6 && has_dollar(tmp->str))
+		{
+			expanded_node = expand(tmp, _env);
+			insert_node(head, node, expanded_node);
+		}
+		node = node -> next;
 	}
-	handle_quote(expanded_node);
-	return (expanded_node);
+	//check_redirection(*head);
 }
+
+// t_list	*expanding(char *str, t_list *_env, int type)
+// {
+// 	t_list	*expanded_node;
+// 	t_list	*tmp;
+// 	int		c;
+//
+// 	c = 0;
+// 	expanded_node = expand(str, _env, type);
+// 	fix_types(expanded_node);
+// 	tmp = expanded_node;
+// 	while (tmp)
+// 	{
+// 		if (c && type > 2 && type < 6)
+// 			print_error(str, ": ", NULL, " ambiguous redirect", 1);
+// 		c++;
+// 		tmp = tmp -> next;
+// 	}
+// 	handle_quote(expanded_node);
+// 	return (expanded_node);
+// }
 
 char	*join_expanded_str(char *str, char type, t_list **lst)
 {
@@ -130,7 +169,7 @@ void	get_splited_parts(char *str, t_list **head, int type)
 	return (get_splited_parts(str + i, head, type));
 }
 
-t_list	*expand(char *str, t_list *env, int type)
+t_list	*expand(t_buffer *bf, t_list *env)
 {
 	int		i;
 	char	*tmp;
@@ -140,18 +179,18 @@ t_list	*expand(char *str, t_list *env, int type)
 
 	i = 0;
 	lst = NULL;
-	while (str[i])
+	while (bf -> str[i])
 	{
-		tmp = get_var(str, &i);
+		tmp = get_var(bf -> str, &i);
 		tmp = get_var_value(env, tmp);
 		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);
 		ft_lstadd_back(&lst, head);
 	}
-	res = join_all(str, lst, 0);
+	res = join_all(bf -> str, lst, 0);
 	lst = NULL;
 	tmp = ft_strtrim(res, " \t");
-	get_splited_parts(tmp, &lst, type);
+	get_splited_parts(tmp, &lst, bf  -> type);
 	free(tmp);
 	return (lst);
 }

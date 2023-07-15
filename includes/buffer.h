@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 09:03:50 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 11:30:16 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_list	    *main_parse(t_list *env, char **line);
 void		ft_skip_space(char *str, int *i);
 
 //expanding utils
-t_list		*expanding(char *str, t_list *_env, int type);
-t_list		*expand(char *str, t_list *env, int type);
+void		expanding(t_list **lst, t_list *_env);
+t_list		*expand(t_buffer *bf, t_list *env);
 int			has_dollar(char *str);
 int			ft_is_heredoc(char c, char c_plus, int *type);
 int			ft_is_read(char c, int *type);
