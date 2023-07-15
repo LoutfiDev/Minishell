@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 07:32:58 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:55:01 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,17 @@ int	main(int ac, char **av, char **env)
 	_env = create_env(env);
 	while (1)
 	{
-		buffer = main_parse(_env);
 		if (fork() == 0)
 		{
+			buffer = NULL;
+			buffer = main_parse(_env);
+			sh(buffer);
 			tree = build_tree(buffer);
 			execution(tree, _env);
 			free_tree(tree);
+			ft_lstclear(&buffer, clear_buffer);
 		}
 		wait(0);
-		ft_lstclear(&buffer, clear_buffer);
 	}
 	ft_lstclear(&_env, clear_env);
 	return (0);

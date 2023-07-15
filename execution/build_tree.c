@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 09:32:54 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:41:02 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ t_mask	*build_exec(t_list *_buffer)
 		else if (buff_node->type == 2)
 			exec_node->opt = ft_argsjoin(exec_node->opt, buff_node->str);
 		else if (buff_node->type == 3)
-			exec_node->infile = ft_strdup(buff_node->str);
+			exec_node->infile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 4)
-			exec_node->outfile = ft_strdup(buff_node->str);
+			exec_node->outfile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 5)
-			exec_node->out_mode = 1;
+			exec_node->outfile = ft_atoi(buff_node->str);
+		else if (buff_node->type == 6)
+			exec_node->infile = ft_atoi(buff_node->str);
 		_buffer = _buffer->next;
 	}
 	return ((t_mask *)exec_node);

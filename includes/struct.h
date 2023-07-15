@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 07:22:35 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 09:05:31 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ typedef struct s_exec
 	int		mask;
 	char	*cmd;
 	char	*opt;
-	char	*infile;
-	char	*outfile;
-	int		out_mode;
+	int		infile;	
+	int		outfile;	
 }	t_exec;
 
 #endif

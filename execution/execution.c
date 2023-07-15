@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 22:06:06 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 09:13:56 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,16 @@ char	**create_array(char *cmd, char *opt)
 void	_exec(t_exec *node, t_list *_env)
 {
 	char	**array;
-	int		fd;
 
-	if (node->outfile)
+	if (node->infile)
 	{
-		fd = open_outfile(node->outfile, node->cmd, node->out_mode);
+		close(READ_END);
+		dup(node->infile);
+	}
+	if (node->outfile)
+	{	
 		close(WRITE_END);
-		dup(fd);
+		dup(node->outfile);
 	}
 	array = create_array(node->cmd, node->opt);
 	if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
@@ -122,15 +125,35 @@ void	_exec(t_exec *node, t_list *_env)
 	if (!node->cmd)
 		exit(print_error("minishell", ": ", array[0],
 				": command not found\n", 127));
-	if (node->infile)
-	{
-		fd = open_infile(node->infile, array[0]);
-		close(READ_END);
-		dup(fd);
-	}
 	execve(node->cmd, array, NULL);
 	exit (ERROR);
 }
+// void	_exec(t_exec *node, t_list *_env)
+// {
+// 	char	**array;
+// 	int		fd;
+
+// 	if (node->outfile)
+// 	{
+// 		fd = open_outfile(node->outfile, node->cmd, node->out_mode);
+// 		close(WRITE_END);
+// 		dup(fd);
+// 	}
+// 	array = create_array(node->cmd, node->opt);
+// 	if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
+// 		node->cmd = join_path(array[0], _env);
+// 	if (!node->cmd)
+// 		exit(print_error("minishell", ": ", array[0],
+// 				": command not found\n", 127));
+// 	if (node->infile)
+// 	{
+// 		fd = open_infile(node->infile, array[0]);
+// 		close(READ_END);
+// 		dup(fd);
+// 	}
+// 	execve(node->cmd, array, NULL);
+// 	exit (ERROR);
+// }
 
 int	ft_fork(void)
 {
@@ -210,11 +233,9 @@ void	update_node(t_exec **node, t_list *expanded_buff, int type)
 		else if (buff_node->type == 2)
 			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str, type);
 		else if (buff_node->type == 3)
-			(*node)->infile = ft_update((*node)->infile, buff_node->str);
+			(*node)->infile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 4)
-			(*node)->outfile = ft_update((*node)->outfile, buff_node->str);
-		else if (buff_node->type == 5)
-			(*node)->out_mode = 1;
+			(*node)->outfile = ft_atoi(buff_node->str);
 		expanded_buff = expanded_buff->next;
 	}
 }
