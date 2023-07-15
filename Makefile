@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anaji <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/07/15 12:09:21 by anaji            ###   ########.fr        #
+=======
+#    Updated: 2023/07/15 15:01:15 by yloutfi          ###   ########.fr        #
+>>>>>>> 0daffece0de5ce3007b491eefd4d7897b725c7df
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +43,7 @@ OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 
 # all: libft $(NAME)
 all: libft
-	$(CC) parser/*.c $(SRCS) $(HELPERS) main.c $(CFLAGS) $(RDLFLAGS) $(DFLAGS) -o minishell
+	$(CC) parser/*.c $(SRCS) $(HELPERS) $(BUILTINS) main.c $(CFLAGS) $(RDLFLAGS) $(DFLAGS) -o minishell
 
 libft:
 	@$(MAKE) -C libft -s

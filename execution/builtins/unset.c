@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:13:30 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 14:59:25 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,5 @@ void	exec_unset(char **args, t_list **env)
 			continue ;
 		env_delnode(args[i], env);
 	}
+	ft_exit(0);
 }

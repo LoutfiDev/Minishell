@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/11 08:27:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 15:05:19 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,17 +89,20 @@ int	new_env(t_list **env, char *new_var)
 	return (0);
 }
 
-int	exec_export(char **args, t_list **env, int *exit_status)
+void	exec_export(char **args, t_list **env)
 {
 	int	i;
+	int	exit_code;
 
 	i = 0;
+	if (!args || !args[i])
+		exec_env(*env, 1);
 	while (args[i])
 	{
-		*exit_status = is_valide(args[i]);
-		if (!(*exit_status))
+		exit_code = is_valide(args[i]);
+		if (!exit_code)
 			new_env(env, args[i]);
 		i++;
 	}
-	return (*exit_status);
+	ft_exit(exit_code);
 }

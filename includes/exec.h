@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 11:43:49 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 14:59:34 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <dirent.h>
 # include "struct.h"
+# include "buffer.h"
 
 # define PIPE_NODE 124
 # define EXEC_NODE 126
@@ -41,13 +42,13 @@ t_env	*create_node(char *key, char *value);
 char	*ft_argsjoin(char *s1, char	*s2);
 
 //builtins commands
-void	exec_echo(char **args, int write_end);
-int		exec_cd(char **args, t_list *env);
-void	exec_pwd(int fd);
-int		exec_export(char **args, t_list **env, int *exit_status);
+void	exec_echo(char **args);
+void	exec_cd(char **args, t_list *env);
+void	exec_pwd();
+void	exec_export(char **args, t_list **env);
 void	exec_unset(char **args, t_list **env);
 void	exec_env(t_list *env, int export);
-void	exec_exit(char **args, int *exit_code);
+void	exec_exit(char **args);
 
 //execution functions
 t_mask	*build_tree(t_list *_buffer);
