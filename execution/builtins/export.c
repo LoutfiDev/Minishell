@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 14:44:12 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 15:05:19 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	exec_export(char **args, t_list **env)
 	int	exit_code;
 
 	i = 0;
+	if (!args || !args[i])
+		exec_env(*env, 1);
 	while (args[i])
 	{
 		exit_code = is_valide(args[i]);
