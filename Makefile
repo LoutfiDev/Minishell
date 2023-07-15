@@ -6,13 +6,13 @@
 #    By: anaji <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/17 10:44:25 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/13 13:16:15 by anaji            ###   ########.fr        #
+#    Updated: 2023/07/14 20:42:27 by anaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-CFLAGS = #-fsanitize=address -g
+CFLAGS = -fsanitize=address -g
 DFLAGS = -Llibft -lft
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
