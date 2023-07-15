@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 10:03:15 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:20:07 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,45 +38,6 @@ char	*join_path(char *cmd, t_list *_env)
 	}
 	ft_free_array(array, i);
 	return (NULL);
-}
-
-int	open_infile(char *filename, char *cmd)
-{
-	int	fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1 && !access(filename, F_OK))
-	{
-		close(fd);
-		exit(print_error(cmd, ": ", filename, ": permission denied\n", 1));
-	}
-	else if (fd == -1)
-	{
-		close(fd);
-		exit(print_error(cmd, ": ", filename,
-				": No such file or directory\n", 1));
-	}
-	return (fd);
-}
-
-int	open_outfile(char *filename, char *cmd, int mode)
-{
-	int	fd;
-
-	fd = open(filename, O_CREAT, 0644);
-	if (fd == -1)
-	{
-		perror(filename);
-		exit(ERROR);
-	}
-	close(fd);
-	if (!mode)
-		fd = open(filename, O_WRONLY | O_TRUNC);
-	else
-		fd = open(filename, O_WRONLY | O_APPEND);
-	if (fd == -1)
-		exit(print_error(cmd, ": ", filename, ": permission denied\n", 1));
-	return (fd);
 }
 
 char	**create_array(char *cmd, char *opt)
@@ -128,32 +89,6 @@ void	_exec(t_exec *node, t_list *_env)
 	execve(node->cmd, array, NULL);
 	exit (ERROR);
 }
-// void	_exec(t_exec *node, t_list *_env)
-// {
-// 	char	**array;
-// 	int		fd;
-
-// 	if (node->outfile)
-// 	{
-// 		fd = open_outfile(node->outfile, node->cmd, node->out_mode);
-// 		close(WRITE_END);
-// 		dup(fd);
-// 	}
-// 	array = create_array(node->cmd, node->opt);
-// 	if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
-// 		node->cmd = join_path(array[0], _env);
-// 	if (!node->cmd)
-// 		exit(print_error("minishell", ": ", array[0],
-// 				": command not found\n", 127));
-// 	if (node->infile)
-// 	{
-// 		fd = open_infile(node->infile, array[0]);
-// 		close(READ_END);
-// 		dup(fd);
-// 	}
-// 	execve(node->cmd, array, NULL);
-// 	exit (ERROR);
-// }
 
 int	ft_fork(void)
 {
@@ -179,6 +114,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 	}
 	if (ft_fork() == 0)
 	{
+		g_exit_status = 0;
 		close(READ_END);
 		dup(p[READ_END]);
 		close(p[READ_END]);
@@ -202,61 +138,6 @@ int	*_init_pipe(void)
 	return (p);
 }
 
-char	*ft_update(char *old, char *new)
-{
-	if (old)
-		free(old);
-	return (ft_strdup(new));
-}
-
-char	*ft_opt_update(char *opt, char *buff, int type)
-{
-	char	*new_opt;
-	if (type == 2 && has_dollar(opt))
-		new_opt = ft_strdup(buff);
-	else
-		new_opt = ft_argsjoin(buff, opt);
- 	return (new_opt);
-}
-
-void	update_node(t_exec **node, t_list *expanded_buff, int type)
-{
-	t_buffer	*buff_node;
-	
-	while (expanded_buff)
-	{
-		buff_node = (t_buffer *)expanded_buff->content;
-		if (buff_node->type == 7)
-			break ;
-		else if (buff_node->type == 1)
-			(*node)->cmd = ft_update((*node)->cmd, buff_node->str);
-		else if (buff_node->type == 2)
-			(*node)->opt = ft_opt_update((*node)->opt, buff_node->str, type);
-		else if (buff_node->type == 3)
-			(*node)->infile = ft_atoi(buff_node->str);
-		else if (buff_node->type == 4)
-			(*node)->outfile = ft_atoi(buff_node->str);
-		expanded_buff = expanded_buff->next;
-	}
-}
-
-void	expanded(t_exec *node, t_list *_env)
-{
-	t_list	*expanded_buff;
-	
-	expanded_buff = NULL;
-	if (has_dollar(node->cmd))
-	{
-		expanded_buff = expanding(node->cmd, _env, 1);
-		update_node(&node, expanded_buff, 1);
-	}
-	if (has_dollar(node->opt))
-	{
-		expanded_buff = expanding(node->opt, _env, 2);
-		update_node(&node, expanded_buff, 2);
-	}
-}
-
 void	execution(t_mask *root, t_list *_env)
 {
 	int		*p;
@@ -265,9 +146,6 @@ void	execution(t_mask *root, t_list *_env)
 	if (root->mask == PIPE_NODE)
 		_pipe((t_pipe *)root, p, _env);
 	else if (root->mask == EXEC_NODE)
-	{
-		expanded((t_exec *)root, _env);
 		_exec((t_exec *)root, _env);
-	}
 	free(p);
 }

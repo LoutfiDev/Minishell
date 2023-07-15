@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 09:41:02 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 10:47:58 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_mask	*build_exec(t_list *_buffer)
 	t_buffer	*buff_node;
 
 	exec_node = init_exec();
+	ft_close(_buffer);
 	while (_buffer)
 	{
 		buff_node = (t_buffer *)_buffer->content;
