@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 11:10:06 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 15:51:24 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define EXP_ERR ": not a valid identifier\n"
 
 //helpers function
-int		print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
+void	print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);

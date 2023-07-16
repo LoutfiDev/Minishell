@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 16:21:30 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 15:52:49 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	exec_cd(char **args, t_list *env)
 	{
 		if (!get_path("HOME", env))
 		{
-			ft_exit(print_error("cd: ", NULL, "HOME", ": not set\n", 1));
+			print_error("cd: ", NULL, "HOME", ": not set\n", 1);
 			return ;
 		}
 		chdir(get_path("HOME", env));
@@ -84,7 +84,7 @@ void	exec_cd(char **args, t_list *env)
 	{
 		if (!get_path("OLDPWD", env))
 		{
-			ft_exit(print_error("cd: ", NULL, "OLDPWD", ": not set\n", 1));
+			print_error("cd: ", NULL, "OLDPWD", ": not set\n", 1);
 			return ;
 		}
 		chdir(get_path("OLDPWD", env));
@@ -95,7 +95,7 @@ void	exec_cd(char **args, t_list *env)
 		directory = opendir(args[0]);
 		if (!directory)
 		{
-			ft_exit(print_error("cd: ", NULL, args[0], ": Not a directory\n", 1));
+			print_error("cd: ", NULL, args[0], ": Not a directory\n", 1);
 			return ;
 		}
 		chdir(args[0]);

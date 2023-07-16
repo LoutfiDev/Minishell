@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 15:09:37 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 12:06:54 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	expanding(t_list **head, t_list *_env)
 	t_list		*node;
 	t_list		*expanded_node;
 	char		*var;
-	int			index;
 
 	expanded_node = NULL;
 	node = *head;
@@ -51,8 +50,7 @@ void	expanding(t_list **head, t_list *_env)
 				g_exit_status = 1;
 			}
 		}
-		else
-			node = node -> next;
+		node = node -> next;
 		free(var);
 	}
 }

@@ -60,7 +60,7 @@ int	main(int ac, char **av, char **env)
 	{
 		line = NULL;
 		buffer = main_parse(_env, &line);
-		sh(buffer);
+		// sh(buffer);
 		if (buffer)
 		{
 			add_history(line);

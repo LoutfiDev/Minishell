@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 12:52:40 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 15:52:19 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@ char	*join_path(char *cmd, t_list *_env)
 		if (status != -1)
 		{
 			ft_free_array(array, i);
+			free(cmd);
 			return (path);
 		}
 		free(path);
 	}
+	free(cmd);
 	ft_free_array(array, i);
 	return (NULL);
 }
@@ -66,26 +68,7 @@ char	**create_array(char *cmd, char *opt)
 	array[i] = NULL;
 	return (array);
 }
-int	is_builtin(t_exec *node, t_list *_env)
-{
-	if (!ft_strncmp(node->cmd, "cd", ft_strlen(node->cmd)))
-		exec_cd(ft_split(node->opt, ' '), _env);
-	else if (!ft_strncmp(node->cmd, "echo", ft_strlen(node->cmd)))
-		exec_echo(ft_split(node->opt, ' '));
-	else if (!ft_strncmp(node->cmd, "env", ft_strlen(node->cmd)))
-		exec_env(_env, 0);
-	else if (!ft_strncmp(node->cmd, "exit", ft_strlen(node->cmd)))
-		exec_exit(ft_split(node->opt, ' '));
-	else if (!ft_strncmp(node->cmd, "export", ft_strlen(node->cmd)))
-		exec_export(ft_split(node->opt, ' '), &_env);
-	else if (!ft_strncmp(node->cmd, "pwd", ft_strlen(node->cmd)))
-		exec_pwd();
-	else if (!ft_strncmp(node->cmd, "unset", ft_strlen(node->cmd)))
-		exec_unset(ft_split(node->opt, ' '), &_env);
-	else
-		return (0);
-	return (1);
-}
+
 void	expand_array(char **array)
 {
 	int	i;
@@ -97,10 +80,53 @@ void	expand_array(char **array)
 		{
 			free(array[i]);
 			array[i] = ft_itoa(g_exit_status);
-		} 
+		}
 		i++;
 	}
+}
+
+int	is_builtin(t_exec *node, t_list *_env)
+{
+	char	**array;
 	
+	array = create_array(node->cmd, node->opt);
+	expand_array(array);	
+	if (!ft_strncmp(array[0], "cd", ft_strlen(array[0])))
+		exec_cd(array + 1, _env);
+	else if (!ft_strncmp(array[0], "echo", ft_strlen(array[0])))
+		exec_echo(array + 1);
+	else if (!ft_strncmp(array[0], "env", ft_strlen(array[0])))
+		exec_env(_env, 0);
+	else if (!ft_strncmp(array[0], "exit", ft_strlen(array[0])))
+		exec_exit(array + 1);
+	else if (!ft_strncmp(array[0], "export", ft_strlen(array[0])))
+		exec_export(array + 1, &_env);
+	else if (!ft_strncmp(array[0], "pwd", ft_strlen(array[0])))
+		exec_pwd();
+	else if (!ft_strncmp(array[0], "unset", ft_strlen(array[0])))
+		exec_unset(array + 1, &_env);
+	else
+	{
+		ft_free_array(array, 0);	
+		return (0);
+	}
+	ft_free_array(array, 0);	
+	return (1);
+}
+void	dup_files(int infile, int outfile)
+{
+	if (infile != 0)
+	{
+		close(READ_END);
+		dup(infile);
+		close(infile);
+	}
+	if (outfile != 1)
+	{	
+		close(WRITE_END);
+		dup(outfile);
+		close(outfile);
+	}
 }
 
 void	_exec(t_exec *node, t_list *_env)
@@ -114,24 +140,13 @@ void	_exec(t_exec *node, t_list *_env)
 		array = create_array(node->cmd, node->opt);
 		expand_array(array);
 		if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
-			node->cmd = join_path(array[0], _env);
+			node->cmd = join_path(node->cmd, _env);
 		if (!node->cmd)
-			return (ft_exit(print_error("minishell", ": ", array[0],
-						": command not found\n", 127)));	
+			return (print_error("minishell", ": ", array[0],
+						": command not found\n", 127));	
 		if ((pid = ft_fork()) == 0)
 		{
-			if (node->infile != 0)
-			{
-				close(READ_END);
-				dup(node->infile);
-				close(node -> infile);
-			}
-			if (node->outfile != 1)
-			{	
-				close(WRITE_END);
-				dup(node->outfile);
-				close(node->outfile);
-			}
+			dup_files(node->infile, node->outfile);
 			execve(node->cmd, array, NULL);
 			exit(1);
 		}
@@ -140,6 +155,7 @@ void	_exec(t_exec *node, t_list *_env)
 			g_exit_status = WEXITSTATUS(status);
 		else
 			g_exit_status = 1;
+		ft_free_array(array, 0);
 	}
 }
 
@@ -149,14 +165,14 @@ int	ft_fork(void)
 
 	pid = fork();
 	if (pid < 0)
-		ft_exit(print_error(NULL, NULL, NULL, "fork failed\n", ERROR));
+		print_error(NULL, NULL, NULL, "fork failed\n", ERROR);
 	return (pid);
 }
 
 void	_pipe(t_pipe *node, int *p, t_list *_env)
 {
 	if (pipe(p) < 0)
-		ft_exit(print_error(NULL, NULL, NULL, "pipe failed\n", ERROR));
+		print_error(NULL, NULL, NULL, "pipe failed\n", ERROR);
 	g_exit_status = 0;
 	if (ft_fork() == 0)
 	{
