@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 13:37:04 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 07:44:20 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	open_files(t_list *lst)
 			open_file(&bf -> str, bf -> type);
 			if (prev)
 				ft_close(prev -> content);
+			prev = lst;
 		}
-		prev = lst;
 		lst = lst -> next;
 	}
 }

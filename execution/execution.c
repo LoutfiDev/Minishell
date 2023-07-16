@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 15:00:44 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 15:32:32 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
+#include <sys/wait.h>
 
 char	*join_path(char *cmd, t_list *_env)
 {
@@ -106,8 +107,10 @@ void	_exec(t_exec *node, t_list *_env)
 	if (!node->cmd)
 		ft_exit(print_error("minishell", ": ", array[0],
 				": command not found\n", 127));
-	execve(node->cmd, array, NULL);
-	ft_exit(ERROR);
+	if (fork() == 0)
+		execve(node->cmd, array, NULL);
+	wait(0);
+	//ft_exit(ERROR);
 }
 
 int	ft_fork(void)
@@ -140,6 +143,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 		close(p[READ_END]);
 		close(p[WRITE_END]);
 		execution(node->right, _env);
+		exit(0);
 	}
 	close(p[READ_END]);
 	close(p[WRITE_END]);
