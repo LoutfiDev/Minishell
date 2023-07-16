@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 07:39:59 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 07:51:50 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int ac, char **av, char **env)
 	_env = create_env(env);
 	while (1)
 	{
+		line = NULL;
 		buffer = main_parse(_env, &line);
 		sh(buffer);
 		if (buffer)
