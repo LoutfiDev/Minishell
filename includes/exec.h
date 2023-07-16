@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 14:59:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 11:10:06 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <dirent.h>
 # include "struct.h"
 # include "buffer.h"
+ #include <sys/wait.h>
 
 # define PIPE_NODE 124
 # define EXEC_NODE 126

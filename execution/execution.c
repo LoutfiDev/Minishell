@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 09:42:53 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 12:52:40 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,39 +86,61 @@ int	is_builtin(t_exec *node, t_list *_env)
 		return (0);
 	return (1);
 }
+void	expand_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		if (!ft_strncmp(array[i], "$?", ft_strlen(array[i])))
+		{
+			free(array[i]);
+			array[i] = ft_itoa(g_exit_status);
+		} 
+		i++;
+	}
+	
+}
 
 void	_exec(t_exec *node, t_list *_env)
 {
 	char	**array;
+	int		pid;
+	int		status;
 
 	if (!is_builtin(node, _env))
 	{
 		array = create_array(node->cmd, node->opt);
+		expand_array(array);
 		if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
 			node->cmd = join_path(array[0], _env);
 		if (!node->cmd)
-			ft_exit(print_error("minishell", ": ", array[0],
-						": command not found\n", 127));
-	}
-	if (ft_fork() == 0)
-	{
-		if (node->infile != 0)
+			return (ft_exit(print_error("minishell", ": ", array[0],
+						": command not found\n", 127)));	
+		if ((pid = ft_fork()) == 0)
 		{
-			close(READ_END);
-			dup(node->infile);
-			close(node -> infile);
+			if (node->infile != 0)
+			{
+				close(READ_END);
+				dup(node->infile);
+				close(node -> infile);
+			}
+			if (node->outfile != 1)
+			{	
+				close(WRITE_END);
+				dup(node->outfile);
+				close(node->outfile);
+			}
+			execve(node->cmd, array, NULL);
+			exit(1);
 		}
-		if (node->outfile != 1)
-		{	
-			close(WRITE_END);
-			dup(node->outfile);
-			close(node->outfile);
-		}
-		execve(node->cmd, array, NULL);
-		ft_exit(ERROR);	
-		exit(1);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+		else
+			g_exit_status = 1;
 	}
-	wait(0);
 }
 
 int	ft_fork(void)
@@ -133,9 +155,9 @@ int	ft_fork(void)
 
 void	_pipe(t_pipe *node, int *p, t_list *_env)
 {
-	g_exit_status = 0;
 	if (pipe(p) < 0)
 		ft_exit(print_error(NULL, NULL, NULL, "pipe failed\n", ERROR));
+	g_exit_status = 0;
 	if (ft_fork() == 0)
 	{
 		close(WRITE_END);

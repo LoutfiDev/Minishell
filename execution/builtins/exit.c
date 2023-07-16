@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 21:21:18 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 10:34:15 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ int	is_digit(char *arg)
 
 void	exec_exit(char **args)
 {
-	int	exit_code;
-
-	exit_code = 0;
+	int exit_code;
+	
 	if (!args || !args[0])
 	{
 		ft_putstr_fd("exit\n", 1);
