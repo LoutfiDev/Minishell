@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 08:05:18 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 09:28:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,6 @@ void	_exec(t_exec *node, t_list *_env)
 {
 	char	**array;
 
-	if (node->infile)
-	{
-		close(READ_END);
-		dup(node->infile);
-		close(node -> infile);
-	}
-	if (node->outfile)
-	{	
-		close(WRITE_END);
-		dup(node->outfile);
-		close(node->outfile);
-	}
 	if (!is_builtin(node, _env))
 	{
 		array = create_array(node->cmd, node->opt);
@@ -110,12 +98,27 @@ void	_exec(t_exec *node, t_list *_env)
 			node->cmd = join_path(array[0], _env);
 		if (!node->cmd)
 			ft_exit(print_error("minishell", ": ", array[0],
-					": command not found\n", 127));
-		if (ft_fork() == 0)
-			execve(node->cmd, array, NULL);
-		wait(0);
-		ft_exit(ERROR);	
+						": command not found\n", 127));
 	}
+	if (ft_fork() == 0)
+	{
+		if (node->infile)
+		{
+			close(READ_END);
+			dup(node->infile);
+			close(node -> infile);
+		}
+		if (node->outfile)
+		{	
+			close(WRITE_END);
+			dup(node->outfile);
+			close(node->outfile);
+		}
+			execve(node->cmd, array, NULL);
+			ft_exit(ERROR);	
+			exit(1);
+	}
+	wait(0);
 }
 
 int	ft_fork(void)
@@ -140,6 +143,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 		close(p[READ_END]);
 		close(p[WRITE_END]);
 		execution(node->left, _env);
+		//exit(0);
 	}
 	if (ft_fork() == 0)
 	{

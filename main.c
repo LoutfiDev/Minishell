@@ -33,6 +33,19 @@ void	sh(t_list *lst)
 	}
 }
 
+void	close_files(t_list *lst)
+{
+	t_buffer	*bf;
+
+	while (lst)
+	{
+		bf = lst -> content;
+		if (bf -> type > 2 && bf -> type < 7)
+			close(ft_atoi(bf -> str));
+		lst = lst -> next;
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_mask	*tree;
@@ -45,19 +58,20 @@ int	main(int ac, char **av, char **env)
 	_env = create_env(env);
 	while (1)
 	{
-		line = NULL;
+		//line = NULL;
 		buffer = main_parse(_env, &line);
-		sh(buffer);
+		// sh(buffer);
 		if (buffer)
 		{
 			add_history(line);
-			free(line);
+			//free(line);
 			tree = build_tree(buffer);
 			execution(tree, _env);
 			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 			// printf("ES = %d\n",g_exit_status);
 		}
+		//exit(0);
 	}
 	ft_lstclear(&_env, clear_env);
 	return (0);

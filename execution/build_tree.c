@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 11:44:36 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 09:27:04 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_exec	*init_exec(void)
 	exec_node = malloc(sizeof(t_exec));
 	ft_memset(exec_node, 0, sizeof(t_exec));
 	exec_node->mask = EXEC_NODE;
+	exec_node->outfile = 1;
 	return (exec_node);
 }
 

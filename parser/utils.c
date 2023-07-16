@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 07:44:20 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 09:15:04 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ void	open_files(t_list *lst)
 		if (bf -> type > 2 && bf -> type < 6)
 		{
 			open_file(&bf -> str, bf -> type);
-			if (prev)
-				ft_close(prev -> content);
-			prev = lst;
+		//	if (prev)
+		//		ft_close(prev -> content);
+		//	prev = lst;
 		}
 		lst = lst -> next;
 	}

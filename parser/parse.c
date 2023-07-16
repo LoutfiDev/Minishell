@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 15:04:40 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 09:15:00 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,15 @@
 //3 -> get next arg type (find end delim and copy)
 //4 -> repeat 1 tell '\0'
 
-void	remove_normal_quote(t_list *lst)
+void	remove_normal_quote(t_list *lst, t_quote *quote)
 {
 	t_buffer	*bf;
 
 	while (lst)
 	{
 		bf = (t_buffer *)lst -> content;
-		if (!has_dollar(bf -> str))
+		if (!has_dollar(bf -> str) && (quote->num_dquote
+				|| quote -> num_squote))
 			remove_quote(&bf -> str);
 		lst = lst -> next;
 	}
@@ -64,21 +65,22 @@ t_list	*main_parse(t_list *env, char **line)
 {
 	t_list	*buffer;
 	t_quote	*quotes;
+	char	*lin;
 
-	line[0] = ft_strtrim(readline("MINISHELL : "), " \t");
-	if (!ft_strlen (line[0]))
+	lin = ft_strtrim(readline("MINISHELL : "), " \t");
+	if (!ft_strlen (lin))
 		return (NULL);
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
 	quotes -> num_squote = 0;
 	buffer = NULL;
-	parsing(line[0], 0, quotes, &buffer);
+	parsing(lin, 0, quotes, &buffer);
 	expanding(&buffer, env);
 	check_pipe_node(buffer);
 	open_heredoc(buffer, env);
 	open_files(buffer);
 	check_num_quotes(quotes);
-	remove_normal_quote(buffer);
+	remove_normal_quote(buffer, quotes);
 	free(quotes);
 	return (buffer);
 }
