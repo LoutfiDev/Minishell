@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 15:37:46 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 07:39:07 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,16 @@ int	main(int ac, char **av, char **env)
 	_env = create_env(env);
 	while (1)
 	{
+		line = NULL;
 		buffer = main_parse(_env, &line);
 		//sh(buffer);
 		if (buffer)
 		{
 			add_history(line);
 			free(line);
-			tree = build_tree(buffer);
-			execution(tree, _env);
-			free_tree(tree);
+			// tree = build_tree(buffer);
+			// execution(tree, _env);
+			// free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 			//printf("ES = %d\n",g_exit_status);
 		}

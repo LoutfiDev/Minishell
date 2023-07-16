@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 08:20:31 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/15 16:03:17 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ char	*get_var_value(t_list *env, char *key)
 	t_env	*v_env;
 
 	if (!ft_strncmp(key, "$?", ft_strlen(key) + 2))
-	{
-		free(key);
-		return (ft_itoa(g_exit_status));
-	}
+		return (key);
 	tmp = ft_strdup(key + 1);
 	len = ft_strlen(tmp);
 	free(key);
