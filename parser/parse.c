@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 09:15:00 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 10:09:29 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,15 @@ t_list	*main_parse(t_list *env, char **line)
 {
 	t_list	*buffer;
 	t_quote	*quotes;
-	char	*lin;
 
-	lin = ft_strtrim(readline("MINISHELL : "), " \t");
-	if (!ft_strlen (lin))
+	line[0] = ft_strtrim(readline("MINISHELL : "), " \t");
+	if (!ft_strlen (line[0]))
 		return (NULL);
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
 	quotes -> num_squote = 0;
 	buffer = NULL;
-	parsing(lin, 0, quotes, &buffer);
+	parsing(line[0], 0, quotes, &buffer);
 	expanding(&buffer, env);
 	check_pipe_node(buffer);
 	open_heredoc(buffer, env);
