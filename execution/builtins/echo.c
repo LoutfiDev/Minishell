@@ -6,13 +6,13 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:10:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 14:51:36 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 19:21:32 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-int	is_valid_option(char **args, int *index)
+int	is_valid_option(char **args, int *index, int *nbr)
 {
 	int	i;
 	int	option;
@@ -26,33 +26,32 @@ int	is_valid_option(char **args, int *index)
 				return (option);
 		option = 1;
 		*index += 1;
+		*nbr += 1;
 	}
-	return (0);
+	return (option);
 }
 
 void	exec_echo(char **args)
 {
 	int	i;
-	int	j;
 	int	option;
+	int	nbr;
 
+	g_exit_status = 0;
 	if (!args)
 	{
 		write(1, "\n", 1);
 		return ;
 	}
 	i = 0;
-	option = is_valid_option(args, &i);
+	nbr = 0;
+	option = is_valid_option(args, &i , &nbr);
 	while (args[i])
 	{
-		j = 0;
-		if ((option && i > 1) || (!option && i > 0))
+		if ((option && i > nbr) || (!option && i > 0))
 			write(1, " ", 1);
-		while (args[i][j])
-			write(1, &args[i][j++], 1);
-		i++;
+		ft_putstr_fd(args[i++], 1);
 	}
 	if (!option)
 		write(1, "\n", 1);
-	ft_exit(0);
 }
