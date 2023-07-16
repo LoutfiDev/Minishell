@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 15:07:33 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 12:06:34 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ t_list	*insert_node(t_list **head, t_list *node, t_list *n_node)
 			tmp -> next = n_node;
 			last -> next = node -> next;
 			ft_lstdelone(node, clear_buffer);
-			return (*head);
+			return (n_node);
 		}
 		tmp = tmp -> next;
 	}
-	return (*head);
+	return (n_node);
 }

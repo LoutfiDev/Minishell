@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 10:11:51 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 11:43:42 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	open_files(t_list *lst)
 {
 	t_buffer	*bf;
 	t_list		*prev;
+	char		*tmp;
 
 	prev = NULL;
 	while (lst)
@@ -80,6 +81,12 @@ void	open_files(t_list *lst)
 		bf = (t_buffer *)lst-> content;
 		if (bf -> type > 2 && bf -> type < 6)
 		{
+			if (!ft_strncmp(bf -> str, "$?", 2))
+			{
+				tmp = ft_itoa(g_exit_status);
+				free(bf->str);
+				bf-> str = tmp;
+			}
 			open_file(&bf -> str, bf -> type);
 		if (prev)
 			ft_close(prev -> content);

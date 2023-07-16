@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 10:09:29 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 12:11:53 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_list	*main_parse(t_list *env, char **line)
 	open_heredoc(buffer, env);
 	open_files(buffer);
 	check_num_quotes(quotes);
-	remove_normal_quote(buffer, quotes);
+	handle_quote(buffer);
 	free(quotes);
 	return (buffer);
 }
