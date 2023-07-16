@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 21:41:19 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 08:05:18 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	_exec(t_exec *node, t_list *_env)
 		dup(node->outfile);
 		close(node->outfile);
 	}
-	// if (!is_builtin(node, _env))
-	// {
+	if (!is_builtin(node, _env))
+	{
 		array = create_array(node->cmd, node->opt);
 		if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
 			node->cmd = join_path(array[0], _env);
@@ -115,7 +115,7 @@ void	_exec(t_exec *node, t_list *_env)
 			execve(node->cmd, array, NULL);
 		wait(0);
 		ft_exit(ERROR);	
-	// }
+	}
 }
 
 int	ft_fork(void)

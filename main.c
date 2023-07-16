@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/22 13:40:55 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 07:51:50 by yloutfi          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include <readline/history.h>
 #include <readline/readline.h>
@@ -63,11 +52,11 @@ int	main(int ac, char **av, char **env)
 		{
 			add_history(line);
 			free(line);
-			// tree = build_tree(buffer);
-			// execution(tree, _env);
-			// free_tree(tree);
+			tree = build_tree(buffer);
+			execution(tree, _env);
+			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
-			printf("ES = %d\n",g_exit_status);
+			// printf("ES = %d\n",g_exit_status);
 		}
 	}
 	ft_lstclear(&_env, clear_env);
