@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 15:05:19 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/15 20:41:26 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	_joined(t_list **env, char *key, char *value, int is_join)
 			free(key);
 			if (is_join)
 				env_node->value = ft_strjoin(env_node->value, value);
-			else
+			else if ((!env_node->value && value) || (env_node->value && value))
 			{
 				free(env_node->value);
 				env_node->value = value;
@@ -95,8 +95,13 @@ void	exec_export(char **args, t_list **env)
 	int	exit_code;
 
 	i = 0;
+	exit_code = 0;
 	if (!args || !args[i])
+	{
 		exec_env(*env, 1);
+		ft_exit(exit_code);
+		return ;
+	}
 	while (args[i])
 	{
 		exit_code = is_valide(args[i]);

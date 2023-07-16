@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 15:32:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 08:05:18 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,25 @@ char	**create_array(char *cmd, char *opt)
 	array[i] = NULL;
 	return (array);
 }
-void	is_builtin(t_exec *node, t_list *_env)
+int	is_builtin(t_exec *node, t_list *_env)
 {
 	if (!ft_strncmp(node->cmd, "cd", ft_strlen(node->cmd)))
 		exec_cd(ft_split(node->opt, ' '), _env);
-	if (!ft_strncmp(node->cmd, "echo", ft_strlen(node->cmd)))
+	else if (!ft_strncmp(node->cmd, "echo", ft_strlen(node->cmd)))
 		exec_echo(ft_split(node->opt, ' '));
-	if (!ft_strncmp(node->cmd, "env", ft_strlen(node->cmd)))
+	else if (!ft_strncmp(node->cmd, "env", ft_strlen(node->cmd)))
 		exec_env(_env, 0);
-	if (!ft_strncmp(node->cmd, "exit", ft_strlen(node->cmd)))
+	else if (!ft_strncmp(node->cmd, "exit", ft_strlen(node->cmd)))
 		exec_exit(ft_split(node->opt, ' '));
-	if (!ft_strncmp(node->cmd, "export", ft_strlen(node->cmd)))
+	else if (!ft_strncmp(node->cmd, "export", ft_strlen(node->cmd)))
 		exec_export(ft_split(node->opt, ' '), &_env);
-	if (!ft_strncmp(node->cmd, "pwd", ft_strlen(node->cmd)))
+	else if (!ft_strncmp(node->cmd, "pwd", ft_strlen(node->cmd)))
 		exec_pwd();
-	if (!ft_strncmp(node->cmd, "unset", ft_strlen(node->cmd)))
+	else if (!ft_strncmp(node->cmd, "unset", ft_strlen(node->cmd)))
 		exec_unset(ft_split(node->opt, ' '), &_env);
+	else
+		return (0);
+	return (1);
 }
 
 void	_exec(t_exec *node, t_list *_env)
@@ -100,17 +103,19 @@ void	_exec(t_exec *node, t_list *_env)
 		dup(node->outfile);
 		close(node->outfile);
 	}
-	is_builtin(node, _env);
-	array = create_array(node->cmd, node->opt);
-	if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
-		node->cmd = join_path(array[0], _env);
-	if (!node->cmd)
-		ft_exit(print_error("minishell", ": ", array[0],
-				": command not found\n", 127));
-	if (fork() == 0)
-		execve(node->cmd, array, NULL);
-	wait(0);
-	//ft_exit(ERROR);
+	if (!is_builtin(node, _env))
+	{
+		array = create_array(node->cmd, node->opt);
+		if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
+			node->cmd = join_path(array[0], _env);
+		if (!node->cmd)
+			ft_exit(print_error("minishell", ": ", array[0],
+					": command not found\n", 127));
+		if (ft_fork() == 0)
+			execve(node->cmd, array, NULL);
+		wait(0);
+		ft_exit(ERROR);	
+	}
 }
 
 int	ft_fork(void)
