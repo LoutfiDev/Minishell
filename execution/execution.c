@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 09:28:18 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/16 09:42:53 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,21 +102,21 @@ void	_exec(t_exec *node, t_list *_env)
 	}
 	if (ft_fork() == 0)
 	{
-		if (node->infile)
+		if (node->infile != 0)
 		{
 			close(READ_END);
 			dup(node->infile);
 			close(node -> infile);
 		}
-		if (node->outfile)
+		if (node->outfile != 1)
 		{	
 			close(WRITE_END);
 			dup(node->outfile);
 			close(node->outfile);
 		}
-			execve(node->cmd, array, NULL);
-			ft_exit(ERROR);	
-			exit(1);
+		execve(node->cmd, array, NULL);
+		ft_exit(ERROR);	
+		exit(1);
 	}
 	wait(0);
 }
@@ -143,7 +143,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 		close(p[READ_END]);
 		close(p[WRITE_END]);
 		execution(node->left, _env);
-		//exit(0);
+		exit(0);
 	}
 	if (ft_fork() == 0)
 	{
