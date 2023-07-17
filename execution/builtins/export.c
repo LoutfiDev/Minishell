@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 20:41:26 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:08:14 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,19 @@ int	is_valide(char *str)
 	int	i;
 
 	if (str[0] && str[0] == '=')
-		return (print_error("export: ", NULL, str, EXP_ERR, 1));
+	{
+		print_error("export: ", NULL, str, EXP_ERR, 1);
+		return (1);
+	}
 	i = 0;
 	while (str[i] && str[i] != '=' && !(str[i] == '+' && str[i + 1] == '='))
+	{
 		if (!ft_isalnum(str[i++]))
-			return (print_error("export: ", NULL, str, EXP_ERR, 1));
+		{
+			print_error("export: ", NULL, str, EXP_ERR, 1);
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -44,7 +52,7 @@ void	_joined(t_list **env, char *key, char *value, int is_join)
 	while (tmp)
 	{
 		env_node = (t_env *)tmp->content;
-		if (!ft_strncmp(env_node->key, key, ft_strlen(key)))
+		if (!ft_strncmp(env_node->key, key, 0))
 		{
 			free(key);
 			if (is_join)

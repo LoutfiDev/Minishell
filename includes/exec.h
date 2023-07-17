@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 14:59:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 09:24:11 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <dirent.h>
 # include "struct.h"
 # include "buffer.h"
+ #include <sys/wait.h>
 
 # define PIPE_NODE 124
 # define EXEC_NODE 126
@@ -34,7 +35,7 @@
 # define EXP_ERR ": not a valid identifier\n"
 
 //helpers function
-int		print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
+void	print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
@@ -60,5 +61,8 @@ void	ft_free_array(char **array, int index);
 void	clear_env(void *content);
 void	clear_buffer(void *content);
 void	free_tree(t_mask *root);
+
+//signals handling
+void    sig_handler(int signum);
 
 #endif

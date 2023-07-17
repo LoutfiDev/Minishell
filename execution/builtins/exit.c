@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 21:21:18 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/16 15:55:40 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,23 @@ int	is_digit(char *arg)
 }
 
 void	exec_exit(char **args)
-{
-	int	exit_code;
-
-	exit_code = 0;
+{	
 	if (!args || !args[0])
 	{
 		ft_putstr_fd("exit\n", 1);
+		g_exit_status = 0;
 		exit(0);
 	}
 	else if (is_digit(args[0]))
-		exit_code = print_error("exit\nexit: ", NULL, args[0],
+		print_error("exit\nexit: ", NULL, args[0],
 				": numeric argument required\n", 255);
 	else if (nbr_args(args) > 1)
-		exit_code = print_error("exit\nexit: ", NULL, NULL,
+		print_error("exit\nexit: ", NULL, NULL,
 				"too many arguments\n", 1);
 	else
 	{
-		exit_code = ft_atoi(args[0]) % 256;
+		g_exit_status = ft_atoi(args[0]) % 256;
 		ft_putstr_fd("exit\n", 1);
 	}
-	ft_exit(exit_code);
-	exit(exit_code);
+	exit(g_exit_status);
 }
