@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 12:46:38 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:49:44 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_exec
 {
 	int		mask;
 	char	*cmd;
-	char	*opt;
+	char	**opt;
 	int		infile;	
 	int		outfile;	
 }	t_exec;

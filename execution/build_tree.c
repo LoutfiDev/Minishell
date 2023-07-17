@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 09:27:04 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/17 13:33:09 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,40 @@ t_mask	*build_pipe(t_mask *left, t_mask *right)
 	pipe_node->right = right;
 	return ((t_mask *)pipe_node);
 }
+int	nbr_options(t_list *_buffer)
+{
+	t_buffer	*buff_node;
+	int			nbr;
+
+	nbr = 0;
+	while (_buffer)
+	{
+		buff_node = (t_buffer *)_buffer->content;
+		if (buff_node->type == 2)
+			nbr++;
+		_buffer = _buffer->next;
+	}
+	return (nbr);
+}
+
+char	**fill_options(t_list *_buffer)
+{
+	char		**options;
+	t_buffer	*buff_node;
+	int			i;
+
+	options = malloc((nbr_options(_buffer) + 1) * sizeof(char *));
+	i = 0;
+	while (_buffer)
+	{
+		buff_node = (t_buffer *)_buffer->content;
+		if (buff_node->type == 2)
+			options[i++] = ft_strdup(buff_node->str);
+		_buffer = _buffer->next;
+	}
+	options[i] = NULL;
+	return (options);
+}
 
 t_mask	*build_exec(t_list *_buffer)
 {
@@ -48,8 +82,6 @@ t_mask	*build_exec(t_list *_buffer)
 			break ;
 		else if (buff_node->type == 1)
 			exec_node->cmd = ft_strdup(buff_node->str);
-		else if (buff_node->type == 2)
-			exec_node->opt = ft_argsjoin(exec_node->opt, buff_node->str);
 		else if (buff_node->type == 3)
 			exec_node->infile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 4)
@@ -58,6 +90,7 @@ t_mask	*build_exec(t_list *_buffer)
 			exec_node->outfile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 6)
 			exec_node->infile = ft_atoi(buff_node->str);
+		exec_node->opt = fill_options(_buffer);
 		_buffer = _buffer->next;
 	}
 	return ((t_mask *)exec_node);
