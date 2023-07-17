@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 10:06:18 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 12:30:59 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	expand_array(char **array)
 	int	i;
 
 	i = 0;
-	while (array[i])
+	while (array && array[i])
 	{
 		if (!ft_strncmp(array[i], "$?", 0))
 		{
@@ -137,15 +137,15 @@ void	_exec(t_exec *node, t_list *_env)
 	int		pid;
 	int		status;
 
-	if (!is_builtin(node, _env))
+	if (!is_builtin(node, _env) && node->cmd)
 	{
 		array = create_array(node->cmd, node->opt);
 		expand_array(array);
-		if (array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
+		if (array[0] && array[0][0] != '/' && ft_strncmp(array[0], "./", 2))
 			node->cmd = join_path(node->cmd, _env);
 		if (!node->cmd)
 			return (print_error("minishell", ": ", array[0],
-						": command not found\n", 127));	
+						": command not found\n", 127));
 		if ((pid = ft_fork()) == 0)
 		{
 			dup_files(node->infile, node->outfile);

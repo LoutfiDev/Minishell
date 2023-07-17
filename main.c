@@ -61,6 +61,10 @@ int	main(int ac, char **av, char **env)
 	{
 		line = NULL;
 		buffer = main_parse(_env, &line);
+		//if git_sig(crt + \)
+			// signal(SIGINT,SIG_IGN);
+		//if read(EOF)
+			
 		sh(buffer);
 		if (buffer)
 		{
