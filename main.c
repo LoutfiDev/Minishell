@@ -1,6 +1,7 @@
 
 #include <readline/history.h>
 #include <readline/readline.h>
+#include <signal.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -46,6 +47,12 @@ void	close_files(t_list *lst)
 	}
 }
 
+void	print_hello(int action)
+{
+	printf(" <--> ");
+	//printf("CTR-C\n");
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_mask	*tree;
@@ -56,19 +63,19 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	_env = create_env(env);
-	// signal(SIGINT,sig_handler);
+	//signal(SIGINT,print_hello);
 	while (1)
 	{
 		line = NULL;
 		buffer = main_parse(_env, &line);
-		sh(buffer);
+		// sh(buffer);
 		if (buffer)
 		{
 			add_history(line);
 			free(line);
-			tree = build_tree(buffer);
-			execution(tree, _env);
-			free_tree(tree);
+			// tree = build_tree(buffer);
+			// execution(tree, _env);
+			// free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 		// signal(SIGINT,SIG_DFL);

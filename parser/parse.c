@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 09:41:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/17 11:16:27 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_list	*main_parse(t_list *env, char **line)
 	handle_quote(buffer);
 	free(quotes);
 	return (re_arrange_buffer(buffer));
+	return (buffer);
 }
 
 void	create_pipe(char *str, int type, t_quote *quote, t_list **lst)

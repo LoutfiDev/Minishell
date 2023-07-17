@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 12:35:39 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 22:04:34 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 13:43:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+#include <signal.h>
 
 int	has_dollar(char *str)
 {
@@ -43,6 +44,13 @@ int	is_herdoc_expandable(char *hd_lim)
 		i++;
 	}
 	return (1);
+}
+
+void	here_doc_signal(int signal)
+{
+	printf("\n");
+	g_exit_status = 1;
+	exit(1);
 }
 
 void	open_heredoc(t_list *head, t_list *_env)
