@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 12:06:54 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/17 09:57:53 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,12 @@ void	expanding(t_list **head, t_list *_env)
 		{
 			expanded_node = expand(tmp, _env);
 			node = insert_node(head, node, expanded_node);
-			if (check_redirection(expanded_node, var))
-			{
-				ft_lstclear(head, clear_buffer);
+			if (check_redirection(expanded_node, var))	 
 				g_exit_status = 1;
-			}
+			else
+				free(var);
 		}
 		node = node -> next;
-		free(var);
 	}
 }
 

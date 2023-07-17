@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 11:43:42 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/17 09:36:13 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	open_file(char  **file, int type)
 		if (access(file[0], F_OK) != -1)
 			fd = open(file[0], O_WRONLY | O_TRUNC);
 		else
-			fd = open(file[0], O_CREAT, 0644);
+			fd = open(file[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	}
 	else if (type == 5)
 	{
 		if (access(file[0], F_OK) != -1)
 			fd = open(file[0], O_APPEND);
 		else
-			fd = open(file[0], O_CREAT, 0644);
+			fd = open(file[0], O_CREAT | O_APPEND, 0644);
 	}
 	if (fd == -1)
 	{
@@ -76,6 +76,8 @@ void	open_files(t_list *lst)
 	char		*tmp;
 
 	prev = NULL;
+	if (g_exit_status)
+		return ;
 	while (lst)
 	{
 		bf = (t_buffer *)lst-> content;
@@ -88,10 +90,43 @@ void	open_files(t_list *lst)
 				bf-> str = tmp;
 			}
 			open_file(&bf -> str, bf -> type);
-		if (prev)
-			ft_close(prev -> content);
-		prev = lst;
+			if (prev)
+				ft_close(prev -> content);
+			prev = lst;
 		}
 		lst = lst -> next;
 	}
 }
+
+t_list	*re_arrange_buffer(t_list *lst)
+{
+	t_buffer	*bf;
+	t_list		*head;
+	t_list		*tmp;
+	t_list		*old;
+	int			old_type;
+
+	old_type = 0;
+	head = NULL;
+	while (lst)
+	{
+		bf = (t_buffer *)lst -> content;
+		if (ft_strlen(bf -> str))
+		{
+			if (old_type)
+				bf -> type = old_type;
+			tmp = ft_lstnew(new_buffer(bf -> str, bf -> type));
+			ft_lstadd_back(&head, tmp);
+			old_type = 0;
+		}
+		else if (bf -> type == 1)
+			old_type = 1;
+		old = lst;
+		lst = lst -> next;
+		ft_lstdelone(old, clear_buffer);
+	}
+	if (lst)
+		ft_lstclear(&lst, clear_buffer);
+	return (head);
+}
+

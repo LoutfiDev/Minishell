@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 12:11:53 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/17 09:41:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	check_pipe_node(t_list *lst)
 	t_buffer	*bf_start;
 	t_buffer	*bf_last;
 
+	if (!lst)
+		return ;
 	bf_start = lst -> content;
 	bf_last = ft_lstlast(lst)-> content;
 	if (bf_start -> type == 7 || bf_last ->type == 7)
@@ -81,7 +83,7 @@ t_list	*main_parse(t_list *env, char **line)
 	check_num_quotes(quotes);
 	handle_quote(buffer);
 	free(quotes);
-	return (buffer);
+	return (re_arrange_buffer(buffer));
 }
 
 void	create_pipe(char *str, int type, t_quote *quote, t_list **lst)
