@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 15:52:49 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:07:58 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	set_oldpwd(t_list **env)
 	while (tmp)
 	{
 		env_node = (t_env *)tmp->content;
-		if (!ft_strncmp(env_node->key, "OLDPWD", ft_strlen(env_node->key)))
+		if (!ft_strncmp(env_node->key, "OLDPWD", 0))
 		{
 			free(env_node->value);
 			env_node->value = current_dir;
@@ -53,7 +53,7 @@ int	set_pwd(t_list **env)
 	while (tmp)
 	{
 		env_node = (t_env *)tmp->content;
-		if (!ft_strncmp(env_node->key, "PWD", ft_strlen(env_node->key)))
+		if (!ft_strncmp(env_node->key, "PWD", 0))
 		{
 			free(env_node->value);
 			env_node->value = current_dir;
@@ -71,7 +71,7 @@ void	exec_cd(char **args, t_list *env)
 	DIR		*directory;
 
 	set_oldpwd(&env);
-	if (!ft_strncmp(args[0], "~", ft_strlen(args[0])))
+	if (!ft_strncmp(args[0], "~", 0))
 	{
 		if (!get_path("HOME", env))
 		{
@@ -80,7 +80,7 @@ void	exec_cd(char **args, t_list *env)
 		}
 		chdir(get_path("HOME", env));
 	}
-	else if (!ft_strncmp(args[0], "-", ft_strlen(args[0])))
+	else if (!ft_strncmp(args[0], "-", 0))
 	{
 		if (!get_path("OLDPWD", env))
 		{

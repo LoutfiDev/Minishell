@@ -56,11 +56,12 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	_env = create_env(env);
+	// signal(SIGINT,sig_handler);
 	while (1)
 	{
 		line = NULL;
 		buffer = main_parse(_env, &line);
-		// sh(buffer);
+		sh(buffer);
 		if (buffer)
 		{
 			add_history(line);
@@ -70,6 +71,7 @@ int	main(int ac, char **av, char **env)
 			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
+		// signal(SIGINT,SIG_DFL);
 		// printf("ES = %d\n", g_exit_status);
 		//exit(0);
 	}

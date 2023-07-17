@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 15:51:24 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 09:24:11 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ void	ft_free_array(char **array, int index);
 void	clear_env(void *content);
 void	clear_buffer(void *content);
 void	free_tree(t_mask *root);
+
+//signals handling
+void    sig_handler(int signum);
 
 #endif

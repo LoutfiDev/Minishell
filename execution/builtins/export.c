@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 15:58:09 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:08:14 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	_joined(t_list **env, char *key, char *value, int is_join)
 	while (tmp)
 	{
 		env_node = (t_env *)tmp->content;
-		if (!ft_strncmp(env_node->key, key, ft_strlen(key)))
+		if (!ft_strncmp(env_node->key, key, 0))
 		{
 			free(key);
 			if (is_join)

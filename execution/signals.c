@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 08:47:55 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/14 12:11:57 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 09:23:29 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,7 @@ void    sig_handler(int signum)
         rl_redisplay();
     }
 }
+
+// signal(SIGINT,sig_handler);
+// signal(SIGINT,SIG_DFL);
+// signal(SIGINT,SIG_IGN);

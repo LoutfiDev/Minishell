@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/16 15:52:19 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/17 10:06:18 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	expand_array(char **array)
 	i = 0;
 	while (array[i])
 	{
-		if (!ft_strncmp(array[i], "$?", ft_strlen(array[i])))
+		if (!ft_strncmp(array[i], "$?", 0))
 		{
 			free(array[i]);
 			array[i] = ft_itoa(g_exit_status);
@@ -91,19 +91,19 @@ int	is_builtin(t_exec *node, t_list *_env)
 	
 	array = create_array(node->cmd, node->opt);
 	expand_array(array);	
-	if (!ft_strncmp(array[0], "cd", ft_strlen(array[0])))
+	if (!ft_strncmp(array[0], "cd", 0))
 		exec_cd(array + 1, _env);
-	else if (!ft_strncmp(array[0], "echo", ft_strlen(array[0])))
+	else if (!ft_strncmp(array[0], "echo", 0))
 		exec_echo(array + 1);
-	else if (!ft_strncmp(array[0], "env", ft_strlen(array[0])))
+	else if (!ft_strncmp(array[0], "env", 0))
 		exec_env(_env, 0);
-	else if (!ft_strncmp(array[0], "exit", ft_strlen(array[0])))
+	else if (!ft_strncmp(array[0], "exit", 0))
 		exec_exit(array + 1);
-	else if (!ft_strncmp(array[0], "export", ft_strlen(array[0])))
+	else if (!ft_strncmp(array[0], "export", 0))
 		exec_export(array + 1, &_env);
-	else if (!ft_strncmp(array[0], "pwd", ft_strlen(array[0])))
+	else if (!ft_strncmp(array[0], "pwd", 0))
 		exec_pwd();
-	else if (!ft_strncmp(array[0], "unset", ft_strlen(array[0])))
+	else if (!ft_strncmp(array[0], "unset", 0))
 		exec_unset(array + 1, &_env);
 	else
 	{
@@ -115,6 +115,8 @@ int	is_builtin(t_exec *node, t_list *_env)
 }
 void	dup_files(int infile, int outfile)
 {
+	if (infile == -1 || outfile == -1)
+		exit(1);
 	if (infile != 0)
 	{
 		close(READ_END);
