@@ -63,13 +63,14 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+
+	//exit status need a fixe its value never chages betwen calls
 	_env = create_env(env);
 	while (1)
 	{
 		signal(SIGINT,sig_handler);
 		line = NULL;
 		buffer = main_parse(_env, &line);
-		signal(SIGINT,SIG_IGN);
 		if (buffer)
 		{
 			//add_history(line);

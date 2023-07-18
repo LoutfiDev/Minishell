@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 11:51:18 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 20:23:52 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	*read_here_doc(char *lim, int expand, t_list *env)
 	pipe(pip);
 	if (fork() == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		len = ft_strlen(lim);
 		if ((in = readline("> ")) == NULL)
 			exit(0);

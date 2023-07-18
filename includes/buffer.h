@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 12:43:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 20:10:44 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			ft_is_write(char c, int *type);
 
 //general utils function
 void		ft_exit(int exit_state);
+void		eof_exit();
 void		clear_buffer(void *bf);
 void		fix_types(t_list *lst);
 

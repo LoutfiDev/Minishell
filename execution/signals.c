@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 08:47:55 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 18:53:46 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 20:11:25 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void    sig_handler(int signum)
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
+		g_exit_status = 1;
     }
 }
 

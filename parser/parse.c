@@ -6,15 +6,12 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:09:31 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 20:20:41 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
-#include <readline/history.h>
-#include <unistd.h>
-
-//int	add_history(const char *str);
+#include "../includes/exec.h"
 
 // 1 - parse
 // 2 - send
@@ -72,7 +69,8 @@ t_list	*main_parse(t_list *env, char **line)
 
 	tmp = readline("MINISHELL : ");
 	if (!tmp)
-		exit(g_exit_status);
+		eof_exit();
+	signal(SIGINT,SIG_IGN);
 	line[0] = ft_strtrim(tmp, " \t");
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
