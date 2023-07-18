@@ -56,29 +56,23 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	_env = create_env(env);
-	// signal(SIGINT,sig_handler);
 	while (1)
 	{
+		// signal(SIGINT,sig_handler);
 		line = NULL;
 		buffer = main_parse(_env, &line);
-		//if git_sig(crt + \)
-			// signal(SIGINT,SIG_IGN);
-		//if read(EOF)
-			
-		sh(buffer);
+		// signal(SIGINT,SIG_IGN);
 		if (buffer)
 		{
 			add_history(line);
 			free(line);
-			tree = build_tree(buffer);
-			execution(tree, _env);
+			tree = build_tree(buffer, _env);
+			execution(tree, _env, env);
 			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
-		// signal(SIGINT,SIG_DFL);
-		// printf("ES = %d\n", g_exit_status);
-		//exit(0);
 	}
 	ft_lstclear(&_env, clear_env);
 	return (0);
 }
+

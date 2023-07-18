@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 13:33:09 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:31:17 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,19 @@ int	nbr_options(t_list *_buffer)
 	return (nbr);
 }
 
-char	**fill_options(t_list *_buffer)
+char	**fill_options(t_list *_buffer, t_list *_env)
 {
 	char		**options;
 	t_buffer	*buff_node;
 	int			i;
 
-	options = malloc((nbr_options(_buffer) + 1) * sizeof(char *));
+	options = malloc((nbr_options(_buffer) + 2) * sizeof(char *));
 	i = 0;
 	while (_buffer)
 	{
 		buff_node = (t_buffer *)_buffer->content;
+		if (buff_node->type == 1)
+			options[i++] = ft_strdup(buff_node->str);
 		if (buff_node->type == 2)
 			options[i++] = ft_strdup(buff_node->str);
 		_buffer = _buffer->next;
@@ -69,19 +71,21 @@ char	**fill_options(t_list *_buffer)
 	return (options);
 }
 
-t_mask	*build_exec(t_list *_buffer)
+t_mask	*build_exec(t_list *_buffer, t_list	*_env)
 {
 	t_exec		*exec_node;
 	t_buffer	*buff_node;
+	t_list		*tmp;
 
 	exec_node = init_exec();
-	while (_buffer)
+	tmp = _buffer;
+	while (tmp)
 	{
 		buff_node = (t_buffer *)_buffer->content;
 		if (buff_node->type == 7)
 			break ;
 		else if (buff_node->type == 1)
-			exec_node->cmd = ft_strdup(buff_node->str);
+			exec_node->cmd = join_path(buff_node->str, _env);
 		else if (buff_node->type == 3)
 			exec_node->infile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 4)
@@ -90,9 +94,12 @@ t_mask	*build_exec(t_list *_buffer)
 			exec_node->outfile = ft_atoi(buff_node->str);
 		else if (buff_node->type == 6)
 			exec_node->infile = ft_atoi(buff_node->str);
-		exec_node->opt = fill_options(_buffer);
-		_buffer = _buffer->next;
+		tmp = tmp->next;
 	}
+	exec_node->opt = fill_options(_buffer, _env);
+	int i = 0;
+	while (exec_node->opt[i])
+		printf("%s\n", exec_node->opt[i++]);
 	return ((t_mask *)exec_node);
 }
 
@@ -112,7 +119,7 @@ t_list	*pipe_finder(t_list *_buffer)
 	return (NULL);
 }
 
-t_mask	*build_tree(t_list *_buffer)
+t_mask	*build_tree(t_list *_buffer, t_list *_env)
 {
 	t_list	*tmp;
 	t_mask	*mask;
@@ -120,8 +127,8 @@ t_mask	*build_tree(t_list *_buffer)
 	mask = NULL;
 	tmp = pipe_finder(_buffer);
 	if (!tmp)
-		mask = build_exec(_buffer);
+		mask = build_exec(_buffer, _env);
 	else
-		mask = build_pipe(build_exec(_buffer), build_tree(tmp));
+		mask = build_pipe(build_exec(_buffer, _env), build_tree(tmp, _env));
 	return (mask);
 }

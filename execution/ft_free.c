@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 16:32:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 10:04:03 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:39:30 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_exec(t_exec *exec_node)
 	if (exec_node->cmd)
 		free(exec_node->cmd);
 	if (exec_node->opt)
-		free(exec_node->opt);
+		ft_free_array(exec_node->opt, 0);
 	free(exec_node);
 }
 

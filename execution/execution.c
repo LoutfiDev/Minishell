@@ -6,13 +6,32 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 13:41:37 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:42:24 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
 #include <sys/wait.h>
+
+int	is_builtin(char	*cmd)
+{	
+	if (!ft_strncmp(cmd, "cd", 0))
+		return(0);
+	else if (!ft_strncmp(cmd, "echo", 0))
+		return (0);
+	else if (!ft_strncmp(cmd, "env", 0))
+		return (0);
+	else if (!ft_strncmp(cmd, "exit", 0))
+		return (0);
+	else if (!ft_strncmp(cmd, "export", 0))
+		return (0);
+	else if (!ft_strncmp(cmd, "pwd", 0))
+		return (0);
+	else if (!ft_strncmp(cmd, "unset", 0))
+		return (0);
+	return (1);
+}
 
 char	*join_path(char *cmd, t_list *_env)
 {
@@ -22,8 +41,8 @@ char	*join_path(char *cmd, t_list *_env)
 	int		i;
 
 	i = 0;
-	if (!cmd)
-		return (NULL);
+	if (!is_builtin(cmd))
+		return (cmd);
 	array = ft_split(get_path("PATH", _env), ':');
 	while (array[i])
 	{
@@ -33,12 +52,10 @@ char	*join_path(char *cmd, t_list *_env)
 		if (status != -1)
 		{
 			ft_free_array(array, i);
-			free(cmd);
 			return (path);
 		}
 		free(path);
 	}
-	// free(cmd);
 	ft_free_array(array, i);
 	return (cmd);
 }
@@ -64,26 +81,26 @@ void	expand_array(t_exec	**node)
 	}
 }
 
-int	is_builtin(t_exec *node, t_list *_env)
+int	exec_builtin(t_exec *node, t_list *_env)
 {
 	expand_array(&node);	
 	if (!ft_strncmp(node->cmd, "cd", 0))
-		exec_cd(node->opt, _env);
+		exec_cd(node->opt + 1, _env);
 	else if (!ft_strncmp(node->cmd, "echo", 0))
-		exec_echo(node->opt);
+		exec_echo(node->opt + 1);
 	else if (!ft_strncmp(node->cmd, "env", 0))
 		exec_env(_env, 0);
 	else if (!ft_strncmp(node->cmd, "exit", 0))
-		exec_exit(node->opt);
+		exec_exit(node->opt + 1);
 	else if (!ft_strncmp(node->cmd, "export", 0))
-		exec_export(node->opt, &_env);
+		exec_export(node->opt + 1, &_env);
 	else if (!ft_strncmp(node->cmd, "pwd", 0))
 		exec_pwd();
 	else if (!ft_strncmp(node->cmd, "unset", 0))
-		exec_unset(node->opt, &_env);
+		exec_unset(node->opt + 1, &_env);
 	else
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 void	dup_files(int infile, int outfile)
 {
@@ -103,23 +120,22 @@ void	dup_files(int infile, int outfile)
 	}
 }
 
-void	_exec(t_exec *node, t_list *_env)
+void	_exec(t_exec *node, t_list *_env, char **envp)
 {
 	int		pid;
 	int		status;
 
-	if (!is_builtin(node, _env) && node->cmd)
+	if (exec_builtin(node, _env) && node->cmd)
 	{
 		expand_array(&node);
 		if (node->cmd[0] != '/' && ft_strncmp(node->cmd, "./", 2))
-			node->cmd = join_path(node->cmd, _env);
-		if (node->cmd[0] != '/')
 			return (print_error("minishell", ": ", node->cmd,
 						": command not found\n", 127));
 		if ((pid = ft_fork()) == 0)
 		{
+			// signal(SIGINT, SIG_DFL);
 			dup_files(node->infile, node->outfile);
-			execve(node->cmd, node->opt, NULL);
+			execve(node->cmd, node->opt, envp);
 			exit(1);
 		}
 		waitpid(pid, &status, 0);
@@ -140,7 +156,7 @@ int	ft_fork(void)
 	return (pid);
 }
 
-void	_pipe(t_pipe *node, int *p, t_list *_env)
+void	_pipe(t_pipe *node, int *p, t_list *_env, char **envp)
 {
 	if (pipe(p) < 0)
 		print_error(NULL, NULL, NULL, "pipe failed\n", ERROR);
@@ -151,7 +167,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 		dup(p[WRITE_END]);
 		close(p[READ_END]);
 		close(p[WRITE_END]);
-		execution(node->left, _env);
+		execution(node->left, _env, envp);
 		exit(0);
 	}
 	if (ft_fork() == 0)
@@ -160,7 +176,7 @@ void	_pipe(t_pipe *node, int *p, t_list *_env)
 		dup(p[READ_END]);
 		close(p[READ_END]);
 		close(p[WRITE_END]);
-		execution(node->right, _env);
+		execution(node->right, _env, envp);
 		exit(0);
 	}
 	close(p[READ_END]);
@@ -179,14 +195,14 @@ int	*_init_pipe(void)
 	return (p);
 }
 
-void	execution(t_mask *root, t_list *_env)
+void	execution(t_mask *root, t_list *_env, char **envp)
 {
 	int		*p;
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
-		_pipe((t_pipe *)root, p, _env);
+		_pipe((t_pipe *)root, p, _env, envp);
 	else if (root->mask == EXEC_NODE)
-		_exec((t_exec *)root, _env);
+		_exec((t_exec *)root, _env, envp);
 	free(p);
 }
