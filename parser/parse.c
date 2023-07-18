@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/18 12:44:31 by anaji            ###   ########.fr       */
+=======
+/*   Updated: 2023/07/18 15:25:03 by yloutfi          ###   ########.fr       */
+>>>>>>> 8abec057bc11d1269d7806f8a1101a0d62657841
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +92,13 @@ t_list	*main_parse(t_list *env, char **line)
 	check_num_quotes(quotes);
 	handle_quote(buffer);
 	free(quotes);
+<<<<<<< HEAD
 	return (re_arrange_buffer(buffer, 0));
 	return (buffer);
+=======
+	return (buffer);
+	//return (re_arrange_buffer(buffer));
+>>>>>>> 8abec057bc11d1269d7806f8a1101a0d62657841
 }
 
 void	create_pipe(char *str, int type, t_quote *quote, t_list **lst)

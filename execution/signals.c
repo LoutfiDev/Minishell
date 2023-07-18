@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 08:47:55 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 12:37:21 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 18:53:46 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void    sig_handler(int signum)
 {
     if (signum == SIGINT)
     {
-        printf("\n");
+        write(1, "\n", 1);
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();

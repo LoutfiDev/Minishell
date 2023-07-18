@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 11:58:52 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 18:54:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ typedef struct s_exec
 {
 	int		mask;
 	char	*cmd;
-	char	*opt;
+	char	**opt;
 	int		infile;	
 	int		outfile;	
 }	t_exec;
-
-int	rl_replace_line(const char * str, int n);
 
 #endif

@@ -18,7 +18,7 @@ BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 OBJS = exec_test.o ./execution/build_tree.o ./execution/execution.o
 
 OBJS_HELPERS = ./execution/helpers.o ./execution/split.o ./execution/ft_argsjoin.o \
-		./execution/ft_free.o
+		./execution/ft_free.o ./execution/signals.o
 
 OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 		./execution/builtins/cd.o ./execution/builtins/export.o			\

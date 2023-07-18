@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 13:42:56 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 18:54:30 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
 char	*ft_argsjoin(char *s1, char	*s2);
+char	*join_path(char *cmd, t_list *_env);
 
 //builtins commands
 void	exec_echo(char **args);
@@ -52,18 +53,23 @@ void	exec_env(t_list *env, int export);
 void	exec_exit(char **args);
 
 //execution functions
-t_mask	*build_tree(t_list *_buffer);
+t_mask	*build_tree(t_list *_buffer, t_list *_env);
 int		ft_fork(void);
-void	execution(t_mask *mask, t_list *_env);
+void	execution(t_mask *mask, t_list *_env, char **envp);
 
 //free functions
 void	ft_free_array(char **array, int index);
 void	clear_env(void *content);
 void	clear_buffer(void *content);
 void	free_tree(t_mask *root);
+void	free_exec(t_exec *exec_node);
 
 //signals handling
 void    sig_handler(int signum);
+<<<<<<< HEAD
 void	here_doc_signal(int signum);
 
+=======
+void	rl_replace_line (const char *text, int clear_undo);
+>>>>>>> 8abec057bc11d1269d7806f8a1101a0d62657841
 #endif
