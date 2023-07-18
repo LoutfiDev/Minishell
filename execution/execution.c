@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 18:42:24 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 19:09:26 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	_exec(t_exec *node, t_list *_env, char **envp)
 						": command not found\n", 127));
 		if ((pid = ft_fork()) == 0)
 		{
-			// signal(SIGINT, SIG_DFL);
+			signal(SIGINT, SIG_DFL);
 			dup_files(node->infile, node->outfile);
 			execve(node->cmd, node->opt, envp);
 			exit(1);

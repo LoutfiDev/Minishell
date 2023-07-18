@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:01:15 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 19:12:54 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	nbr_options(t_list *_buffer)
 	return (nbr);
 }
 
-char	**fill_options(t_list *_buffer, t_list *_env)
+char	**fill_options(t_list *_buffer)
 {
 	char		**options;
 	t_buffer	*buff_node;
@@ -96,10 +96,7 @@ t_mask	*build_exec(t_list *_buffer, t_list	*_env)
 			exec_node->infile = ft_atoi(buff_node->str);
 		tmp = tmp->next;
 	}
-	exec_node->opt = fill_options(_buffer, _env);
-	int i = 0;
-	while (exec_node->opt[i])
-		printf("%s\n", exec_node->opt[i++]);
+	exec_node->opt = fill_options(_buffer);
 	return ((t_mask *)exec_node);
 }
 

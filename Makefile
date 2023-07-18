@@ -1,6 +1,5 @@
 
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-CFLAGS = #-fsanitize=address -g
+# CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 DFLAGS = -Llibft -lft -L../../rdln
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
@@ -28,6 +27,7 @@ OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 # all: libft $(NAME)
 all: libft
 	$(CC) parser/*.c $(SRCS) $(HELPERS) $(BUILTINS) main.c $(CFLAGS) $(RDLFLAGS) $(DFLAGS) -o minishell
+	@stty -echoctl
 
 libft:
 	@$(MAKE) -C libft -s
