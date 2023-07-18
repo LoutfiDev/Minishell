@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 15:25:03 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 19:00:32 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+#include <readline/history.h>
 #include <unistd.h>
 
 //int	add_history(const char *str);
@@ -67,24 +68,28 @@ t_list	*main_parse(t_list *env, char **line)
 {
 	t_list	*buffer;
 	t_quote	*quotes;
+	char	*tmp;
 
-	line[0] = ft_strtrim(readline("MINISHELL : "), " \t");
-	if (!ft_strlen (line[0]))
-		return (NULL);
+	tmp = readline("MINISHELL : ");
+	if (!tmp)
+		exit(g_exit_status);
+	line[0] = ft_strtrim(tmp, " \t");
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
 	quotes -> num_squote = 0;
 	buffer = NULL;
 	parsing(line[0], 0, quotes, &buffer);
 	expanding(&buffer, env);
+	if (buffer)
+		add_history(line[0]);
 	check_pipe_node(buffer);
 	open_heredoc(buffer, env);
 	open_files(buffer);
 	check_num_quotes(quotes);
 	handle_quote(buffer);
 	free(quotes);
+	return (re_arrange_buffer(buffer, 0));
 	return (buffer);
-	//return (re_arrange_buffer(buffer));
 }
 
 void	create_pipe(char *str, int type, t_quote *quote, t_list **lst)

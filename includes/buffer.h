@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 08:23:33 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 12:43:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list		*insert_node(t_list **head, t_list *node, t_list *n_node);
 void		parsing(char *str, int delim, t_quote *quote, t_list **head);
 t_list	    *main_parse(t_list *env, char **line);
 void		ft_skip_space(char *str, int *i);
-t_list		*re_arrange_buffer(t_list *lst);
+t_list		*re_arrange_buffer(t_list *lst, int old_type);
 
 //expanding utils
 void		expanding(t_list **lst, t_list *_env);

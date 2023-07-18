@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 08:57:09 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/11 13:34:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 09:59:14 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_strtrim(char *s1, char *set)
 	size_t	len;
 
 	if (!s1)
-		return (free(s1), NULL);
+		return (free(s1), s1);
 	if (!set)
 		return (ft_strdup(s1));
 	start_txt = start_of_text(s1, set);
