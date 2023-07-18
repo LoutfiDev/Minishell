@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 18:54:30 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 18:59:02 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ void	free_exec(t_exec *exec_node);
 
 //signals handling
 void    sig_handler(int signum);
-<<<<<<< HEAD
-void	here_doc_signal(int signum);
-
-=======
 void	rl_replace_line (const char *text, int clear_undo);
->>>>>>> 8abec057bc11d1269d7806f8a1101a0d62657841
+
 #endif
