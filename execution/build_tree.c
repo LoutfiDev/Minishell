@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 18:31:17 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:59:42 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_mask	*build_exec(t_list *_buffer, t_list	*_env)
 	tmp = _buffer;
 	while (tmp)
 	{
-		buff_node = (t_buffer *)_buffer->content;
+		buff_node = (t_buffer *)tmp->content;
 		if (buff_node->type == 7)
 			break ;
 		else if (buff_node->type == 1)
@@ -97,9 +97,6 @@ t_mask	*build_exec(t_list *_buffer, t_list	*_env)
 		tmp = tmp->next;
 	}
 	exec_node->opt = fill_options(_buffer, _env);
-	int i = 0;
-	while (exec_node->opt[i])
-		printf("%s\n", exec_node->opt[i++]);
 	return ((t_mask *)exec_node);
 }
 
