@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/17 09:36:13 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 12:46:29 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	fix_types(t_list *lst)
 			bf -> type = c;
 			if (c > 1)
 				bf -> type = 2;
+			c++;
 		}
-		c++;
 		lst = lst -> next;
 	}
 }
 
-void	open_file(char  **file, int type)
+void	open_file(char **file, int type)
 {
 	int	fd;
 
@@ -87,7 +87,7 @@ void	open_files(t_list *lst)
 			{
 				tmp = ft_itoa(g_exit_status);
 				free(bf->str);
-				bf-> str = tmp;
+				bf -> str = tmp;
 			}
 			open_file(&bf -> str, bf -> type);
 			if (prev)
@@ -98,15 +98,13 @@ void	open_files(t_list *lst)
 	}
 }
 
-t_list	*re_arrange_buffer(t_list *lst)
+t_list	*re_arrange_buffer(t_list *lst, int old_type)
 {
 	t_buffer	*bf;
 	t_list		*head;
 	t_list		*tmp;
 	t_list		*old;
-	int			old_type;
 
-	old_type = 0;
 	head = NULL;
 	while (lst)
 	{
@@ -125,8 +123,5 @@ t_list	*re_arrange_buffer(t_list *lst)
 		lst = lst -> next;
 		ft_lstdelone(old, clear_buffer);
 	}
-	if (lst)
-		ft_lstclear(&lst, clear_buffer);
-	return (head);
+	return (ft_lstclear(&lst, clear_buffer), head);
 }
-

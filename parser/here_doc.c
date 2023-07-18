@@ -6,13 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 13:36:06 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 11:51:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
-
+#include "../includes/exec.h"
 #include <readline/readline.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -90,26 +91,26 @@ int	*read_here_doc(char *lim, int expand, t_list *env)
 {
 	char	*in;
 	int		len;
-	int		pid;
 	int		*pip;
 
 	pip = malloc(2 * sizeof(int));
 	pipe(pip);
-	pid = fork();
-	if (pid == 0)
+	if (fork() == 0)
 	{
 		len = ft_strlen(lim);
-		in = readline("> ");
+		if ((in = readline("> ")) == NULL)
+			exit(0);
 		while (ft_strncmp(lim, in, ft_strlen(in) + len))
 		{
 			in = ft_strjoin(expand_in_heredoc(in, expand, env), ft_strdup("\n"));
 			write(pip[1], in, ft_strlen(in));
 			free(in);
-			in = readline("> ");
+			if ((in = readline("> ")) == NULL)
+				exit(0);
 		}
-		free(in);
 		exit(0);
+		free(in);
 	}
-	waitpid(pid, NULL, 0);
+	wait(0);
 	return (pip);
 }

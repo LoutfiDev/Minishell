@@ -1,7 +1,7 @@
 
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 CFLAGS = #-fsanitize=address -g
-DFLAGS = -Llibft -lft -L../../rdln
+DFLAGS = -Llibft -lft -L$(HOME)/Desktop/rdln
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
 

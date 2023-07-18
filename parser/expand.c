@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/17 09:57:53 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 12:37:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	expanding(t_list **head, t_list *_env)
 		{
 			expanded_node = expand(tmp, _env);
 			node = insert_node(head, node, expanded_node);
-			if (check_redirection(expanded_node, var))	 
+			if (check_redirection(expanded_node, var))
 				g_exit_status = 1;
 			else
 				free(var);
@@ -158,7 +158,7 @@ t_list	*expand(t_buffer *bf, t_list *env)
 	res = join_all(bf -> str, lst, 0);
 	lst = NULL;
 	tmp = ft_strtrim(res, " \t");
-	get_splited_parts(tmp, &lst, bf  -> type);
+	get_splited_parts(tmp, &lst, bf -> type);
 	free(tmp);
 	return (lst);
 }
