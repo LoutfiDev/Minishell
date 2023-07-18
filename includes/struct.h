@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 09:57:43 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 11:58:52 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ typedef struct s_exec
 	int		infile;	
 	int		outfile;	
 }	t_exec;
+
+int	rl_replace_line(const char * str, int n);
 
 #endif

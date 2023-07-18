@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/17 13:43:41 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 11:51:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,31 +91,26 @@ int	*read_here_doc(char *lim, int expand, t_list *env)
 {
 	char	*in;
 	int		len;
-	int		pid;
 	int		*pip;
 
 	pip = malloc(2 * sizeof(int));
 	pipe(pip);
-	pid = fork();
-	if (pid == 0)
+	if (fork() == 0)
 	{
-		signal(SIGINT, here_doc_signal);
 		len = ft_strlen(lim);
-		in = readline("> ");
-		if (!ft_strlen(in))
-			exit(1);
+		if ((in = readline("> ")) == NULL)
+			exit(0);
 		while (ft_strncmp(lim, in, ft_strlen(in) + len))
 		{
 			in = ft_strjoin(expand_in_heredoc(in, expand, env), ft_strdup("\n"));
 			write(pip[1], in, ft_strlen(in));
 			free(in);
-			in = readline("> ");
-			if (!ft_strlen(in))
-				exit(1);
+			if ((in = readline("> ")) == NULL)
+				exit(0);
 		}
-		free(in);
 		exit(0);
+		free(in);
 	}
-	waitpid(pid, NULL, 0);
+	wait(0);
 	return (pip);
 }

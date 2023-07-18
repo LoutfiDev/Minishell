@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 12:35:39 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/17 13:43:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 11:44:54 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,6 @@ int	is_herdoc_expandable(char *hd_lim)
 		i++;
 	}
 	return (1);
-}
-
-void	here_doc_signal(int signal)
-{
-	printf("\n");
-	g_exit_status = 1;
-	exit(1);
 }
 
 void	open_heredoc(t_list *head, t_list *_env)

@@ -49,7 +49,8 @@ void	close_files(t_list *lst)
 
 void	print_hello(int action)
 {
-	printf(" <--> ");
+	exit(1);
+	printf("\n");
 	//printf("CTR-C\n");
 }
 
@@ -63,7 +64,7 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	_env = create_env(env);
-	//signal(SIGINT,print_hello);
+	signal(SIGINT,sig_handler);
 	while (1)
 	{
 		line = NULL;
@@ -71,11 +72,11 @@ int	main(int ac, char **av, char **env)
 		// sh(buffer);
 		if (buffer)
 		{
-			add_history(line);
+			//add_history(line);
 			free(line);
-			// tree = build_tree(buffer);
-			// execution(tree, _env);
-			// free_tree(tree);
+			tree = build_tree(buffer);
+			execution(tree, _env);
+			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 		// signal(SIGINT,SIG_DFL);

@@ -1,14 +1,14 @@
 
 #CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 CFLAGS = #-fsanitize=address -g
-DFLAGS = -Llibft -lft
+DFLAGS = -Llibft -lft -L$(HOME)/Desktop/rdln
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
 
 SRCS = ./execution/build_tree.c ./execution/execution.c
 
 HELPERS = ./execution/helpers.c ./execution/split.c ./execution/ft_argsjoin.c \
-		./execution/ft_free.c
+		./execution/ft_free.c ./execution/signals.c
 
 BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 		./execution/builtins/cd.c ./execution/builtins/export.c		\
