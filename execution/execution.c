@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:09:26 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 19:28:17 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*join_path(char *cmd, t_list *_env)
 
 	i = 0;
 	if (!is_builtin(cmd))
-		return (cmd);
+		return (ft_strdup(cmd));
 	array = ft_split(get_path("PATH", _env), ':');
 	while (array[i])
 	{
@@ -57,7 +57,7 @@ char	*join_path(char *cmd, t_list *_env)
 		free(path);
 	}
 	ft_free_array(array, i);
-	return (cmd);
+	return (ft_strdup(cmd));
 }
 
 void	expand_array(t_exec	**node)
