@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 12:37:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 19:12:43 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ void	expanding(t_list **head, t_list *_env)
 	while (node)
 	{
 		tmp = (t_buffer *) node -> content;
-		var = ft_strdup(tmp -> str);
 		if (tmp->type != 6 && has_dollar(tmp->str))
 		{
+			var = ft_strdup(tmp -> str);
 			expanded_node = expand(tmp, _env);
 			node = insert_node(head, node, expanded_node);
 			if (check_redirection(expanded_node, var))
 				g_exit_status = 1;
-			else
-				free(var);
+			free(var);
 		}
 		node = node -> next;
 	}
