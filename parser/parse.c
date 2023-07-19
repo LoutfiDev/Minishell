@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:00:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 21:42:35 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+#include "../includes/exec.h"
 #include <readline/history.h>
 #include <unistd.h>
 
@@ -70,7 +71,9 @@ t_list	*main_parse(t_list *env, char **line)
 	t_quote	*quotes;
 	char	*tmp;
 
+	signal(SIGINT,sig_handler);
 	tmp = readline("MINISHELL : ");
+	signal(SIGINT,SIG_IGN);
 	if (!tmp)
 		exit(g_exit_status);
 	line[0] = ft_strtrim(tmp, " \t");
@@ -83,7 +86,8 @@ t_list	*main_parse(t_list *env, char **line)
 	if (buffer)
 		add_history(line[0]);
 	check_pipe_node(buffer);
-	open_heredoc(buffer, env);
+	if (open_heredoc(buffer, env))
+		return(NULL);
 	open_files(buffer);
 	check_num_quotes(quotes);
 	handle_quote(buffer);

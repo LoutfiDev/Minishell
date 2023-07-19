@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 11:51:18 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 21:20:47 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*expand_in_heredoc(char *tmp, int expandable, t_list *env)
 	return (res);
 }
 
-int	*read_here_doc(char *lim, int expand, t_list *env)
+int	*read_here_doc(char *lim, int expand, t_list *env, int *st)
 {
 	char	*in;
 	int		len;
@@ -97,6 +97,7 @@ int	*read_here_doc(char *lim, int expand, t_list *env)
 	pipe(pip);
 	if (fork() == 0)
 	{
+		signal(SIGINT, SIG_DFL);
 		len = ft_strlen(lim);
 		if ((in = readline("> ")) == NULL)
 			exit(0);
@@ -111,6 +112,8 @@ int	*read_here_doc(char *lim, int expand, t_list *env)
 		exit(0);
 		free(in);
 	}
-	wait(0);
+	wait(st);
+	if (WEXITSTATUS(*st))
+		*st = 1;
 	return (pip);
 }

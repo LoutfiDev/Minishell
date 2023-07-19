@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:28:17 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/18 21:38:12 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,15 +134,16 @@ void	_exec(t_exec *node, t_list *_env, char **envp)
 		if ((pid = ft_fork()) == 0)
 		{
 			signal(SIGINT, SIG_DFL);
+			signal(SIGQUIT, SIG_DFL);
 			dup_files(node->infile, node->outfile);
 			execve(node->cmd, node->opt, envp);
 			exit(1);
 		}
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
+			g_exit_status = 128 + WEXITSTATUS(status);
 		else
-			g_exit_status = 1;
+			g_exit_status = WEXITSTATUS(status);
 	}
 }
 

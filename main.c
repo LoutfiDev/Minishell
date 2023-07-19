@@ -64,12 +64,11 @@ int	main(int ac, char **av, char **env)
 	(void) ac;
 	(void) av;
 	_env = create_env(env);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		signal(SIGINT,sig_handler);
 		line = NULL;
 		buffer = main_parse(_env, &line);
-		signal(SIGINT,SIG_IGN);
 		if (buffer)
 		{
 			//add_history(line);

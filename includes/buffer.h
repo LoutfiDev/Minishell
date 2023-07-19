@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 12:43:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/18 21:41:55 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	open_files(t_list *lst);
 int		check_redirection(t_list *head, char *str);
 
 //HERE_DOC
-int			*read_here_doc(char *lim, int expand, t_list *env);
+int			*read_here_doc(char *lim, int expand, t_list *env, int *st);
 int			is_herdoc_expandable(char *hd_lim);
-void		open_heredoc(t_list *lst, t_list *env);
+int		open_heredoc(t_list *lst, t_list *env);
 #	endif
