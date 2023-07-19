@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:54:46 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 20:22:03 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/19 15:24:42 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ void	ft_exit(int exit_state)
 	g_exit_status = exit_state;
 }
 
-void	eof_exit()
+void	eof_exit(char *tmp)
 {
-	write(1, "exit", 4);
-	exit(g_exit_status);
+	if (!tmp)
+	{
+		write(2, "exit\n", 5);
+		exit(g_exit_status);
+	}
 }

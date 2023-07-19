@@ -1,4 +1,3 @@
-
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
@@ -15,8 +14,6 @@
 #include "includes/struct.h"
 #include "libft/libft.h"
 #include <errno.h>
-
-//int	exit_status;
 
 void	sh(t_list *lst)
 {
@@ -47,34 +44,22 @@ void	close_files(t_list *lst)
 	}
 }
 
-void	print_hello(int action)
-{
-	exit(1);
-	printf("\n");
-	//printf("CTR-C\n");
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
-	char	*line;
 
 	(void) ac;
 	(void) av;
-
-	//exit status need a fixe its value never chages betwen calls
 	_env = create_env(env);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		signal(SIGINT,sig_handler);
-		line = NULL;
-		buffer = main_parse(_env, &line);
+		signal(SIGINT, sig_handler);
+		buffer = main_parse(_env);
 		if (buffer)
 		{
-			//add_history(line);
-			free(line);
 			tree = build_tree(buffer, _env);
 			execution(tree, _env, env);
 			free_tree(tree);
@@ -84,4 +69,3 @@ int	main(int ac, char **av, char **env)
 	ft_lstclear(&_env, clear_env);
 	return (0);
 }
-

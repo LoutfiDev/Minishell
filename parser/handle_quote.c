@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 13:42:06 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/19 12:41:04 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ void	handle_quote(t_list *lst)
 	}
 }
 
-void	check_num_quotes(t_quote *quote)
+int	check_num_quotes(t_quote *quote)
 {
 	if (quote -> num_dquote % 2 || quote -> num_squote % 2)
 	{
 		write(2, "syntax error (unclosed quote)\n", 31);
 		g_exit_status = 258;
+		return (-1);
 	}
+	return (0);
 }

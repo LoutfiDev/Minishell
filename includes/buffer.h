@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 20:10:44 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/19 17:52:08 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ t_buffer	*new_buffer(char *str, int type);
 t_list		*insert_node(t_list **head, t_list *node, t_list *n_node);
 
 //parsing utils
-void		parsing(char *str, int delim, t_quote *quote, t_list **head);
-t_list	    *main_parse(t_list *env, char **line);
+t_list		*main_parse(t_list *env);
 void		ft_skip_space(char *str, int *i);
 t_list		*re_arrange_buffer(t_list *lst, int old_type);
 
@@ -45,7 +44,7 @@ int			ft_is_write(char c, int *type);
 
 //general utils function
 void		ft_exit(int exit_state);
-void		eof_exit();
+void		eof_exit(char *str);
 void		clear_buffer(void *bf);
 void		fix_types(t_list *lst);
 
@@ -53,16 +52,16 @@ t_list		*create_env(char **env);
 void		clear_env(void *content);
 
 //remove quotes
-void		check_num_quotes(t_quote *quote);
+int			check_num_quotes(t_quote *quote);
 void		handle_quote(t_list *lst);
 void		remove_quote(char **str);
 
 //open files
-void	open_files(t_list *lst);
-int		check_redirection(t_list *head, char *str);
+void		open_files(t_list *lst);
+int			check_redirection(t_list *head, char *str);
 
 //HERE_DOC
-int			*read_here_doc(char *lim, int expand, t_list *env);
+int			*read_here_doc(char *lim, int expand, t_list *env, int *st);
 int			is_herdoc_expandable(char *hd_lim);
-void		open_heredoc(t_list *lst, t_list *env);
+int			open_heredoc(t_list *lst, t_list *env);
 #	endif

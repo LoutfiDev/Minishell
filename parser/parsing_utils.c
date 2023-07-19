@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 15:02:48 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 13:36:53 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/19 14:22:20 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ void	ft_skip_space(char *str, int *i)
 		(*i)++;
 }
 
-int	get_start_delim(char *str, int i, int *type, int *delim)
+int	get_start_delim(char *str, int *i, int *type, int *delim)
 {
-	ft_skip_space(str, &i);
+	ft_skip_space(str, i);
 	*delim = 1;
-	if (ft_is_heredoc(str[i], str[i + 1], type)
-		|| ft_is_append(str[i], str[i + 1], type))
+	if (ft_is_heredoc(str[*i], str[(*i) + 1], type)
+		|| ft_is_append(str[*i], str[(*i) + 1], type))
 	{
-		i += 2;
-		ft_skip_space(str, &i);
+		*i += 2;
+		ft_skip_space(str, i);
 		return (2);
 	}
-	if (ft_is_read(str[i], type) || ft_is_write(str[i], type))
+	if (ft_is_read(str[*i], type) || ft_is_write(str[*i], type))
 	{
-		i += 1;
-		ft_skip_space(str, &i);
+		*i += 1;
+		ft_skip_space(str, i);
 		return (1);
 	}
-	ft_skip_space(str, &i);
+	ft_skip_space(str, i);
 	return (0);
 }
 
@@ -54,6 +54,7 @@ int	get_next_delim(char *str, int i, int *delim, t_quote *quotes)
 		else
 			write(2, "syntax error near unexpected token `newline'\n", 45);
 		g_exit_status = 2;
+		return (-1);
 	}
 	while (str[i])
 	{

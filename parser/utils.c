@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 19:44:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/19 13:42:48 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ void	open_files(t_list *lst)
 	char		*tmp;
 
 	prev = NULL;
-	if (g_exit_status)
-		return ;
 	while (lst)
 	{
 		bf = (t_buffer *)lst-> content;

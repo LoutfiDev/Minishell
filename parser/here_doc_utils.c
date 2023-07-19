@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 12:35:39 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 11:44:54 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/19 17:16:27 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,28 @@ int	is_herdoc_expandable(char *hd_lim)
 	return (1);
 }
 
-void	open_heredoc(t_list *head, t_list *_env)
+int	open_heredoc(t_list *head, t_list *_env)
 {
 	t_buffer	*bf;
 	int			*here_doc;
+	int			st;
 
+	st = 0;
 	while (head)
 	{
 		bf = (t_buffer *)head -> content;
 		if (bf ->type == 6)
 		{
 			here_doc = read_here_doc(bf->str, is_herdoc_expandable(bf->str),
-					_env);
+					_env, &st);
 			close(here_doc[1]);
 			free(bf->str);
 			bf->str = ft_itoa(here_doc[0]);
 			free(here_doc);
+			if (st != 0)
+				return (-1);
 		}
 		head = head -> next;
 	}
+	return (0);
 }
