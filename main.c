@@ -17,6 +17,34 @@
 #include <errno.h>
 
 //int	exit_status;
+void	printTree(t_mask *node, int space)
+{
+	t_pipe	*pipe_node;
+	t_exec	*exec_node;
+
+	if (!node)
+		return ;
+	if (node->mask == PIPE_NODE)
+	{
+		pipe_node = (t_pipe *)node;
+		space += 10;
+		printTree(pipe_node->left, space);
+		printf("\n");
+		for (int i = 10; i < space; i++)
+			printf(" ");
+		printf("%s", "P");
+		printTree(pipe_node->right, space);
+	}
+	else if (node->mask == EXEC_NODE)
+	{
+		exec_node = (t_exec *)node;
+		space += 10;
+		printf("\n");
+		for (int i = 10; i < space; i++)
+			printf(" ");
+		printf("%d", exec_node->last);
+	}
+}
 
 void	sh(t_list *lst)
 {
@@ -63,6 +91,7 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
+	g_status = 0;
 	_env = create_env(env);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -74,6 +103,7 @@ int	main(int ac, char **av, char **env)
 			//add_history(line);
 			free(line);
 			tree = build_tree(buffer, _env);
+			// printTree(tree, 0);
 			execution(tree, _env, env);
 			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);

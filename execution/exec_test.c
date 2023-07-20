@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 09:01:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 12:16:48 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/20 08:43:01 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,25 @@ int run(int ac, char **av, char **env)
 {
 	// env = NULL;
 	(void)ac;
-	(void)av;
+	// (void)av;
 	// (void)env;
 	// int fd = open("test.txt", O_WRONLY | O_TRUNC);
 	t_list	*_env = NULL;
-	t_list	*_buffer = NULL;
-	t_mask	*_tree = NULL;
+	// t_list	*_buffer = NULL;
+	// t_mask	*_tree = NULL;
 	_env = create_env(env);
-	_buffer = create_buff(_buffer, "cat", 1);
-	_buffer = create_buff(_buffer, "main.c", 3);
-	_buffer = create_buff(_buffer, "|", 7);
-	_buffer = create_buff(_buffer, "grep", 1);
-	_buffer = create_buff(_buffer, "s", 2);
-	_buffer = create_buff(_buffer, "|", 7);
-	_buffer = create_buff(_buffer, "wc", 1);
-	_buffer = create_buff(_buffer, "-c", 2);
-	_buffer = create_buff(_buffer, "outfile", 4);
-	_buffer = create_buff(_buffer, "append", 5);
-	_tree = build_tree(_buffer);
-	execution(_tree, _env);
+	// _buffer = create_buff(_buffer, "cd", 1);
+	// _buffer = create_buff(_buffer, "~", 2);
+	// _buffer = create_buff(_buffer, "|", 7);
+	// _buffer = create_buff(_buffer, "grep", 1);
+	// _buffer = create_buff(_buffer, "s", 2);
+	// _buffer = create_buff(_buffer, "|", 7);
+	// _buffer = create_buff(_buffer, "wc", 1);
+	// _buffer = create_buff(_buffer, "-c", 2);
+	// _buffer = create_buff(_buffer, "outfile", 4);
+	// _buffer = create_buff(_buffer, "append", 5);
+	// _tree = build_tree(_buffer, _env);
+	// execution(_tree, _env, env);
 	// printTree(_tree, 0);
 	// printf("\n");
 	// char *str[] = {"/bin/cat", NULL};
@@ -102,7 +102,7 @@ int run(int ac, char **av, char **env)
 	// exec_echo(NULL, 1);
 	// exec_env(_env, 1);
 	// printf("*************************************************\n");
-	// exec_cd(av+2, _env);
+	exec_cd(av+2, _env, 1);
 	// execve("/bin/cat",  str, NULL);
 	// exec_pwd(1);
 	// ac = 0;
@@ -112,9 +112,9 @@ int run(int ac, char **av, char **env)
 	// printf("*************************************************\n");
 	// exec_exit(av+2, &ac);
 	// ft_lstfree(_env);
-	free_tree(_tree);
+	// free_tree(_tree);
 	ft_lstclear(&_env, clear_env);
-	ft_lstclear(&_buffer, clear_buffer);
+	// ft_lstclear(&_buffer, clear_buffer);
 	return (0);
 }
 // int main (int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:03:00 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/20 15:18:04 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ char	*ft_argsjoin(char *s1, char	*s2);
 char	*join_path(char *cmd, t_list *_env);
 
 //builtins commands
-void	exec_echo(char **args);
-void	exec_cd(char **args, t_list *env);
-void	exec_pwd();
-void	exec_export(char **args, t_list **env);
+void	exec_echo(char **args, int fd);
+void	exec_cd(char **args, t_list *env, int fd);
+void	exec_pwd(int fd);
+void	exec_export(char **args, t_list **env, int fd);
 void	exec_unset(char **args, t_list **env);
-void	exec_env(t_list *env, int export);
+void	exec_env(t_list *env, int fd, int export);
 void	exec_exit(char **args);
 
 //execution functions
@@ -67,4 +67,5 @@ void	free_exec(t_exec *exec_node);
 //signals handling
 void    sig_handler(int signum);
 void	rl_replace_line (const char *text, int clear_undo);
+
 #endif

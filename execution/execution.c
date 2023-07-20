@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 21:38:12 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/20 21:32:54 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,43 +81,44 @@ void	expand_array(t_exec	**node)
 	}
 }
 
-int	exec_builtin(t_exec *node, t_list *_env)
+void	_close(int infile, int outfile)
 {
-	expand_array(&node);	
-	if (!ft_strncmp(node->cmd, "cd", 0))
-		exec_cd(node->opt + 1, _env);
-	else if (!ft_strncmp(node->cmd, "echo", 0))
-		exec_echo(node->opt + 1);
-	else if (!ft_strncmp(node->cmd, "env", 0))
-		exec_env(_env, 0);
-	else if (!ft_strncmp(node->cmd, "exit", 0))
-		exec_exit(node->opt + 1);
-	else if (!ft_strncmp(node->cmd, "export", 0))
-		exec_export(node->opt + 1, &_env);
-	else if (!ft_strncmp(node->cmd, "pwd", 0))
-		exec_pwd();
-	else if (!ft_strncmp(node->cmd, "unset", 0))
-		exec_unset(node->opt + 1, &_env);
-	else
-		return (1);
-	return (0);
+	close(infile);
+	close(outfile);
 }
 void	dup_files(int infile, int outfile)
 {
 	if (infile == -1 || outfile == -1)
 		exit(1);
 	if (infile != 0)
-	{
-		close(READ_END);
-		dup(infile);
-		close(infile);
-	}
+		if (dup2(infile, READ_END))
+			printf("infile dup failed\n");
 	if (outfile != 1)
-	{	
-		close(WRITE_END);
-		dup(outfile);
-		close(outfile);
-	}
+		if (dup2(outfile, WRITE_END))
+			printf("dup outfile failed\n");
+}
+
+int	exec_builtin(t_exec *node, t_list *_env)
+{
+	expand_array(&node);
+	if (!ft_strncmp(node->cmd, "cd", 0))
+		exec_cd(node->opt + 1, _env, node->outfile);
+	else if (!ft_strncmp(node->cmd, "echo", 0))
+		exec_echo(node->opt + 1, node->outfile);
+	else if (!ft_strncmp(node->cmd, "env", 0))
+		exec_env(_env, node->outfile, 0);
+	else if (!ft_strncmp(node->cmd, "exit", 0))
+		exec_exit(node->opt + 1);
+	else if (!ft_strncmp(node->cmd, "export", 0))
+		exec_export(node->opt + 1, &_env, node->outfile);
+	else if (!ft_strncmp(node->cmd, "pwd", 0))
+		exec_pwd(node->outfile);
+	else if (!ft_strncmp(node->cmd, "unset", 0))
+		exec_unset(node->opt + 1, &_env);
+	else
+		return (1);
+	_close(node->infile, node->outfile);
+	return (0);
 }
 
 void	_exec(t_exec *node, t_list *_env, char **envp)
@@ -137,11 +138,11 @@ void	_exec(t_exec *node, t_list *_env, char **envp)
 			signal(SIGQUIT, SIG_DFL);
 			dup_files(node->infile, node->outfile);
 			execve(node->cmd, node->opt, envp);
-			exit(1);
+			exit(ERROR);
 		}
 		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			g_exit_status = 128 + WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			g_exit_status = 128 + WTERMSIG(status);
 		else
 			g_exit_status = WEXITSTATUS(status);
 	}
@@ -157,33 +158,36 @@ int	ft_fork(void)
 	return (pid);
 }
 
+
 void	_pipe(t_pipe *node, int *p, t_list *_env, char **envp)
 {
+	int pid1;
+	int pid2;
+	int	status;
+	
 	if (pipe(p) < 0)
 		print_error(NULL, NULL, NULL, "pipe failed\n", ERROR);
-	g_exit_status = 0;
-	if (ft_fork() == 0)
+	if ((pid1 = ft_fork()) == 0)
 	{
-		close(WRITE_END);
-		dup(p[WRITE_END]);
-		close(p[READ_END]);
-		close(p[WRITE_END]);
+		dup2(p[WRITE_END], WRITE_END);
+		_close(p[READ_END], p[WRITE_END]);
 		execution(node->left, _env, envp);
-		exit(0);
+		exit(g_exit_status);
 	}
-	if (ft_fork() == 0)
+	if ((pid2 = ft_fork()) == 0)
 	{
-		close(READ_END);
-		dup(p[READ_END]);
-		close(p[READ_END]);
-		close(p[WRITE_END]);
+		dup2(p[READ_END], READ_END);
+		_close(p[READ_END], p[WRITE_END]);
 		execution(node->right, _env, envp);
-		exit(0);
+		exit(g_exit_status);
 	}
-	close(p[READ_END]);
-	close(p[WRITE_END]);
-	wait(0);
-	wait(0);
+	_close(p[READ_END], p[WRITE_END]);
+	waitpid(pid1, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	waitpid(pid2, &status, 0);
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
 }
 
 int	*_init_pipe(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 18:54:18 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/20 15:04:21 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/history.h>
 
 int	g_exit_status;
+int	g_status;
 
 typedef struct s_quote
 {
@@ -58,6 +59,7 @@ typedef struct s_exec
 	char	**opt;
 	int		infile;	
 	int		outfile;	
+	int		last;
 }	t_exec;
 
 #endif
