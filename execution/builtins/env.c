@@ -12,7 +12,28 @@
 
 #include "../../includes/exec.h"
 
-void	exec_env(t_list *env, int export)
+void export_print(char *key, char *value, int fd)
+{
+	if (value)
+	{
+		write(fd, key, ft_strlen(key));
+		write(fd, "=", 1);
+		write(fd, value, ft_strlen(value));
+	}
+	else
+		write(fd, key, ft_strlen(key));
+}
+
+void env_print(char *key, char *value, int fd)
+{
+	if (key && value)
+	{
+		write(fd, key, ft_strlen(key));
+		write(fd, "=", 1);
+		write(fd, value, ft_strlen(value));
+	}
+}
+void	exec_env(t_list *env, int fd, int export)
 {
 	t_env	*node;
 
@@ -21,10 +42,8 @@ void	exec_env(t_list *env, int export)
 		while (env)
 		{
 			node = (t_env *)env->content;
-			if (node->value)
-				printf("%s=%s\n", node->key, node->value);
-			else
-				printf("%s\n", node->key);
+			export_print(node->key, node->value, fd);
+			write(fd, "\n", 1);
 			env = env->next;
 		}
 	}
@@ -33,8 +52,8 @@ void	exec_env(t_list *env, int export)
 		while (env)
 		{
 			node = (t_env *)env->content;
-			if (node->key && node->value)
-				printf("%s=%s\n", node->key, node->value);
+			env_print(node->key, node->value, fd);
+			write(fd, "\n", 1);
 			env = env->next;
 		}
 	}

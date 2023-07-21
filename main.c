@@ -62,8 +62,10 @@ int	main(int ac, char **av, char **env)
 		{
 			sh(buffer);
 			tree = build_tree(buffer, _env);
+			// printTree(tree, 0);
 			execution(tree, _env, env);
 			free_tree(tree);
+			// sh(buffer);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 	}
