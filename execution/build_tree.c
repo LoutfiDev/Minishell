@@ -6,13 +6,13 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 19:24:14 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/20 21:13:30 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-t_exec	*init_exec(void)
+t_exec	*init_exec()
 {
 	t_exec	*exec_node;
 
@@ -43,7 +43,9 @@ int	nbr_options(t_list *_buffer)
 	while (_buffer)
 	{
 		buff_node = (t_buffer *)_buffer->content;
-		if (buff_node->type == 2)
+		if (buff_node->type == 7)
+			break ;
+		else if (buff_node->type == 2)
 			nbr++;
 		_buffer = _buffer->next;
 	}
@@ -61,9 +63,11 @@ char	**fill_options(t_list *_buffer)
 	while (_buffer)
 	{
 		buff_node = (t_buffer *)_buffer->content;
-		if (buff_node->type == 1)
+		if (buff_node->type == 7)
+			break ;
+		else if (buff_node->type == 1)
 			options[i++] = ft_strdup(buff_node->str);
-		if (buff_node->type == 2)
+		else if (buff_node->type == 2)
 			options[i++] = ft_strdup(buff_node->str);
 		_buffer = _buffer->next;
 	}

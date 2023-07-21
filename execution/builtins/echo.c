@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:10:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 19:21:32 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 10:28:30 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_valid_option(char **args, int *index, int *nbr)
 	return (option);
 }
 
-void	exec_echo(char **args)
+void	exec_echo(char **args, int fd)
 {
 	int	i;
 	int	option;
@@ -40,7 +40,7 @@ void	exec_echo(char **args)
 	g_exit_status = 0;
 	if (!args)
 	{
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 		return ;
 	}
 	i = 0;
@@ -49,9 +49,9 @@ void	exec_echo(char **args)
 	while (args[i])
 	{
 		if ((option && i > nbr) || (!option && i > 0))
-			write(1, " ", 1);
-		ft_putstr_fd(args[i++], 1);
+			write(fd, " ", 1);
+		ft_putstr_fd(args[i++], fd);
 	}
 	if (!option)
-		write(1, "\n", 1);
+		write(fd, "\n", 1);
 }
