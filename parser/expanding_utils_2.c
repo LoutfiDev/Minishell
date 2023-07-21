@@ -6,29 +6,33 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/21 16:42:13 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/21 19:58:39 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
 
-char	*get_var(char *str, int *i)
+char	*get_var(char *str, int *i, int dolar, int check)
 {
 	int		start;
-	int		dolar;
 	char	*res;
 
-	dolar = 0;
 	while (str[*i])
 	{
-		if (str[*i] == '$' && dolar == 0)
-		{
-			dolar++;
-			start = *i;
-		}
-		else if (dolar == 1 && !ft_isalnum(str[*i]) && str[*i] != '?')
+		if (dolar == 2)
 			break ;
+		if (dolar == 1 && check == 1 && !ft_isalnum(str[*i]) && str[*i] != '?')
+			break ;
+		if (str[*i] == '$')
+		{
+			check = 0;
+			if (!dolar)
+				start = *i;
+			dolar++;
+		}
+		else
+			check = 1;
 		*i += 1;
 	}
 	res = ft_substr(str, start, (*i) - start);
@@ -41,8 +45,10 @@ char	*get_var_value(t_list *env, char *key)
 	char	*tmp;
 	t_env	*v_env;
 
-	if (!ft_strncmp(key, "$?", ft_strlen(key) + 2))
+	if (!ft_strncmp(key, "$", ft_strlen(key) + 1))
 		return (ft_strdup("$"));
+	if (!ft_strncmp(key, "$?", ft_strlen(key) + 2))
+		return (ft_strdup("$?"));
 	if (!ft_strncmp(key, "$$", ft_strlen(key) + 2))
 		return (ft_strdup("$$"));
 	tmp = ft_strdup(key + 1);
@@ -65,16 +71,23 @@ char	*get_var_value(t_list *env, char *key)
 void	skip_to_next(char *str, int *i, int delim)
 {
 	int	num;
+	int	dolar;
 
 	num = 0;
+	dolar = 0;
 	while (str[*i])
 	{
-		if (num >= 2)
+		if (num == 2 || dolar == 2)
 			break ;
-		else if (delim == '$' && num && !ft_isalnum(str[*i]))
+		else if (delim == '$' && num && !ft_isalnum(str[*i]) && str[*i] != '?'
+			&& str[*i] != '$')
 			break ;
 		else if (str[*i] == delim)
+		{
+			if (str[*i] == '$')
+				dolar++;
 			num++;
+		}
 		*i += 1;
 	}
 }
