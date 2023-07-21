@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/19 17:52:08 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/21 16:28:30 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define OUT_APP 5
 # define HERE_DOC 6
 # define PIPE 7
+
+void		sh(t_list *lst);
 
 t_buffer	*new_buffer(char *str, int type);
 t_list		*insert_node(t_list **head, t_list *node, t_list *n_node);
@@ -47,6 +49,7 @@ void		ft_exit(int exit_state);
 void		eof_exit(char *str);
 void		clear_buffer(void *bf);
 void		fix_types(t_list *lst);
+int			error_protocol(t_list **lst, t_quote *quote);
 
 t_list		*create_env(char **env);
 void		clear_env(void *content);
@@ -57,7 +60,7 @@ void		handle_quote(t_list *lst);
 void		remove_quote(char **str);
 
 //open files
-void		open_files(t_list *lst);
+int			open_files(t_list *lst);
 int			check_redirection(t_list *head, char *str);
 
 //HERE_DOC

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 16:03:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/20 11:29:00 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,37 @@ int	get_dollar(char *str, int *end)
 	return (0);
 }
 
+void	check_quote_before_ex(char *str, int *i)
+{
+	int	d_quote;
+	int	s_quote;
+
+	d_quote = 0;
+	s_quote = 0;
+	while (str && str[*i])
+	{
+		if (str[*i] == '$' && ((s_quote % 2 != 0 && d_quote % 2 == 0)
+				|| (s_quote % 2 == 0 && d_quote % 2 != 0)))
+		{
+			*i = 0;
+			return ;
+		}
+		if (str[*i] == '$' && s_quote % 2 == 0 && d_quote % 2 == 0)
+				break ;
+		if (str[*i] == '\'' && d_quote % 2 == 0)
+			s_quote++;
+		if (str[*i] == '"' && s_quote % 2 == 0)
+			d_quote++;
+		*i += 1;
+	}
+}
+
 int	get_expand_type(char *str)
 {
 	int	i;
 
 	i = 0;
+	check_quote_before_ex(str, &i);
 	while (str[i])
 	{
 		if (str[i] == '\'')

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/19 17:21:00 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/20 11:51:31 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,13 @@ int	check_pipe_node(t_list *lst)
 int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
 {
 	if (check_pipe_node(*buffer) == -1)
-	{
-		free(quotes);
-		ft_lstclear(buffer, clear_buffer);
-		return (-1);
-	}
-	if (open_heredoc(*buffer, env) == -1)
-	{
-		free(quotes);
-		ft_lstclear(buffer, clear_buffer);
-		return (-1);
-	}
-	if (check_num_quotes(quotes) == -1)
-	{
-		free(quotes);
-		ft_lstclear(buffer, clear_buffer);
-		return (-1);
-	}
+		return (error_protocol(buffer, quotes));
+	else if (open_heredoc(*buffer, env) == -1)
+		return (error_protocol(buffer, quotes));
+	else if (check_num_quotes(quotes) == -1)
+		return (error_protocol(buffer, quotes));
+	else if (open_files(*buffer) == -1)
+		return (error_protocol(buffer, quotes));
 	handle_quote(*buffer);
 	free(quotes);
 	return (0);
@@ -106,7 +96,8 @@ t_list	*main_parse(t_list *env)
 	quotes -> num_dquote = 0;
 	quotes -> num_squote = 0;
 	buffer = NULL;
-	parsing(line, 0, quotes, &buffer);
+	if (parsing(line, 0, quotes, &buffer) == -1)
+		return (NULL);
 	free(line);
 	expanding(&buffer, env);
 	if (buffer)
@@ -114,7 +105,6 @@ t_list	*main_parse(t_list *env)
 	free(tmp);
 	if (check_parse(&buffer, env, quotes) == -1)
 		return (NULL);
-	open_files(buffer);
 	return (re_arrange_buffer(buffer, 0));
 }
 
