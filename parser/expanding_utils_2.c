@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/15 16:03:17 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/21 16:42:13 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_var(char *str, int *i)
 			dolar++;
 			start = *i;
 		}
-		else if (dolar == 1 && is_expand_delim(str[*i]))
+		else if (dolar == 1 && !ft_isalnum(str[*i]) && str[*i] != '?')
 			break ;
 		*i += 1;
 	}
@@ -42,7 +42,9 @@ char	*get_var_value(t_list *env, char *key)
 	t_env	*v_env;
 
 	if (!ft_strncmp(key, "$?", ft_strlen(key) + 2))
-		return (key);
+		return (ft_strdup("$"));
+	if (!ft_strncmp(key, "$$", ft_strlen(key) + 2))
+		return (ft_strdup("$$"));
 	tmp = ft_strdup(key + 1);
 	len = ft_strlen(tmp);
 	free(key);
@@ -67,21 +69,26 @@ void	skip_to_next(char *str, int *i, int delim)
 	num = 0;
 	while (str[*i])
 	{
-		if (str[*i] == delim)
+		if (num >= 2)
+			break ;
+		else if (delim == '$' && num && !ft_isalnum(str[*i]))
+			break ;
+		else if (str[*i] == delim)
 			num++;
-		else if (num >= 2)
-			break ;
-		if (delim == '$' && (num >= 2 || str[*i] == '"' || str[*i] == '\''))
-			break ;
 		*i += 1;
 	}
 }
 
-int	to_next(char *str, int *i)
+int	to_next(char *str, int *i, int check)
 {
 	while (str[*i])
 	{
-		if (str[*i] == '"' || str[*i] == '\'' | str[*i] == ' ')
+		if (check == 2)
+		{
+			*i += 1;
+			return (*i);
+		}
+		if (!ft_isalnum(str[*i]) && str[*i] != '$' && str[*i] != '?')
 			return (*i + 1);
 		if (str[*i] == '$')
 			break ;

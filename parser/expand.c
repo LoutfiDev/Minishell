@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 12:37:58 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/20 20:18:39 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "../includes/expand.h"
 #include "../includes/exec.h"
 #include <stdint.h>
+#include <stdlib.h>
 
 /*	algorithm	*/
 
@@ -27,6 +28,38 @@
 // 3 - 2 - if nothing is found then split that resault str based on space
 //		eg (a="abcd     efgh") $a => |abcd| -> |efgh| -> |NULL|
 
+char	*skip_dollar(char *str)
+{
+	char	*tmp;
+	int		i;
+	int		c;
+	int		j;
+
+	j = 0;
+	c = 0;
+	i = 0;
+	tmp = ft_strdup(str);
+	free(str);
+	str = ft_calloc(ft_strlen(tmp) + 1, sizeof(char));
+	while (tmp[i])
+	{
+		c++;
+		if (tmp[i] == '$' && tmp[i + 1] == '$')
+			i += 2;
+		else
+		{
+			str[j] = tmp[i];
+			i++;
+			j++;
+		}
+	}
+	str[i] = '\0';
+	if (!c)
+		return (tmp);
+	free(tmp);
+	return (str);
+}
+
 void	expanding(t_list **head, t_list *_env)
 {
 	t_buffer	*tmp;
@@ -39,15 +72,15 @@ void	expanding(t_list **head, t_list *_env)
 	while (node)
 	{
 		tmp = (t_buffer *) node -> content;
-		var = ft_strdup(tmp -> str);
 		if (tmp->type != 6 && has_dollar(tmp->str))
 		{
+			var = ft_strdup(tmp -> str);
+			// tmp -> str = skip_dollar(tmp->str);
 			expanded_node = expand(tmp, _env);
 			node = insert_node(head, node, expanded_node);
 			if (check_redirection(expanded_node, var))
 				g_exit_status = 1;
-			else
-				free(var);
+			free(var);
 		}
 		node = node -> next;
 	}
@@ -58,9 +91,12 @@ char	*join_expanded_str(char *str, char type, t_list **lst)
 	char	*tmp;
 	char	*join;
 	int		i;
+	int		check;
 
 	i = 0;
 	join = NULL;
+	if (!ft_strncmp(str, "$$", ft_strlen(str) + 2))
+		check = 2;
 	while (str && str[i])
 	{
 		if (str[i] == '$')
@@ -69,7 +105,7 @@ char	*join_expanded_str(char *str, char type, t_list **lst)
 			join = ft_strjoin(join, tmp);
 			join = ft_join(join, lst);
 			i++;
-			to_next(str, &i);
+			to_next(str, &i, check);
 			tmp = join_expanded_str(str + i, type, lst);
 			join = ft_strjoin(join, tmp);
 			return (join);
@@ -147,6 +183,8 @@ t_list	*expand(t_buffer *bf, t_list *env)
 
 	i = 0;
 	lst = NULL;
+	if (ft_strlen(bf->str) == 1 && bf->str[0] =='$')
+		return (ft_lstnew(new_buffer(bf -> str, bf -> type)));
 	while (bf -> str[i])
 	{
 		tmp = get_var(bf -> str, &i);

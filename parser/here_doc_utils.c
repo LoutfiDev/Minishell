@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 12:35:39 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 21:44:01 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:54:40 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	open_heredoc(t_list *head, t_list *_env)
 {
 	t_buffer	*bf;
 	int			*here_doc;
-	int st = 0;
+	int			st;
 
+	st = 0;
 	while (head)
 	{
 		bf = (t_buffer *)head -> content;
@@ -63,8 +64,8 @@ int	open_heredoc(t_list *head, t_list *_env)
 			free(bf->str);
 			bf->str = ft_itoa(here_doc[0]);
 			free(here_doc);
-			if (st == 1)
-				return (1);
+			if (st != 0)
+				return (-1);
 		}
 		head = head -> next;
 	}

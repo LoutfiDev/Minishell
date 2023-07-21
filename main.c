@@ -1,4 +1,3 @@
-
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
@@ -15,36 +14,6 @@
 #include "includes/struct.h"
 #include "libft/libft.h"
 #include <errno.h>
-
-//int	exit_status;
-void	printTree(t_mask *node, int space)
-{
-	t_pipe	*pipe_node;
-	t_exec	*exec_node;
-
-	if (!node)
-		return ;
-	if (node->mask == PIPE_NODE)
-	{
-		pipe_node = (t_pipe *)node;
-		space += 10;
-		printTree(pipe_node->left, space);
-		printf("\n");
-		for (int i = 10; i < space; i++)
-			printf(" ");
-		printf("%s", "P");
-		printTree(pipe_node->right, space);
-	}
-	else if (node->mask == EXEC_NODE)
-	{
-		exec_node = (t_exec *)node;
-		space += 10;
-		printf("\n");
-		for (int i = 10; i < space; i++)
-			printf(" ");
-		printf("%d", exec_node->last);
-	}
-}
 
 void	sh(t_list *lst)
 {
@@ -75,19 +44,11 @@ void	close_files(t_list *lst)
 	}
 }
 
-void	print_hello(int action)
-{
-	exit(1);
-	printf("\n");
-	//printf("CTR-C\n");
-}
-
 int	main(int ac, char **av, char **env)
 {
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
-	char	*line;
 
 	(void) ac;
 	(void) av;
@@ -95,12 +56,11 @@ int	main(int ac, char **av, char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		line = NULL;
-		buffer = main_parse(_env, &line);
+		signal(SIGINT, sig_handler);
+		buffer = main_parse(_env);
 		if (buffer)
 		{
-			//add_history(line);
-			free(line);
+			sh(buffer);
 			tree = build_tree(buffer, _env);
 			// printTree(tree, 0);
 			execution(tree, _env, env);
@@ -112,4 +72,3 @@ int	main(int ac, char **av, char **env)
 	ft_lstclear(&_env, clear_env);
 	return (0);
 }
-

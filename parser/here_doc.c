@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/18 21:20:47 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:55:13 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,26 @@ char	*expand_in_heredoc(char *tmp, int expandable, t_list *env)
 	return (res);
 }
 
+void	read_inputs(char *lim, int *pip, t_list *env, int expand)
+{
+	int		len;
+	char	*in;
+
+	len = ft_strlen(lim);
+	in = readline("> ");
+	if (in == NULL)
+		exit(0);
+	while (ft_strncmp(lim, in, ft_strlen(in) + len))
+	{
+		in = ft_strjoin(expand_in_heredoc(in, expand, env), ft_strdup("\n"));
+		write(pip[1], in, ft_strlen(in));
+		free(in);
+		in = readline("> ");
+		if (in == NULL)
+			exit(0);
+	}
+}
+
 int	*read_here_doc(char *lim, int expand, t_list *env, int *st)
 {
 	char	*in;
@@ -98,22 +118,15 @@ int	*read_here_doc(char *lim, int expand, t_list *env, int *st)
 	if (fork() == 0)
 	{
 		signal(SIGINT, SIG_DFL);
-		len = ft_strlen(lim);
-		if ((in = readline("> ")) == NULL)
-			exit(0);
-		while (ft_strncmp(lim, in, ft_strlen(in) + len))
-		{
-			in = ft_strjoin(expand_in_heredoc(in, expand, env), ft_strdup("\n"));
-			write(pip[1], in, ft_strlen(in));
-			free(in);
-			if ((in = readline("> ")) == NULL)
-				exit(0);
-		}
+		read_inputs(lim, pip, env, expand);
 		exit(0);
 		free(in);
 	}
 	wait(st);
-	if (WEXITSTATUS(*st))
-		*st = 1;
+	if (WIFSIGNALED(*st))
+	{
+		write(2, "\n", 1);
+		*st = WTERMSIG(*st);
+	}
 	return (pip);
 }

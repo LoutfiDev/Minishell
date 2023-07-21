@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/20 15:04:21 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 16:55:51 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_pipe
 	t_mask	*left;
 	t_mask	*right;
 }	t_pipe;
-
 
 typedef struct s_exec
 {

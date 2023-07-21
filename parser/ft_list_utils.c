@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/17 09:52:05 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/20 19:31:56 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	check_redirection(t_list *lst, char *str)
 			{
 				write(2, str, ft_strlen(str));
 				write(2, ": ambiguous redirect\n", 22);
-				free(str);
 				str = ft_strdup("-1");
 				free(bf_node->str);
 				bf_node -> str = str;
