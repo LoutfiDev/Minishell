@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/21 16:37:17 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 17:58:42 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
 
-int	is_delimiter(char c)
-{
-	return ((c >= 33 && c <= 47) || c == '\0');
-}
 char	*sub_var(char *str, int *i)
 {
 	int		start;
@@ -32,7 +28,7 @@ char	*sub_var(char *str, int *i)
 			dolar++;
 			start = *i;
 		}
-		else if (dolar == 1 && is_delimiter(str[*i]))
+		else if (dolar == 1 && !ft_isalnum(str[*i]) && str[*i] != '?')
 			break ;
 		*i += 1;
 	}
