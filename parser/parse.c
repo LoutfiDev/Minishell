@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/20 11:51:31 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/21 20:38:54 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_list	*main_parse(t_list *env)
 	quotes -> num_squote = 0;
 	buffer = NULL;
 	if (parsing(line, 0, quotes, &buffer) == -1)
-		return (NULL);
+		return (free(tmp), free(line), NULL);
 	free(line);
 	expanding(&buffer, env);
 	if (buffer)
@@ -141,7 +141,7 @@ int	parsing(char *str, int delim, t_quote *quote, t_list **head)
 		i[1] = i[0];
 		i[0] = get_next_delim(str, i[0], &delim, quote);
 		if (i[0] == -1)
-			return (-1);
+			return (error_protocol(head, quote));
 		tmp = ft_substr(str, i[1], i[0] - i[1]);
 		buf = ft_lstnew(new_buffer(tmp, type));
 		free(tmp);
