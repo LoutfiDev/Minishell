@@ -91,7 +91,6 @@ int	main(int ac, char **av, char **env)
 
 	(void) ac;
 	(void) av;
-	g_status = 0;
 	_env = create_env(env);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -106,6 +105,7 @@ int	main(int ac, char **av, char **env)
 			// printTree(tree, 0);
 			execution(tree, _env, env);
 			free_tree(tree);
+			// sh(buffer);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 	}

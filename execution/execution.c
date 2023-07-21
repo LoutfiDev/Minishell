@@ -6,13 +6,14 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/20 21:32:54 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 15:35:17 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
 #include <sys/wait.h>
+
 
 int	is_builtin(char	*cmd)
 {	
@@ -60,32 +61,37 @@ char	*join_path(char *cmd, t_list *_env)
 	return (ft_strdup(cmd));
 }
 
-void	expand_array(t_exec	**node)
-{
-	int	i;
+// void	expand_array(t_exec	**node)
+// {
+// 	int	i;
 	
-	i = 0;
-	if (!ft_strncmp((*node)->cmd, "$?", 0))
-	{
-		free((*node)->cmd);
-		(*node)->cmd = ft_itoa(g_exit_status);
-	}
-	while ((*node)->opt && (*node)->opt[i])
-	{
-		if (!ft_strncmp((*node)->opt[i], "$?", 0))
-		{
-			free((*node)->opt[i]);
-			(*node)->opt[i] = ft_itoa(g_exit_status);
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	if (!ft_strncmp((*node)->cmd, "$?", 0))
+// 	{
+// 		free((*node)->cmd);
+// 		(*node)->cmd = ft_itoa(g_exit_status);
+// 	}
+// 	while ((*node)->opt && (*node)->opt[i])
+// 	{
+// 		if (!ft_strncmp((*node)->opt[i], "$?", 0))
+// 		{
+// 			free((*node)->opt[i]);
+// 			(*node)->opt[i] = ft_itoa(g_exit_status);
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	_close(int infile, int outfile)
 {
-	close(infile);
-	close(outfile);
+	if (infile == -1 || outfile == -1)
+		return ;
+	if (infile != 0)
+		close(infile);
+	if (outfile != 1)
+		close(outfile);
 }
+
 void	dup_files(int infile, int outfile)
 {
 	if (infile == -1 || outfile == -1)
@@ -183,8 +189,6 @@ void	_pipe(t_pipe *node, int *p, t_list *_env, char **envp)
 	}
 	_close(p[READ_END], p[WRITE_END]);
 	waitpid(pid1, &status, 0);
-	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
 	waitpid(pid2, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
@@ -206,7 +210,10 @@ void	execution(t_mask *root, t_list *_env, char **envp)
 
 	p = _init_pipe();
 	if (root->mask == PIPE_NODE)
+	{
+		g_exit_status = 0;
 		_pipe((t_pipe *)root, p, _env, envp);
+	}
 	else if (root->mask == EXEC_NODE)
 		_exec((t_exec *)root, _env, envp);
 	free(p);

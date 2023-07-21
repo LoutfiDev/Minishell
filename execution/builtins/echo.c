@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:10:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/20 15:27:13 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/21 10:28:30 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	exec_echo(char **args, int fd)
 	int	option;
 	int	nbr;
 
+	g_exit_status = 0;
 	if (!args)
 	{
 		write(fd, "\n", 1);
@@ -53,5 +54,4 @@ void	exec_echo(char **args, int fd)
 	}
 	if (!option)
 		write(fd, "\n", 1);
-	g_exit_status = 0;
 }

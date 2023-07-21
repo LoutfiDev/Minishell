@@ -7,7 +7,7 @@ CC = gcc -g #cc
 SRCS = ./execution/build_tree.c ./execution/execution.c
 
 HELPERS = ./execution/helpers.c ./execution/split.c ./execution/ft_argsjoin.c \
-		./execution/ft_free.c ./execution/signals.c
+		./execution/ft_free.c ./execution/signals.c ./execution/expand_exit.c
 
 BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 		./execution/builtins/cd.c ./execution/builtins/export.c		\
@@ -17,7 +17,7 @@ BUILTINS = ./execution/builtins/echo.c ./execution/builtins/pwd.c	\
 OBJS = ./execution/build_tree.o ./execution/execution.o
 
 OBJS_HELPERS = ./execution/helpers.o ./execution/split.o ./execution/ft_argsjoin.o \
-		./execution/ft_free.o ./execution/signals.o
+		./execution/ft_free.o ./execution/signals.o ./execution/expand_exit.o
 
 OBJS_BUILTINS = ./execution/builtins/echo.o ./execution/builtins/pwd.o	\
 		./execution/builtins/cd.o ./execution/builtins/export.o			\
