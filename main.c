@@ -44,11 +44,48 @@ void	close_files(t_list *lst)
 	}
 }
 
+int	nbr_keys(t_list *env)
+{
+	int	nbr;
+
+	nbr = 0;
+	while (env)
+	{
+		nbr++;
+		env = env->next;
+	}
+	return (nbr);
+}
+
+char	**shared_env(t_list *env)
+{
+	char	**envp;
+	t_list	*tmp_env;
+	t_env	*env_node;
+	char	*tmp;
+	int		i;
+
+	i = nbr_keys(env);
+	envp = malloc (sizeof(char *) * (i + 1));
+	tmp_env = env;
+	i = 0;
+	while (tmp_env)
+	{
+		env_node = (t_env *)tmp_env->content;
+		tmp = ft_strjoin(ft_strdup(env_node->key), ft_strdup("="));
+		envp[i++] = ft_strjoin(tmp, ft_strdup(env_node->value));
+		tmp_env = tmp_env->next;
+	}
+	envp[i] = NULL;
+	return (envp);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_mask	*tree;
 	t_list	*buffer;
 	t_list	*_env;
+	char	**envp;
 
 	(void) ac;
 	(void) av;
@@ -61,10 +98,11 @@ int	main(int ac, char **av, char **env)
 		if (buffer)
 		{
 			sh(buffer);
-			// tree = build_tree(buffer, _env);
-			// execution(tree, _env, env);
-			// free_tree(tree);
-			// sh(buffer);
+			envp = shared_env(_env);
+			tree = build_tree(buffer, _env);
+			execution(tree, _env, envp);
+			ft_free_array(envp, 0);
+			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 	}
