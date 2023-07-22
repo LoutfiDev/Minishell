@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:34:03 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 21:23:02 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	*get_expanded(char *str)
 	}
 	res = join_all(str, lst, 0);
 	quote_remover(&res);
+	free(str);
 	return (res);
 }
 
