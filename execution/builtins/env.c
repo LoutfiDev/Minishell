@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
@@ -6,13 +6,13 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:11:38 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/15 14:45:28 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/22 15:00:12 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/exec.h"
 
-void export_print(char *key, char *value, int fd)
+void	export_print(char *key, char *value, int fd)
 {
 	if (value)
 	{
@@ -24,7 +24,7 @@ void export_print(char *key, char *value, int fd)
 		write(fd, key, ft_strlen(key));
 }
 
-void env_print(char *key, char *value, int fd)
+void	env_print(char *key, char *value, int fd)
 {
 	if (key && value)
 	{
@@ -33,6 +33,7 @@ void env_print(char *key, char *value, int fd)
 		write(fd, value, ft_strlen(value));
 	}
 }
+
 void	exec_env(t_list *env, int fd, int export)
 {
 	t_env	*node;

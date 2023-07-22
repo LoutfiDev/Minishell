@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:31:52 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/18 20:06:46 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 15:04:57 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,41 +38,43 @@ void	print_error(char *cmd, char *delim, char *arg, char *msg, int exit_status)
 	ft_exit(exit_status);
 }
 
-// t_env	*create_env_node(char *content)
-// {
-// 	t_env	*env_node;
-// 	char	**array;
+int	nbr_options(t_list *_buffer)
+{
+	t_buffer	*buff_node;
+	int			nbr;
 
-// 	env_node = malloc(sizeof(t_env));
-// 	array = split(content, '=');
-// 	env_node->key = array[0];
-// 	if (ft_strchr(content, '=') && !array[1])
-// 	{
-// 		free(array[1]);
-// 		env_node->value = ft_strdup("");
-// 	}
-// 	else
-// 		env_node->value = array[1];
-// 	free(array);
-// 	return (env_node);
-// }
+	nbr = 0;
+	while (_buffer)
+	{
+		buff_node = (t_buffer *)_buffer->content;
+		if (buff_node->type == 7)
+			break ;
+		else if (buff_node->type == 2)
+			nbr++;
+		_buffer = _buffer->next;
+	}
+	return (nbr);
+}
 
-// t_list	*create_env(char **env)
-// {
-// 	t_list	*_env;
-// 	t_env	*env_node;
-// 	int		i;
+char	**fill_options(t_list *_buffer)
+{
+	char		**options;
+	t_buffer	*buff_node;
+	int			i;
 
-// 	_env = NULL;
-// 	i = 0;
-// 	while (env && env[i])
-// 		i++;
-// 	i -= 1;
-// 	while (i >= 0)
-// 	{
-// 		env_node = create_env_node(env[i]);
-// 		ft_lstadd_front(&_env, ft_lstnew(env_node));
-// 		i--;
-// 	}
-// 	return (_env);
-// }
+	options = malloc((nbr_options(_buffer) + 2) * sizeof(char *));
+	i = 0;
+	while (_buffer)
+	{
+		buff_node = (t_buffer *)_buffer->content;
+		if (buff_node->type == 7)
+			break ;
+		else if (buff_node->type == 1)
+			options[i++] = ft_strdup(buff_node->str);
+		else if (buff_node->type == 2)
+			options[i++] = ft_strdup(buff_node->str);
+		_buffer = _buffer->next;
+	}
+	options[i] = NULL;
+	return (options);
+}
