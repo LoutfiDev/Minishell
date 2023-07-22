@@ -6,13 +6,13 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 11:25:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/20 21:13:30 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/22 15:01:16 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 
-t_exec	*init_exec()
+t_exec	*init_exec(void)
 {
 	t_exec	*exec_node;
 
@@ -33,46 +33,6 @@ t_mask	*build_pipe(t_mask *left, t_mask *right)
 	pipe_node->left = left;
 	pipe_node->right = right;
 	return ((t_mask *)pipe_node);
-}
-int	nbr_options(t_list *_buffer)
-{
-	t_buffer	*buff_node;
-	int			nbr;
-
-	nbr = 0;
-	while (_buffer)
-	{
-		buff_node = (t_buffer *)_buffer->content;
-		if (buff_node->type == 7)
-			break ;
-		else if (buff_node->type == 2)
-			nbr++;
-		_buffer = _buffer->next;
-	}
-	return (nbr);
-}
-
-char	**fill_options(t_list *_buffer)
-{
-	char		**options;
-	t_buffer	*buff_node;
-	int			i;
-
-	options = malloc((nbr_options(_buffer) + 2) * sizeof(char *));
-	i = 0;
-	while (_buffer)
-	{
-		buff_node = (t_buffer *)_buffer->content;
-		if (buff_node->type == 7)
-			break ;
-		else if (buff_node->type == 1)
-			options[i++] = ft_strdup(buff_node->str);
-		else if (buff_node->type == 2)
-			options[i++] = ft_strdup(buff_node->str);
-		_buffer = _buffer->next;
-	}
-	options[i] = NULL;
-	return (options);
 }
 
 t_mask	*build_exec(t_list *_buffer, t_list	*_env)
