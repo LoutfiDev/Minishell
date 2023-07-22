@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/22 12:47:50 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 15:10:49 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ char	*get_var_value(t_list *env, char *key)
 	t_env	*v_env;
 
 	if (!ft_strncmp(key, "$", ft_strlen(key) + 1))
-		return (key);
+		return (ft_strjoin(key, ft_strdup("\0")));
 	if (!ft_strncmp(key, "$?", ft_strlen(key) + 2))
-		return (key);
+		return (ft_strjoin(key, ft_strdup("\0")));
 	if (!ft_strncmp(key, "$$", ft_strlen(key) + 2))
-		return (key);
+		return (ft_strjoin(key, ft_strdup("\0")));
 	tmp = ft_strdup(key + 1);
 	len = ft_strlen(tmp);
 	free(key);
@@ -75,23 +75,23 @@ void	skip_to_next(char *str, int *i, int delim)
 
 	num = 0;
 	dolar = 0;
+	if (ft_strnstr(str, "$$", ft_strlen(str) + 2) == str)
+	{
+		*i += 2;
+		return ;
+	}
 	while (str[*i])
 	{
 		if (num == 2)
 			break ;
 		else if (str[*i] == delim)
 		{
-			// *i += 1;
-			// to_next(str, i, 0);
-			// return ;
-			if (str[(*i) + 1] == '$')
-			{
-				*i += 1;
-				return ;
-			}
 			num++;
+			dolar++;
 		}
 		else if (delim == '$' && num && !ft_isalnum(str[*i]) && str[*i] != '?')
+			break ;
+		if (dolar == 2)
 			break ;
 		*i += 1;
 	}

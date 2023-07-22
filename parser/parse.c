@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/21 20:45:03 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 15:14:30 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ t_list	*main_parse(t_list *env)
 	char	*tmp;
 	char	*line;
 
-	signal(SIGINT,sig_handler);
 	tmp = readline("MINISHELL : ");
 	eof_exit(tmp);
 	signal(SIGINT, SIG_IGN);
