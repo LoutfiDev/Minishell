@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/21 19:53:38 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 11:30:04 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	check_quote_before_ex(char *str, int *i)
 
 	d_quote = 0;
 	s_quote = 0;
+	if (ft_strnstr(str, "$?", 0))
+		return ;
 	while (str && str[*i])
 	{
 		if (str[*i] == '$' && ((s_quote % 2 != 0 && d_quote % 2 == 0)
