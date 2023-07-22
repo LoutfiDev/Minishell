@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/22 15:10:49 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 20:27:11 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ void	skip_to_next(char *str, int *i, int delim)
 		}
 		else if (delim == '$' && num && !ft_isalnum(str[*i]) && str[*i] != '?')
 			break ;
-		if (dolar == 2)
-			break ;
 		*i += 1;
 	}
 }
@@ -103,7 +101,7 @@ int	to_next(char *str, int *i, int check)
 	{
 		if (check == 2)
 		{
-			*i += 1;
+			*i += 2;
 			return (*i);
 		}
 		if (!ft_isalnum(str[*i]) && str[*i] != '$' && str[*i] != '?')

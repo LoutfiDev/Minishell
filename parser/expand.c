@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/22 11:44:39 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 20:28:12 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*join_expanded_str(char *str, char type, t_list **lst)
 
 	i = 0;
 	join = NULL;
-	if (ft_strnstr(str, "$$", ft_strlen(str) + 2))
+	if (ft_strnstr(str, "$$", ft_strlen(str) + 2) == str)
 		check = 2;
 	while (str && str[i])
 	{

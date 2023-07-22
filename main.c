@@ -54,9 +54,9 @@ int main(int ac, char **av, char **env) {
     buffer = main_parse(_env);
     if (buffer) {
       sh(buffer);
-      // tree = build_tree(buffer, _env);
-      // execution(tree, _env, env);
-      // free_tree(tree);
+      tree = build_tree(buffer, _env);
+      execution(tree, _env, env);
+      free_tree(tree);
       // sh(buffer);
       ft_lstclear(&buffer, clear_buffer);
     }
