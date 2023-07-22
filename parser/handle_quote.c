@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/22 12:49:57 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 15:35:16 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ void	remove_quote(char **str)
 	int		len;
 
 	i = 0;
-	if (ft_strnstr(*str, "'$?'", ft_strlen(*str) + 4) ||
-			ft_strnstr(*str, "'$$'", ft_strlen(*str) + 4))
+	if (ft_strnstr(*str, "$?", ft_strlen(*str) + 2))
 		return ;
 	tmp = ft_strdup(*str);
 	free(*str);

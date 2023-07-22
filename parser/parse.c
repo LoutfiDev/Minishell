@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/21 20:48:49 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/22 19:44:09 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,28 @@ int	check_pipe_node(t_list *lst)
 {
 	t_buffer	*bf_start;
 	t_buffer	*bf_last;
+	int			check;
 
+	check = 0;
 	if (!lst)
 		return (-1);
 	bf_start = lst -> content;
 	bf_last = ft_lstlast(lst)-> content;
 	if (bf_start -> type == 7 || bf_last ->type == 7)
+		check = 1;
+	while (lst && lst -> next)
 	{
-		write(2, "syntax error near unexpected token `|'\n", 39);
-		g_exit_status = 2;
-		return (-1);
+		bf_start = lst->content;
+		bf_last = lst -> next->content;
+		if (bf_start -> type == bf_last -> type)
+			check = 1;
+		lst = lst -> next;
 	}
-	return (0);
+	if (!check)
+		return (0);
+	write(2, "syntax error near unexpected token `|'\n", 39);
+	g_exit_status = 2;
+	return (-1);
 }
 
 int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
@@ -86,7 +96,6 @@ t_list	*main_parse(t_list *env)
 	char	*tmp;
 	char	*line;
 
-	signal(SIGINT,sig_handler);
 	tmp = readline("MINISHELL : ");
 	eof_exit(tmp);
 	signal(SIGINT, SIG_IGN);

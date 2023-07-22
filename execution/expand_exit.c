@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:04:38 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/22 15:34:03 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	expand_array(t_exec	**node)
 		(*node)->cmd = get_expanded((*node)->cmd);
 	while ((*node)->opt && (*node)->opt[i])
 	{
-		if (ft_strnstr((*node)->cmd, "$?", ft_strlen((*node)->cmd) + 2))
+		if (ft_strnstr((*node)->opt[i], "$?", ft_strlen((*node)->opt[i]) + 2))
 			(*node)->opt[i] = get_expanded((*node)->opt[i]);
 		i++;
 	}
