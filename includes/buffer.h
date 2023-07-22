@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/21 16:53:24 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/22 12:49:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void		eof_exit(char *str);
 void		clear_buffer(void *bf);
 void		fix_types(t_list *lst);
 int			error_protocol(t_list **lst, t_quote *quote);
-
 t_list		*create_env(char **env);
 void		clear_env(void *content);
 
@@ -58,6 +57,8 @@ void		clear_env(void *content);
 int			check_num_quotes(t_quote *quote);
 void		handle_quote(t_list *lst);
 void		remove_quote(char **str);
+void		ft_cpy_new(char *old, char **res, int len);
+int			get_tmp_len(char *str);
 
 //open files
 int			open_files(t_list *lst);
