@@ -1,5 +1,5 @@
 # -Wall -Wextra -Werror
-CFLAGS = #-fsanitize=address -g3
+CFLAGS = -fsanitize=address -g3
 DFLAGS = -Llibft -lft -L$(HOME)/Desktop/rdln
 RDLFLAGS = -lreadline -lcurses
 CC = gcc -g #cc
