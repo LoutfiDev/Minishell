@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:13:30 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/17 10:08:22 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/23 19:24:49 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,19 @@ int	env_delnode(char *arg, t_list **env)
 void	exec_unset(char **args, t_list **env)
 {
 	int		i;
+	int		exit_code;
 
 	i = -1;
+	exit_code = 0;
 	while (args[++i])
 	{
-		if (!env_delhead(args[i], env))
-			continue ;
-		env_delnode(args[i], env);
+		exit_code = is_valide(args[i]);
+		if (!exit_code)
+		{
+			if (!env_delhead(args[i], env))
+				continue ;
+			env_delnode(args[i], env);
+		}
 	}
-	ft_exit(0);
+	ft_exit(exit_code);
 }

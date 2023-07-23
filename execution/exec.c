@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 15:10:42 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:41:46 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ void	_exec(t_exec *node, t_list *_env, char **envp)
 
 	if (exec_builtin(node, _env) && node->cmd && !is_dir(node->opt[0]))
 	{
-		expand_array(&node);
 		if (node->cmd[0] != '/' && ft_strncmp(node->cmd, "./", 2))
 			return (print_error("minishell", ": ",
 					node->cmd, ": command not found\n", 127));

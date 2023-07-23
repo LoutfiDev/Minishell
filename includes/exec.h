@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 14:51:51 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/23 18:28:47 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
 char	*ft_argsjoin(char *s1, char	*s2);
 char	*join_path(char *cmd, t_list *_env);
-int	    is_builtin(char	*cmd);
+int     is_builtin(char	*cmd);
 int	    nbr_options(t_list *_buffer);
 char	**fill_options(t_list *_buffer);
+int	    is_valide(char *str);
 
 //exec_expand function
 void	expand_array(t_exec	**node);
