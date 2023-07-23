@@ -6,13 +6,36 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:02:38 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/23 15:10:42 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
 #include <sys/wait.h>
+
+int	is_dir(char *path)
+{
+	DIR		*directory;
+
+	directory = opendir(path);
+	if (directory)
+	{
+		if (!ft_strncmp(path, ".", 0))
+		{
+			print_error("minishell: ", NULL, path,
+				": filename argument required\n", 2);
+			ft_putstr_fd(".: usage: . filename [arguments]\n", 2);
+		}
+		else if (!ft_strncmp(path, "..", 0))
+			print_error("minishell: ", NULL, path, ": command not found\n", 127);
+		else
+			print_error("minishell: ", NULL, path, ": is a directory\n", 126);
+		closedir(directory);
+		return (1);
+	}
+	return (0);
+}
 
 int	is_builtin(char	*cmd)
 {	
@@ -65,12 +88,12 @@ void	_exec(t_exec *node, t_list *_env, char **envp)
 	int		pid;
 	int		status;
 
-	if (exec_builtin(node, _env) && node->cmd)
+	if (exec_builtin(node, _env) && node->cmd && !is_dir(node->opt[0]))
 	{
 		expand_array(&node);
 		if (node->cmd[0] != '/' && ft_strncmp(node->cmd, "./", 2))
-			return (print_error("minishell", ": ", node->cmd,
-					": command not found\n", 127));
+			return (print_error("minishell", ": ",
+					node->cmd, ": command not found\n", 127));
 		pid = ft_fork();
 		if (pid == 0)
 		{
