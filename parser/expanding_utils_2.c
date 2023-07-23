@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/23 15:07:45 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/23 19:37:03 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_var_value(t_list *env, char *key)
 	return (ft_strdup("\0"));
 }
 
-void	go_to_next(char *str, int *i, int delim)
+void	go_to_next(char *str, int *i, int delim, int num)
 {
 	if (delim == '$' && str[*i] == '$')
 	{
@@ -77,9 +77,18 @@ void	go_to_next(char *str, int *i, int delim)
 	}
 	while (str[*i])
 	{
-		if (str[*i] == delim || (!ft_isalnum(str[*i]) && str[*i] != '?'
-			&& str[*i] != '$'))
-			break ;
+		if (str[*i] == delim || (!ft_isalnum(str[*i]) && str[*i] != '?'))
+		{
+			if (!num && str[*i] == '$' && delim == '$')
+			{
+				*i += 1;
+				if (str[(*i)] == '$')
+					*i += 1;
+				break ;
+			}
+			if (str[*i] != '$')
+				break ;
+		}
 		*i += 1;
 	}
 }
@@ -87,39 +96,24 @@ void	go_to_next(char *str, int *i, int delim)
 void	skip_to_next(char *str, int *i, int delim)
 {
 	int	num;
-	int	dolar;
 
 	num = 0;
-	dolar = 0;
 	if (ft_strnstr(str, "$$", ft_strlen(str) + 2) == str)
 	{
 		*i += 2;
 		return ;
 	}
+	if (str[*i] == '$' && delim == '$')
+		num = 1;
 	while (str[*i])
 	{
-		// if (num == 2)
-		// 	break ;
-		// else if (str[*i] == delim)
-		// {
-		// 	num++;
-		// 	dolar++;
-		// }
-		// else if (delim == '$' && num && !ft_isalnum(str[*i]) && str[*i] != '?')
-		// 	break ;
-		if (str[*i] == delim && delim == '$' && num)
-		{
-			*i += 1;
-			break ;
-		}
 		if (str[*i] == delim)
 		{
 			*i += 1;
-			go_to_next(str, i, delim);
+			go_to_next(str, i, delim, num);
 			break ;
 		}
 		*i += 1;
-		num++;
 	}
 }
 
@@ -140,8 +134,3 @@ int	to_next(char *str, int *i, int check)
 	}
 	return (*i);
 }
-
-// int	is_expand_delim(char c)
-// {
-// 	return (c == ' ' || c == '"' || c == '$' || c == '\'' || c == '\0');
-// }

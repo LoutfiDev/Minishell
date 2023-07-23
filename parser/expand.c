@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/23 13:41:55 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/23 19:36:23 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,13 @@ void	expanding(t_list **head, t_list *_env)
 	}
 }
 
-char	*join_expanded_str(char *str, char type, t_list **lst)
+char	*join_expanded_str(char *str, t_list **lst, char *join)
 {
 	char	*tmp;
-	char	*join;
 	int		i;
 	int		check;
 
 	i = 0;
-	join = NULL;
 	if (ft_strnstr(str, "$$", ft_strlen(str) + 2) == str)
 		check = 2;
 	if (!ft_strncmp(str, "$", 0))
@@ -75,7 +73,7 @@ char	*join_expanded_str(char *str, char type, t_list **lst)
 			join = ft_join(join, lst);
 			i++;
 			to_next(str, &i, check);
-			tmp = join_expanded_str(str + i, type, lst);
+			tmp = join_expanded_str(str + i, lst, NULL);
 			join = ft_strjoin(join, tmp);
 			return (join);
 		}
@@ -103,7 +101,7 @@ char	*join_all(char *str, t_list *lst, int i)
 			join = join_str(join, res, &lst);
 		else
 		{
-			tmp = join_expanded_str(res, type, &lst);
+			tmp = join_expanded_str(res, &lst, NULL);
 			join = ft_strjoin(join, tmp);
 			free(res);
 		}
