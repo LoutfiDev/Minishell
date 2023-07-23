@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:53:06 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/21 19:58:07 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/23 19:36:21 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		get_dollar(char *str, int *end);
 int		get_expand_type(char *str);
 char	*ft_join(char *str, t_list **lst);
 
-char	*join_expanded_str(char *str, char type, t_list **lst);
+char	*join_expanded_str(char *str, t_list **lst, char *join);
 char	*join_str(char *to_join, char *str, t_list **lst);
 char	*join_all(char *str, t_list *lst, int i);
 void	get_splited_parts(char *str, t_list **head, int type);
