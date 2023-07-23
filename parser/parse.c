@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 19:44:09 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/23 12:22:22 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_pipe_node(t_list *lst)
 	{
 		bf_start = lst->content;
 		bf_last = lst -> next->content;
-		if (bf_start -> type == bf_last -> type)
+		if (bf_start -> type == bf_last -> type && bf_start -> type == 7)
 			check = 1;
 		lst = lst -> next;
 	}
@@ -82,8 +82,7 @@ int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
 		return (error_protocol(buffer, quotes));
 	else if (check_num_quotes(quotes) == -1)
 		return (error_protocol(buffer, quotes));
-	else if (open_files(*buffer) == -1)
-		return (error_protocol(buffer, quotes));
+	open_files(*buffer);
 	handle_quote(*buffer);
 	free(quotes);
 	return (0);

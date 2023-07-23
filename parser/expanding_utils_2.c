@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/22 20:27:11 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/23 15:07:45 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,22 @@ char	*get_var_value(t_list *env, char *key)
 	return (ft_strdup("\0"));
 }
 
+void	go_to_next(char *str, int *i, int delim)
+{
+	if (delim == '$' && str[*i] == '$')
+	{
+		*i += 1;
+		return ;
+	}
+	while (str[*i])
+	{
+		if (str[*i] == delim || (!ft_isalnum(str[*i]) && str[*i] != '?'
+			&& str[*i] != '$'))
+			break ;
+		*i += 1;
+	}
+}
+
 void	skip_to_next(char *str, int *i, int delim)
 {
 	int	num;
@@ -82,16 +98,28 @@ void	skip_to_next(char *str, int *i, int delim)
 	}
 	while (str[*i])
 	{
-		if (num == 2)
-			break ;
-		else if (str[*i] == delim)
+		// if (num == 2)
+		// 	break ;
+		// else if (str[*i] == delim)
+		// {
+		// 	num++;
+		// 	dolar++;
+		// }
+		// else if (delim == '$' && num && !ft_isalnum(str[*i]) && str[*i] != '?')
+		// 	break ;
+		if (str[*i] == delim && delim == '$' && num)
 		{
-			num++;
-			dolar++;
-		}
-		else if (delim == '$' && num && !ft_isalnum(str[*i]) && str[*i] != '?')
+			*i += 1;
 			break ;
+		}
+		if (str[*i] == delim)
+		{
+			*i += 1;
+			go_to_next(str, i, delim);
+			break ;
+		}
 		*i += 1;
+		num++;
 	}
 }
 
@@ -101,7 +129,7 @@ int	to_next(char *str, int *i, int check)
 	{
 		if (check == 2)
 		{
-			*i += 2;
+			*i += 1;
 			return (*i);
 		}
 		if (!ft_isalnum(str[*i]) && str[*i] != '$' && str[*i] != '?')
@@ -113,7 +141,7 @@ int	to_next(char *str, int *i, int check)
 	return (*i);
 }
 
-int	is_expand_delim(char c)
-{
-	return (c == ' ' || c == '"' || c == '$' || c == '\'' || c == '\0');
-}
+// int	is_expand_delim(char c)
+// {
+// 	return (c == ' ' || c == '"' || c == '$' || c == '\'' || c == '\0');
+// }
