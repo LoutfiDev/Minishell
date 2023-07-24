@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 12:22:22 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/23 21:47:57 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
 	if (check_pipe_node(*buffer) == -1)
 		return (error_protocol(buffer, quotes));
 	else if (open_heredoc(*buffer, env) == -1)
+	{
+		g_exit_status = 1;
 		return (error_protocol(buffer, quotes));
+	}
 	else if (check_num_quotes(quotes) == -1)
 		return (error_protocol(buffer, quotes));
 	open_files(*buffer);
