@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:34:03 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/24 09:29:40 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,10 @@ void	quote_remover(char **str)
 	free(tmp);
 }
 
-char	*sub_var(char *str, int *i)
-{
-	int		start;
-	int		dolar;
-	char	*res;
-
-	dolar = 0;
-	while (str[*i])
-	{
-		if (str[*i] == '$' && dolar == 0)
-		{
-			dolar++;
-			start = *i;
-		}
-		else if (dolar == 1 && !ft_isalnum(str[*i]) && str[*i] != '?')
-			break ;
-		*i += 1;
-	}
-	res = ft_substr(str, start, (*i) - start);
-	return (res);
-}
-
 char	*get_value(char *str)
 {
+	if (!ft_strncmp(str, "$$", ft_strlen(str) + 2))
+		return (ft_strjoin(str, ft_strdup("\0")));
 	if (!ft_strncmp(str, "$?", ft_strlen(str) + 2))
 	{
 		free(str);
@@ -73,7 +53,7 @@ char	*get_expanded(char *str)
 	lst = NULL;
 	while (str[i])
 	{
-		tmp = sub_var(str, &i);
+		tmp = get_var(str, &i, 0, 0);
 		tmp = get_value(tmp);
 		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);
@@ -81,6 +61,7 @@ char	*get_expanded(char *str)
 	}
 	res = join_all(str, lst, 0);
 	quote_remover(&res);
+	free(str);
 	return (res);
 }
 
@@ -89,7 +70,8 @@ void	expand_array(t_exec	**node)
 	int	i;
 
 	i = 0;
-	if (ft_strnstr((*node)->cmd, "$?", ft_strlen((*node)->cmd) + 2))
+	if ((*node)->cmd && ft_strnstr((*node)->cmd, "$?",
+			ft_strlen((*node)->cmd) + 2))
 		(*node)->cmd = get_expanded((*node)->cmd);
 	while ((*node)->opt && (*node)->opt[i])
 	{
@@ -98,24 +80,3 @@ void	expand_array(t_exec	**node)
 		i++;
 	}
 }
-
-// void	expand_array(t_exec	**node)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	if (!ft_strncmp((*node)->cmd, "$?", 0))
-// 	{
-// 		free((*node)->cmd);
-// 		(*node)->cmd = ft_itoa(g_exit_status);
-// 	}
-// 	while ((*node)->opt && (*node)->opt[i])
-// 	{
-// 		if (!ft_strncmp((*node)->opt[i], "$?", 0))
-// 		{
-// 			free((*node)->opt[i]);
-// 			(*node)->opt[i] = ft_itoa(g_exit_status);
-// 		}
-// 		i++;
-// 	}
-// }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:20:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:05:10 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:03:52 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../includes/buffer.h"
 #include <sys/wait.h>
 
-void	_pipe(t_pipe *node, int *p, t_list *_env, char **envp)
+void	_pipe(t_pipe *node, int *p, t_list **_env, char **envp)
 {
 	int	pid1;
 	int	pid2;

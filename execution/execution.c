@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 14:45:39 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:03:00 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	*_init_pipe(void)
 	return (p);
 }
 
-void	execution(t_mask *root, t_list *_env, char **envp)
+void	execution(t_mask *root, t_list **_env, char **envp)
 {
 	int		*p;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 14:51:51 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:07:15 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,10 @@ t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
 char	*ft_argsjoin(char *s1, char	*s2);
 char	*join_path(char *cmd, t_list *_env);
-int	    is_builtin(char	*cmd);
+int     is_builtin(char	*cmd);
 int	    nbr_options(t_list *_buffer);
 char	**fill_options(t_list *_buffer);
+int	    is_valide(char *str);
 
 //exec_expand function
 void	expand_array(t_exec	**node);
@@ -57,20 +58,20 @@ void	exec_export(char **args, t_list **env, int fd);
 void	exec_unset(char **args, t_list **env);
 void	exec_env(t_list *env, int fd, int export);
 void	exec_exit(char **args);
-int	    exec_builtin(t_exec *node, t_list *_env);
+int	    exec_builtin(t_exec *node, t_list **_env);
 
 //exec functions
 int		ft_fork(void);
 char	*join_path(char *cmd, t_list *_env);
-void	_exec(t_exec *node, t_list *_env, char **envp);
+void	_exec(t_exec *node, t_list **_env, char **envp);
 void	dup_files(int infile, int outfile);
 void	_close(int infile, int outfile);
 
 //pipe function
-void	_pipe(t_pipe *node, int *p, t_list *_env, char **envp);
+void	_pipe(t_pipe *node, int *p, t_list **_env, char **envp);
 
 //execution function
-void	execution(t_mask *mask, t_list *_env, char **envp);
+void	execution(t_mask *mask, t_list **_env, char **envp);
 
 //build_tree function
 t_mask	*build_tree(t_list *_buffer, t_list *_env);
