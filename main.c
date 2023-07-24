@@ -42,13 +42,15 @@ void close_files(t_list *lst) {
 
 int	nbr_keys(t_list *env)
 {
-	int	nbr;
-
+	int		nbr;
+	t_list	*tmp;
+	
 	nbr = 0;
-	while (env)
+	tmp = env;
+	while (tmp)
 	{
 		nbr++;
-		env = env->next;
+		tmp = tmp->next;
 	}
 	return (nbr);
 }
@@ -96,7 +98,7 @@ int	main(int ac, char **av, char **env)
 			sh(buffer);
 			envp = shared_env(_env);
 			tree = build_tree(buffer, _env);
-			execution(tree, _env, envp);
+			execution(tree, &_env, env);
 			ft_free_array(envp, 0);
 			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);

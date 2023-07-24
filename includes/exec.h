@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 13:36:59 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:43:57 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <dirent.h>
 # include "struct.h"
 # include "buffer.h"
- #include <sys/wait.h>
+# include <sys/wait.h>
 
 # define PIPE_NODE 124
 # define EXEC_NODE 126
@@ -42,37 +42,37 @@ t_env	*create_env_node(char *content);
 t_env	*create_node(char *key, char *value);
 char	*ft_argsjoin(char *s1, char	*s2);
 char	*join_path(char *cmd, t_list *_env);
-int     is_builtin(char	*cmd);
-int	    nbr_options(t_list *_buffer);
+int		is_builtin(char	*cmd);
+int		nbr_options(t_list *_buffer);
 char	**fill_options(t_list *_buffer);
-int	    is_valide(char *str);
-int	    set_pwd(t_list **env);
+int		is_valide(char *str);
+int		set_oldpwd(t_list **env);
 
 //exec_expand function
 void	expand_array(t_exec	**node);
 
 //builtins commands
 void	exec_echo(char **args, int fd);
-void	exec_cd(char **args, t_list *env, int fd);
+void	exec_cd(char **args, t_list **env, int fd);
 void	exec_pwd(int fd);
 void	exec_export(char **args, t_list **env, int fd);
 void	exec_unset(char **args, t_list **env);
 void	exec_env(t_list *env, int fd, int export);
 void	exec_exit(char **args);
-int	    exec_builtin(t_exec *node, t_list *_env);
+int		exec_builtin(t_exec *node, t_list **_env);
 
 //exec functions
 int		ft_fork(void);
 char	*join_path(char *cmd, t_list *_env);
-void	_exec(t_exec *node, t_list *_env, char **envp);
+void	_exec(t_exec *node, t_list **_env, char **envp);
 void	dup_files(int infile, int outfile);
 void	_close(int infile, int outfile);
 
 //pipe function
-void	_pipe(t_pipe *node, int *p, t_list *_env, char **envp);
+void	_pipe(t_pipe *node, int *p, t_list **_env, char **envp);
 
 //execution function
-void	execution(t_mask *mask, t_list *_env, char **envp);
+void	execution(t_mask *mask, t_list **_env, char **envp);
 
 //build_tree function
 t_mask	*build_tree(t_list *_buffer, t_list *_env);
@@ -85,7 +85,7 @@ void	free_tree(t_mask *root);
 void	free_exec(t_exec *exec_node);
 
 //signals handling
-void    sig_handler(int signum);
+void	sig_handler(int signum);
 void	rl_replace_line (const char *text, int clear_undo);
 
 #endif

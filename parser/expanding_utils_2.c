@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/23 20:13:42 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/24 12:03:54 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*get_var(char *str, int *i, int dolar, int check)
 	int		start;
 	char	*res;
 
+	check = 1;
 	while (str[*i])
 	{
 		if (dolar == 2)
@@ -26,13 +27,13 @@ char	*get_var(char *str, int *i, int dolar, int check)
 			break ;
 		if (str[*i] == '$')
 		{
-			check = 0;
+			// check = 0;
 			if (!dolar)
 				start = *i;
 			dolar++;
 		}
-		else
-			check = 1;
+		// else
+		// 	check = 1;
 		*i += 1;
 	}
 	res = ft_substr(str, start, (*i) - start);
@@ -115,8 +116,14 @@ void	skip_to_next(char *str, int *i, int delim)
 	}
 }
 
-int	to_next(char *str, int *i, int check)
+int	to_next(char *str, int *i, int check, char type)
 {
+	int	num;
+
+	num = 0;
+	*i += 1;
+	if (str[*i] == '$')
+		return (*i += 1);
 	while (str[*i])
 	{
 		if (check == 2)
@@ -126,8 +133,12 @@ int	to_next(char *str, int *i, int check)
 		}
 		if (!ft_isalnum(str[*i]) && str[*i] != '$' && str[*i] != '?')
 			return (*i + 1);
+		// if (str[*i] == type)
+		// 	num++;
 		if (str[*i] == '$')
 			break ;
+		// if (num == 2)
+		// 	break ;
 		*i += 1;
 	}
 	return (*i);

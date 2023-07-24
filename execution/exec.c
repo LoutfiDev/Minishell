@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 09:28:45 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:03:19 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*join_path(char *cmd, t_list *_env)
 	return (ft_strdup(cmd));
 }
 
-void	_exec(t_exec *node, t_list *_env, char **envp)
+void	_exec(t_exec *node, t_list **_env, char **envp)
 {
 	int		pid;
 	int		status;
