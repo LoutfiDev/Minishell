@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/20 08:27:23 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:35:43 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	exec_cd(char **args, t_list *env, int fd)
 {
 	DIR		*directory;
 
-	set_oldpwd(&env);
 	if (!ft_strncmp(args[0], "~", 0))
 	{
 		if (!get_path("HOME", env))
@@ -81,10 +80,7 @@ void	exec_cd(char **args, t_list *env, int fd)
 	else if (!ft_strncmp(args[0], "-", 0))
 	{
 		if (!get_path("OLDPWD", env))
-		{
-			print_error("cd: ", NULL, "OLDPWD", ": not set\n", 1);
-			return ;
-		}
+			return (print_error("cd: ", NULL, "OLDPWD", ": not set\n", 1));
 		chdir(get_path("OLDPWD", env));
 		exec_pwd(fd);
 	}
@@ -92,10 +88,7 @@ void	exec_cd(char **args, t_list *env, int fd)
 	{
 		directory = opendir(args[0]);
 		if (!directory)
-		{
-			print_error("cd: ", NULL, args[0], ": Not a directory\n", 1);
-			return ;
-		}
+			return (print_error("cd: ", NULL, args[0], ": Not a directory\n", 1));
 		chdir(args[0]);
 		closedir(directory);
 	}

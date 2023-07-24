@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:29:19 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:00:19 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:37:12 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	exec_builtin(t_exec *node, t_list *_env)
 {
 	expand_array(&node);
 	if (!ft_strncmp(node->cmd, "cd", 0))
+	{
+		set_oldpwd(&_env);
 		exec_cd(node->opt + 1, _env, node->outfile);
+	}
 	else if (!ft_strncmp(node->cmd, "echo", 0))
 		exec_echo(node->opt + 1, node->outfile);
 	else if (!ft_strncmp(node->cmd, "env", 0))

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 18:28:47 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 13:36:59 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int     is_builtin(char	*cmd);
 int	    nbr_options(t_list *_buffer);
 char	**fill_options(t_list *_buffer);
 int	    is_valide(char *str);
+int	    set_pwd(t_list **env);
 
 //exec_expand function
 void	expand_array(t_exec	**node);
