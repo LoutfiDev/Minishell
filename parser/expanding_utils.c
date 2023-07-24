@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:02:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/23 12:51:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/24 10:09:19 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ char	*ft_join(char *str, t_list **lst)
 	char		*res;
 
 	tmp = *lst;
+	if (!tmp)
+		return (ft_strdup("\0"));
 	bf = (t_buffer *)tmp -> content;
 	res = ft_strjoin(str, bf -> str);
 	*lst = (*lst)-> next;
