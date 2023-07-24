@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:20:39 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 13:03:52 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/24 20:20:20 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	_pipe(t_pipe *node, int *p, t_list **_env, char **envp)
 	int	status;
 
 	if (pipe(p) < 0)
-		print_error(NULL, NULL, NULL, "pipe failed\n", ERROR);
+		print_error(NULL, NULL, "pipe failed\n", ERROR);
 	if ((pid1 = ft_fork()) == 0)
 	{
 		dup2(p[WRITE_END], WRITE_END);

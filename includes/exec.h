@@ -6,13 +6,12 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:22:27 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 13:43:57 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:22:43 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-
 
 # include <unistd.h>
 # include <stdio.h>
@@ -35,7 +34,7 @@
 # define EXP_ERR ": not a valid identifier\n"
 
 //helpers function
-void	print_error(char *cmd, char *lim, char *arg, char *msg, int exit_code);
+void	print_error(char *cmd, char *arg, char *msg, int exit_code);
 char	*get_path(char *str, t_list *env);
 t_list	*create_env(char **env);
 t_env	*create_env_node(char *content);
@@ -86,6 +85,6 @@ void	free_exec(t_exec *exec_node);
 
 //signals handling
 void	sig_handler(int signum);
-void	rl_replace_line (const char *text, int clear_undo);
+void	rl_replace_line(const char *text, int clear_undo);
 
 #endif

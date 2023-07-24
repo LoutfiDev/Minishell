@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 13:03:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/24 20:20:02 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,15 @@ int	is_dir(char **path)
 	{
 		if (!ft_strncmp(path[0], ".", 0))
 		{
-			print_error("minishell: ", NULL, path[0],
+			print_error("minishell: ", path[0],
 				": filename argument required\n", 2);
 			ft_putstr_fd(".: usage: . filename [arguments]\n", 2);
 		}
 		else if (!ft_strncmp(path[0], "..", 0))
-			print_error("minishell: ", NULL, path[0],
+			print_error("minishell: ", path[0],
 				": command not found\n", 127);
 		else
-			print_error("minishell: ", NULL, path[0], ": is a directory\n", 126);
+			print_error("minishell: ", path[0], ": is a directory\n", 126);
 		closedir(directory);
 		return (1);
 	}
@@ -94,8 +94,8 @@ void	_exec(t_exec *node, t_list **_env, char **envp)
 	if (exec_builtin(node, _env) && node->cmd && !is_dir(node->opt))
 	{
 		if (node->cmd[0] != '/' && ft_strncmp(node->cmd, "./", 2))
-			return (print_error("minishell", ": ",
-					node->cmd, ": command not found\n", 127));
+			return (print_error("minishell:",
+					node->cmd, " : command not found\n", 127));
 		pid = ft_fork();
 		if (pid == 0)
 		{

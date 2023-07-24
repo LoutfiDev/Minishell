@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/19 20:17:08 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:28:02 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@ int	is_valide(char *str)
 
 	if (str[0] && str[0] == '=')
 	{
-		print_error("export: ", NULL, str, EXP_ERR, 1);
+		print_error("export: ", str, EXP_ERR, 1);
 		return (1);
 	}
 	i = 0;
-	while (str[i] && str[i] != '=' && !(str[i] == '+' && str[i + 1] == '='))
+	while (str[i] && str[i] != '='
+		&& !(str[i] == '+' && str[i + 1] == '=' && i > 0))
 	{
 		if (!ft_isalnum(str[i++]))
 		{
-			print_error("export: ", NULL, str, EXP_ERR, 1);
+			print_error("export: ", str, EXP_ERR, 1);
 			return (1);
 		}
 	}

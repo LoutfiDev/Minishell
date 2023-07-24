@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 14:31:52 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 15:04:57 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 20:21:38 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ char	*get_path(char *str, t_list *env)
 	return (NULL);
 }
 
-void	print_error(char *cmd, char *delim, char *arg, char *msg, int exit_status)
+void	print_error(char *cmd, char *arg, char *msg, int exit_status)
 {
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(delim, 2);
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd(msg, 2);
 	ft_exit(exit_status);

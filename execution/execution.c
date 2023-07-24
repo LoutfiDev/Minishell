@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 13:03:00 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/24 20:20:13 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_fork(void)
 
 	pid = fork();
 	if (pid < 0)
-		print_error(NULL, NULL, NULL, "fork failed\n", ERROR);
+		print_error(NULL, NULL, "fork failed\n", ERROR);
 	return (pid);
 }
 
