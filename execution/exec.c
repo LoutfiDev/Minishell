@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 15:41:46 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 09:28:45 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 #include "../includes/buffer.h"
 #include <sys/wait.h>
 
-int	is_dir(char *path)
+int	is_dir(char **path)
 {
 	DIR		*directory;
 
-	directory = opendir(path);
+	if (!path && !path[0])
+		return (0);
+	directory = opendir(path[0]);
 	if (directory)
 	{
-		if (!ft_strncmp(path, ".", 0))
+		if (!ft_strncmp(path[0], ".", 0))
 		{
-			print_error("minishell: ", NULL, path,
+			print_error("minishell: ", NULL, path[0],
 				": filename argument required\n", 2);
 			ft_putstr_fd(".: usage: . filename [arguments]\n", 2);
 		}
-		else if (!ft_strncmp(path, "..", 0))
-			print_error("minishell: ", NULL, path, ": command not found\n", 127);
+		else if (!ft_strncmp(path[0], "..", 0))
+			print_error("minishell: ", NULL, path[0],
+				": command not found\n", 127);
 		else
-			print_error("minishell: ", NULL, path, ": is a directory\n", 126);
+			print_error("minishell: ", NULL, path[0], ": is a directory\n", 126);
 		closedir(directory);
 		return (1);
 	}
@@ -88,7 +91,7 @@ void	_exec(t_exec *node, t_list *_env, char **envp)
 	int		pid;
 	int		status;
 
-	if (exec_builtin(node, _env) && node->cmd && !is_dir(node->opt[0]))
+	if (exec_builtin(node, _env) && node->cmd && !is_dir(node->opt))
 	{
 		if (node->cmd[0] != '/' && ft_strncmp(node->cmd, "./", 2))
 			return (print_error("minishell", ": ",

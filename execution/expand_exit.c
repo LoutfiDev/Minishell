@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 16:15:03 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/24 09:29:40 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	expand_array(t_exec	**node)
 	int	i;
 
 	i = 0;
-	if (ft_strnstr((*node)->cmd, "$?", ft_strlen((*node)->cmd) + 2))
+	if ((*node)->cmd && ft_strnstr((*node)->cmd, "$?",
+			ft_strlen((*node)->cmd) + 2))
 		(*node)->cmd = get_expanded((*node)->cmd);
 	while ((*node)->opt && (*node)->opt[i])
 	{
