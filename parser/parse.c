@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 21:47:57 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/25 12:41:25 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,10 @@ t_list	*main_parse(t_list *env)
 	char	*tmp;
 	char	*line;
 
-	tmp = readline("MINISHELL : ");
+	if (!isatty(READ_END))
+		tmp = ft_strtrim(get_next_line(READ_END), "\n");
+	else
+		tmp = readline("MINISHELL : ");
 	eof_exit(tmp);
 	signal(SIGINT, SIG_IGN);
 	if (!tmp)
