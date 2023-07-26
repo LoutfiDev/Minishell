@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:54:46 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/25 12:47:18 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:20:21 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	eof_exit(char *tmp)
 	if (!tmp)
 	{
 		if (isatty(READ_END))
-			write(2, "\rexit\n", 7);
+			write(2, "exit\n", 6);
 		exit(g_exit_status);
 	}
 }

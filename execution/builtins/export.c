@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:49 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 20:28:02 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/25 14:43:32 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_valide(char *str)
 {
 	int	i;
 
-	if (str[0] && str[0] == '=')
+	if ((str[0] && str[0] == '=') || ft_isdigit(str[0]))
 	{
 		print_error("export: ", str, EXP_ERR, 1);
 		return (1);

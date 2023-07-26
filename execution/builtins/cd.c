@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 20:20:30 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/25 16:30:55 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	set_oldpwd(t_list **env)
 	t_env	*env_node;
 	t_list	*tmp;
 
-	current_dir = ft_strdup(get_path("OLDPWD", *env));
+	current_dir = ft_strdup(get_path("PWD", *env));
 	if (!current_dir)
 	{
 		current_dir = malloc(128);
