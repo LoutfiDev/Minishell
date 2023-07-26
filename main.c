@@ -29,17 +29,6 @@ void sh(t_list *lst) {
   }
 }
 
-void close_files(t_list *lst) {
-  t_buffer *bf;
-
-  while (lst) {
-    bf = lst->content;
-    if (bf->type > 2 && bf->type < 7)
-      close(ft_atoi(bf->str));
-    lst = lst->next;
-  }
-}
-
 int	nbr_keys(t_list *env)
 {
 	int		nbr;
@@ -96,11 +85,11 @@ int	main(int ac, char **av, char **env)
 		if (buffer)
 		{
 			sh(buffer);
-			// envp = shared_env(_env);
-			// tree = build_tree(buffer, _env);
-			// execution(tree, &_env, env);
-			// ft_free_array(envp, 0);
-			// free_tree(tree);
+			envp = shared_env(_env);
+			tree = build_tree(buffer, _env);
+			execution(tree, &_env, env);
+			ft_free_array(envp, 0);
+			free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 	}

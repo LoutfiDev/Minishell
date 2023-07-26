@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:41:52 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 10:34:21 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 15:22:07 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ int	open_file(char **file, int type, int fd)
 	free(*file);
 	file[0] = ft_itoa(fd);
 	return (fd);
-}
-
-void	ft_close(t_buffer *node)
-{
-	close(ft_atoi(node -> str));
 }
 
 t_list	*find_next_pipe(t_list *lst)
@@ -98,9 +93,6 @@ int	open_files(t_list *lst)
 		{
 			if (check_file(&bf->str, bf->type, &exit_code) == -1)
 				break ;
-			if (prev)
-				ft_close(prev -> content);
-			prev = lst;
 		}
 		lst = lst -> next;
 	}
