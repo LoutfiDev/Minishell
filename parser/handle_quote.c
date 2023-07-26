@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:35:36 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/22 15:35:16 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 11:56:34 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ void	remove_quote(char **str)
 	tmp = ft_strdup(*str);
 	free(*str);
 	len = get_tmp_len(tmp);
+	if (len == -1)
+	{
+		*str = malloc(2);
+		str[0][0] = 1;
+		str[0][1] = '\0';
+		return ;
+	}
 	ft_cpy_new(tmp, str, len);
 	free(tmp);
 }

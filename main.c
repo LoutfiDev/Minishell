@@ -96,11 +96,11 @@ int	main(int ac, char **av, char **env)
 		if (buffer)
 		{
 			sh(buffer);
-			envp = shared_env(_env);
-			tree = build_tree(buffer, _env);
-			execution(tree, &_env, env);
-			ft_free_array(envp, 0);
-			free_tree(tree);
+			// envp = shared_env(_env);
+			// tree = build_tree(buffer, _env);
+			// execution(tree, &_env, env);
+			// ft_free_array(envp, 0);
+			// free_tree(tree);
 			ft_lstclear(&buffer, clear_buffer);
 		}
 	}

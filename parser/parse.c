@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/23 21:47:57 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 11:58:58 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ t_list	*main_parse(t_list *env)
 	tmp = readline("MINISHELL : ");
 	eof_exit(tmp);
 	signal(SIGINT, SIG_IGN);
-	if (!tmp)
-		exit(g_exit_status);
 	line = ft_strtrim(ft_strdup(tmp), " \t");
 	quotes = malloc(sizeof(t_quote));
 	quotes -> num_dquote = 0;
@@ -115,9 +113,10 @@ t_list	*main_parse(t_list *env)
 	if (buffer)
 		add_history(tmp);
 	free(tmp);
+	buffer = re_arrange_buffer(buffer, 0);
 	if (check_parse(&buffer, env, quotes) == -1)
 		return (NULL);
-	return (re_arrange_buffer(buffer, 0));
+	return (buffer);
 }
 
 int	create_pipe(char *str, int type, t_quote *quote, t_list **lst)

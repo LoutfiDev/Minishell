@@ -6,11 +6,12 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:54:46 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/19 15:24:42 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/25 13:18:29 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+#include <readline/history.h>
 
 void	ft_exit(int exit_state)
 {

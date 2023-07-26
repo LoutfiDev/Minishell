@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/24 11:55:54 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 14:18:40 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	expanding(t_list **head, t_list *_env)
 		if (tmp->type != 6 && has_dollar(tmp->str))
 		{
 			var = ft_strdup(tmp -> str);
-			expanded_node = expand(tmp, _env);
-			node = insert_node(head, node, expanded_node);
+			expanded_node = expand(tmp, _env, 0);
 			if (check_redirection(expanded_node, var))
 				g_exit_status = 1;
+			node = insert_node(head, node, expanded_node);
 			free(var);
 		}
 		node = node -> next;
@@ -62,8 +62,6 @@ char	*join_expanded_str(char *str, t_list **lst, char *join, char type)
 	i = 0;
 	if (ft_strnstr(str, "$$", ft_strlen(str) + 2) == str)
 		check = 2;
-	// if (!ft_strncmp(str, "$", 0))
-	// 	return (ft_strdup("$"));
 	while (str && str[i])
 	{
 		if (str[i] == '$')
@@ -71,7 +69,6 @@ char	*join_expanded_str(char *str, t_list **lst, char *join, char type)
 			tmp = ft_substr(str, 0, i);
 			join = ft_strjoin(join, tmp);
 			join = ft_join(join, lst);
-			// i++;
 			to_next(str, &i, check, type);
 			tmp = join_expanded_str(str + i, lst, NULL, type);
 			join = ft_strjoin(join, tmp);
@@ -140,21 +137,22 @@ void	get_splited_parts(char *str, t_list **head, int type)
 	return (get_splited_parts(str + i, head, type));
 }
 
-t_list	*expand(t_buffer *bf, t_list *env)
+t_list	*expand(t_buffer *bf, t_list *env, int i)
 {
-	int		i;
 	char	*tmp;
 	t_list	*lst;
 	char	*res;
 	t_list	*head;
+	t_quote	q;
 
-	i = 0;
+	q.num_dquote = 0;
+	q.num_squote = 0;
 	lst = NULL;
 	if (ft_strlen(bf->str) == 1 && bf->str[0] == '$')
 		return (ft_lstnew(new_buffer(bf -> str, bf -> type)));
 	while (bf -> str[i])
 	{
-		tmp = get_var(bf -> str, &i, 0, 0);
+		tmp = get_var(bf -> str + i, &i, &q);
 		tmp = get_var_value(env, tmp);
 		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);

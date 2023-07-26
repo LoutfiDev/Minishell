@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:37:28 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/20 19:31:56 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 11:46:39 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,41 @@ void	clear_buffer(void *bf)
 	free(tmp_bf);
 }
 
+void	replace_node(t_list *lst, char *replace, int type)
+{
+	t_buffer	*bf;
+
+	while (lst)
+	{
+		bf = (t_buffer *)lst -> content;
+		if (bf -> type == type)
+		{
+			free(bf -> str);
+			bf->str = ft_strdup(replace);
+		}
+		lst = lst-> next;
+	}
+}
+
 int	check_redirection(t_list *lst, char *str)
 {
 	t_buffer	*bf_node;
 	int			c;
+	t_list		*head;
 
 	c = 0;
+	head = lst;
 	while (lst)
 	{
 		bf_node = lst ->content;
 		if (bf_node -> type >= 3 && bf_node -> type <= 5)
 		{
+			remove_quote(&bf_node -> str);
 			if (c || !ft_strlen(bf_node -> str))
 			{
 				write(2, str, ft_strlen(str));
 				write(2, ": ambiguous redirect\n", 22);
-				str = ft_strdup("-1");
-				free(bf_node->str);
-				bf_node -> str = str;
+				replace_node(head, "-1", bf_node -> type);
 				return (1);
 			}
 			c++;

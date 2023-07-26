@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 09:29:40 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 14:25:32 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
+#include "../includes/struct.h"
 
 void	quote_remover(char **str)
 {
@@ -41,19 +42,20 @@ char	*get_value(char *str)
 	return (ft_strdup("\0"));
 }
 
-char	*get_expanded(char *str)
+char	*get_expanded(char *str, int i)
 {
-	int		i;
 	char	*tmp;
 	t_list	*lst;
 	char	*res;
 	t_list	*head;
+	t_quote	q;
 
-	i = 0;
+	q.num_dquote = 0;
+	q.num_squote = 0;
 	lst = NULL;
 	while (str[i])
 	{
-		tmp = get_var(str, &i, 0, 0);
+		tmp = get_var(str, &i, &q);
 		tmp = get_value(tmp);
 		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);
@@ -72,11 +74,11 @@ void	expand_array(t_exec	**node)
 	i = 0;
 	if ((*node)->cmd && ft_strnstr((*node)->cmd, "$?",
 			ft_strlen((*node)->cmd) + 2))
-		(*node)->cmd = get_expanded((*node)->cmd);
+		(*node)->cmd = get_expanded((*node)->cmd, 0);
 	while ((*node)->opt && (*node)->opt[i])
 	{
 		if (ft_strnstr((*node)->opt[i], "$?", ft_strlen((*node)->opt[i]) + 2))
-			(*node)->opt[i] = get_expanded((*node)->opt[i]);
+			(*node)->opt[i] = get_expanded((*node)->opt[i], 0);
 		i++;
 	}
 }
