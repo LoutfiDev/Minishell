@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 11:41:51 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 14:18:40 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:38:37 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*join_expanded_str(char *str, t_list **lst, char *join, char type)
 			tmp = ft_substr(str, 0, i);
 			join = ft_strjoin(join, tmp);
 			join = ft_join(join, lst);
-			to_next(str, &i, check, type);
+			to_next(str, &i, check);
 			tmp = join_expanded_str(str + i, lst, NULL, type);
 			join = ft_strjoin(join, tmp);
 			return (join);
@@ -88,7 +88,7 @@ char	*join_all(char *str, t_list *lst, int i)
 	char	*tmp;
 
 	join = NULL;
-	while (i < ft_strlen (str) && str[i])
+	while (i < ft_strlen(str) && str[i])
 	{
 		d_index = 0;
 		type = get_expand_type(str + i);

@@ -6,14 +6,14 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:19:16 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 14:21:19 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:39:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
 
-int	check_var_quote(char c, t_quote *q, int i, int check)
+int	check_var_quote(char c, t_quote *q, int check)
 {
 	if (c == '\'')
 	{
@@ -50,7 +50,7 @@ int	go_to_next_var(char *str, int i, t_quote *q)
 		}
 		else if (str[i] == '\'' || str[i] == '"')
 		{
-			if (check_var_quote(str[i], q, i, c) == -1)
+			if (check_var_quote(str[i], q, c) == -1)
 				return (-i);
 			return (i);
 		}

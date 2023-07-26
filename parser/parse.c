@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 15:24:48 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:27:46 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <stdlib.h>
 
 // 1 - parse
-// 2 - send
-// 3 - build tree
-// 4 - expand
-// 5 - remove quotes
+// 2 - expand
+// 3 - remove quotes
+// 4 - send
+// 5 - build tree
 // 6 - execute
 
 /*
@@ -31,20 +31,6 @@
 //2 -> skip all spces (that endicate end of that argument)
 //3 -> get next arg type (find end delim and copy)
 //4 -> repeat 1 tell '\0'
-
-// void	remove_normal_quote(t_list *lst, t_quote *quote)
-// {
-// 	t_buffer	*bf;
-//
-// 	while (lst)
-// 	{
-// 		bf = (t_buffer *)lst -> content;
-// 		if (!has_dollar(bf -> str) && (quote->num_dquote
-// 				|| quote -> num_squote))
-// 			remove_quote(&bf -> str);
-// 		lst = lst -> next;
-// 	}
-// }
 
 int	check_pipe_node(t_list *lst)
 {
@@ -101,10 +87,7 @@ t_list	*main_parse(t_list *env)
 	char	*tmp;
 	char	*line;
 
-	if (!isatty(READ_END))
-		tmp = ft_strtrim(get_next_line(READ_END), "\n");
-	else
-		tmp = readline("MINISHELL : ");
+	tmp = ft_readline();
 	eof_exit(tmp);
 	signal(SIGINT, SIG_IGN);
 	line = ft_strtrim(ft_strdup(tmp), " \t");

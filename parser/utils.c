@@ -6,14 +6,12 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 15:13:16 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:30:24 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
-#include <stdio.h>
-#include <sys/fcntl.h>
-#include <unistd.h>
+#include "../includes/exec.h"
 
 void	fix_types(t_list *lst)
 {
@@ -33,6 +31,17 @@ void	fix_types(t_list *lst)
 		}
 		lst = lst -> next;
 	}
+}
+
+char	*ft_readline(void)
+{
+	char	*line;
+
+	if (!isatty(READ_END))
+		line = ft_strtrim(get_next_line(READ_END), "\n");
+	else
+		line = readline("MINISHELL : ");
+	return (line);
 }
 
 int	error_protocol(t_list **lst, t_quote *quotes)
@@ -70,29 +79,7 @@ t_list	*re_arrange_buffer(t_list *lst, int old_type)
 	return (ft_lstclear(&lst, clear_buffer), head);
 }
 
-void	ft_close(t_buffer *fd)
+void	ft_close_fd(t_buffer *fd)
 {
 	close(ft_atoi(fd -> str));
-}
-
-void	close_files(t_list *lst, int type)
-{
-	t_buffer	*bf;
-	t_list		*prev;
-
-	prev = NULL;
-	while (lst)
-	{
-		bf = (t_buffer *)lst -> content;
-		if (bf -> type == type)
-		{
-			if (prev)
-			{
-				ft_close(prev -> content);
-				prev = NULL;
-			}
-			prev = lst;
-		}
-		lst = lst -> next;
-	}
 }

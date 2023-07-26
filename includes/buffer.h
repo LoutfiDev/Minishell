@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 15:13:09 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:30:02 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_buffer	*new_buffer(char *str, int type);
 t_list		*insert_node(t_list **head, t_list *node, t_list *n_node);
 
 //parsing utils
+char		*ft_readline(void);
 t_list		*main_parse(t_list *env);
 void		ft_skip_space(char *str, int *i);
 t_list		*re_arrange_buffer(t_list *lst, int old_type);
@@ -64,6 +65,8 @@ int			get_tmp_len(char *str);
 int			open_files(t_list *lst);
 int			check_redirection(t_list *head, char *str);
 void		close_files(t_list *lst, int type);
+void		ft_close_fd(t_buffer *bf);
+
 //HERE_DOC
 int			*read_here_doc(char *lim, int expand, t_list *env, int *st);
 int			is_herdoc_expandable(char *hd_lim);

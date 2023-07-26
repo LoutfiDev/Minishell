@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 14:19:27 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/21 16:55:13 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 16:39:33 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void	read_inputs(char *lim, int *pip, t_list *env, int expand)
 int	*read_here_doc(char *lim, int expand, t_list *env, int *st)
 {
 	char	*in;
-	int		len;
 	int		*pip;
 
 	pip = malloc(2 * sizeof(int));

@@ -6,14 +6,15 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 18:58:48 by anaji             #+#    #+#             */
-/*   Updated: 2022/10/30 22:34:02 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:36:11 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (i <= ft_strlen(s))

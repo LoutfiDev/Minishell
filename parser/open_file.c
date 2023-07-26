@@ -6,11 +6,33 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:41:52 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 15:22:07 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:32:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
+
+void	close_files(t_list *lst, int type)
+{
+	t_buffer	*bf;
+	t_list		*prev;
+
+	prev = NULL;
+	while (lst)
+	{
+		bf = (t_buffer *)lst -> content;
+		if (bf -> type == type)
+		{
+			if (prev)
+			{
+				ft_close_fd(prev -> content);
+				prev = NULL;
+			}
+			prev = lst;
+		}
+		lst = lst -> next;
+	}
+}
 
 int	open_file(char **file, int type, int fd)
 {
@@ -81,7 +103,6 @@ int	open_files(t_list *lst)
 {
 	t_buffer	*bf;
 	t_list		*prev;
-	char		*tmp;
 	int			exit_code;
 
 	prev = NULL;

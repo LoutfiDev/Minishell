@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 14:21:07 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:38:39 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	skip_to_next(char *str, int *i, int delim)
 	}
 }
 
-int	to_next(char *str, int *i, int check, char type)
+int	to_next(char *str, int *i, int check)
 {
 	*i += 1;
 	if (str[*i] == '$')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:02:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 16:11:25 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 16:41:04 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ int	main(int ac, char **av, char **env)
 		buffer = main_parse(_env);
 		if (buffer)
 		{
-			sh(buffer);
 			envp = shared_env(_env);
 			tree = build_tree(buffer, _env);
 			execution(tree, &_env, env);

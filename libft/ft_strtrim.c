@@ -6,17 +6,17 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 08:57:09 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/19 13:17:17 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:40:48 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	start_of_text(const char *s1, const char *set)
+int	start_of_text(const char *s1, const char *set)
 {
-	size_t	i_start;
-	size_t	i;
-	size_t	j;
+	int	i_start;
+	int	i;
+	int	j;
 
 	i = 0;
 	i_start = 0;
@@ -40,11 +40,11 @@ size_t	start_of_text(const char *s1, const char *set)
 	return (i_start);
 }
 
-size_t	end_of_text(const char *s1, const char *set)
+int	end_of_text(const char *s1, const char *set)
 {
-	size_t	i_end;
-	size_t	j;
-	size_t	i;
+	int	i_end;
+	int	j;
+	int	i;
 
 	i = ft_strlen(s1) - 1;
 	i_end = i;
@@ -71,9 +71,9 @@ size_t	end_of_text(const char *s1, const char *set)
 char	*ft_strtrim(char *s1, char *set)
 {
 	char	*s;
-	size_t	start_txt;
-	size_t	end_txt;
-	size_t	len;
+	int		start_txt;
+	int		end_txt;
+	int		len;
 
 	if (!s1)
 		return (free(s1), s1);

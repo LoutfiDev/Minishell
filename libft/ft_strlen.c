@@ -6,15 +6,15 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 11:38:54 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/16 10:04:49 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 16:34:29 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (s && s[i])
