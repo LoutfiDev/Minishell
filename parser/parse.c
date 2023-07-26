@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 16:27:46 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 20:42:18 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
 	else if (open_heredoc(*buffer, env) == -1)
 	{
 		g_exit_status = 1;
+		clear_heredoc(*buffer);
 		return (error_protocol(buffer, quotes));
 	}
 	else if (check_num_quotes(quotes) == -1)
@@ -75,6 +76,7 @@ int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
 	close_files(*buffer, 3);
 	close_files(*buffer, 4);
 	close_files(*buffer, 5);
+	close_files(*buffer, 6);
 	handle_quote(*buffer);
 	free(quotes);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:56:26 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 16:30:02 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 20:30:36 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ void		ft_close_fd(t_buffer *bf);
 int			*read_here_doc(char *lim, int expand, t_list *env, int *st);
 int			is_herdoc_expandable(char *hd_lim);
 int			open_heredoc(t_list *lst, t_list *env);
+void		clear_heredoc(t_list *lst);
 #	endif

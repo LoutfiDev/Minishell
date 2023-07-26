@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 12:35:39 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/21 16:54:40 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 20:26:10 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,17 @@ int	open_heredoc(t_list *head, t_list *_env)
 		head = head -> next;
 	}
 	return (0);
+}
+
+void	clear_heredoc(t_list *lst)
+{
+	t_buffer	*bf;
+
+	while (lst)
+	{
+		bf = lst -> content;
+		if (bf -> type == 6)
+			ft_close_fd(bf);
+		lst = lst -> next;
+	}
 }
