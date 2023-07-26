@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 19:51:45 by anaji             #+#    #+#             */
-/*   Updated: 2023/06/03 08:20:38 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 10:46:26 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_atoi(const char *str)
 			res = res + (str[i] - '0');
 		}
 		else
-			break ;
+			return (-1);
 		i++;
 	}
 	return (res * sign);

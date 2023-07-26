@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:41:52 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/23 12:22:12 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 10:34:21 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	open_file(char **file, int type, int fd)
 	}
 	free(*file);
 	file[0] = ft_itoa(fd);
-	return (0);
+	return (fd);
 }
 
 void	ft_close(t_buffer *node)
@@ -45,31 +45,67 @@ void	ft_close(t_buffer *node)
 	close(ft_atoi(node -> str));
 }
 
+t_list	*find_next_pipe(t_list *lst)
+{
+	t_buffer	*bf;
+
+	while (lst)
+	{
+		bf = lst -> content;
+		if (bf -> type == 7)
+			break ;
+		lst = lst -> next;
+	}
+	return (lst);
+}
+
+int	check_file(char **str, int type, int *exit_code)
+{
+	char	*tmp;
+
+	if (!ft_strncmp(*str, "$?", 0))
+	{
+		tmp = ft_itoa(g_exit_status);
+		free(*str);
+		*str = tmp;
+	}
+	if (!ft_strncmp(*str, "-1", 0))
+	{
+		*exit_code = -1;
+		return (-1);
+	}
+	if (open_file(str, type, 0) == -1)
+	{
+		*exit_code = -1;
+		return (-1);
+	}
+	return (0);
+}
+
 int	open_files(t_list *lst)
 {
 	t_buffer	*bf;
 	t_list		*prev;
 	char		*tmp;
+	int			exit_code;
 
 	prev = NULL;
+	exit_code = 0;
 	while (lst)
 	{
 		bf = (t_buffer *)lst-> content;
 		if (bf -> type > 2 && bf -> type < 6)
 		{
-			if (!ft_strncmp(bf -> str, "$?", 2))
-			{
-				tmp = ft_itoa(g_exit_status);
-				free(bf->str);
-				bf -> str = tmp;
-			}
-			if (open_file(&bf -> str, bf -> type, 0) == -1)
-				return (-1);
+			if (check_file(&bf->str, bf->type, &exit_code) == -1)
+				break ;
 			if (prev)
 				ft_close(prev -> content);
 			prev = lst;
 		}
 		lst = lst -> next;
 	}
-	return (0);
+	lst = find_next_pipe(lst);
+	if (lst)
+		exit_code = open_files(lst->next);
+	return (exit_code);
 }
