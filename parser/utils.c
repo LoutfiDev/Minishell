@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 12:39:30 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/19 18:46:07 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 15:13:16 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,31 @@ t_list	*re_arrange_buffer(t_list *lst, int old_type)
 		ft_lstdelone(old, clear_buffer);
 	}
 	return (ft_lstclear(&lst, clear_buffer), head);
+}
+
+void	ft_close(t_buffer *fd)
+{
+	close(ft_atoi(fd -> str));
+}
+
+void	close_files(t_list *lst, int type)
+{
+	t_buffer	*bf;
+	t_list		*prev;
+
+	prev = NULL;
+	while (lst)
+	{
+		bf = (t_buffer *)lst -> content;
+		if (bf -> type == type)
+		{
+			if (prev)
+			{
+				ft_close(prev -> content);
+				prev = NULL;
+			}
+			prev = lst;
+		}
+		lst = lst -> next;
+	}
 }

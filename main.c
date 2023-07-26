@@ -29,17 +29,6 @@ void sh(t_list *lst) {
   }
 }
 
-void close_files(t_list *lst) {
-  t_buffer *bf;
-
-  while (lst) {
-    bf = lst->content;
-    if (bf->type > 2 && bf->type < 7)
-      close(ft_atoi(bf->str));
-    lst = lst->next;
-  }
-}
-
 int	nbr_keys(t_list *env)
 {
 	int		nbr;

@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 14:27:00 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 15:24:48 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
 	else if (check_num_quotes(quotes) == -1)
 		return (error_protocol(buffer, quotes));
 	open_files(*buffer);
+	close_files(*buffer, 3);
+	close_files(*buffer, 4);
+	close_files(*buffer, 5);
 	handle_quote(*buffer);
 	free(quotes);
 	return (0);
