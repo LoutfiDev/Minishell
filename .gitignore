@@ -56,3 +56,4 @@ rdln
 test*
 out*
 *.old
+*.vscode
