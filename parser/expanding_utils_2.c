@@ -6,39 +6,12 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 10:51:24 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/24 12:03:54 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 14:21:07 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/buffer.h"
 #include "../includes/expand.h"
-
-char	*get_var(char *str, int *i, int dolar, int check)
-{
-	int		start;
-	char	*res;
-
-	check = 1;
-	while (str[*i])
-	{
-		if (dolar == 2)
-			break ;
-		if (dolar == 1 && check == 1 && !ft_isalnum(str[*i]) && str[*i] != '?')
-			break ;
-		if (str[*i] == '$')
-		{
-			// check = 0;
-			if (!dolar)
-				start = *i;
-			dolar++;
-		}
-		// else
-		// 	check = 1;
-		*i += 1;
-	}
-	res = ft_substr(str, start, (*i) - start);
-	return (res);
-}
 
 char	*get_var_value(t_list *env, char *key)
 {
@@ -69,7 +42,7 @@ char	*get_var_value(t_list *env, char *key)
 	return (ft_strdup("\0"));
 }
 
-void	go_to_next(char *str, int *i, int delim, int num)
+void	go_to_next(char *str, int *i, int delim)
 {
 	if (delim == '$' && str[*i] == '$')
 	{
@@ -78,15 +51,14 @@ void	go_to_next(char *str, int *i, int delim, int num)
 	}
 	while (str[*i])
 	{
-		if (str[*i] == delim || (!ft_isalnum(str[*i]) && str[*i] != '?'))
+		if (delim == '$' && !ft_isalnum(str[*i]) && str[*i] != '?')
+			break ;
+		if (str[*i] == delim)
 		{
-			if (!num && str[*i] == '$' && delim == '$')
-			{
-				*i += 1;
-				if (str[(*i)] == '$')
-					*i += 1;
+			if (delim == '$')
 				break ;
-			}
+			*i += 1;
+			break ;
 		}
 		*i += 1;
 	}
@@ -94,22 +66,17 @@ void	go_to_next(char *str, int *i, int delim, int num)
 
 void	skip_to_next(char *str, int *i, int delim)
 {
-	int	num;
-
-	num = 0;
-	if (ft_strnstr(str, "$$", ft_strlen(str) + 2) == str)
-	{
-		*i += 2;
-		return ;
-	}
-	if (str[*i] == '$' && delim == '$')
-		num = 1;
 	while (str[*i])
 	{
 		if (str[*i] == delim)
 		{
 			*i += 1;
-			go_to_next(str, i, delim, num);
+			if (delim == '$' && str[*i] == '$')
+			{
+				*i += 1;
+				break ;
+			}
+			go_to_next(str, i, delim);
 			break ;
 		}
 		*i += 1;
@@ -118,9 +85,6 @@ void	skip_to_next(char *str, int *i, int delim)
 
 int	to_next(char *str, int *i, int check, char type)
 {
-	int	num;
-
-	num = 0;
 	*i += 1;
 	if (str[*i] == '$')
 		return (*i += 1);
@@ -133,12 +97,8 @@ int	to_next(char *str, int *i, int check, char type)
 		}
 		if (!ft_isalnum(str[*i]) && str[*i] != '$' && str[*i] != '?')
 			return (*i + 1);
-		// if (str[*i] == type)
-		// 	num++;
 		if (str[*i] == '$')
 			break ;
-		// if (num == 2)
-		// 	break ;
 		*i += 1;
 	}
 	return (*i);

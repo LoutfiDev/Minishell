@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:16:08 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/21 16:55:51 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/25 19:31:42 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef struct s_quote
 {
 	int	num_squote;
 	int	num_dquote;
-	int	type;
 }	t_quote;
 
 typedef struct s_buffer
