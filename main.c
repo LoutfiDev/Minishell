@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/26 15:02:16 by yloutfi           #+#    #+#             */
+/*   Updated: 2023/07/26 15:02:29 by yloutfi          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/buffer.h"
 #include "includes/exec.h"
 #include "includes/parsing.h"
@@ -15,36 +27,11 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-void sh(t_list *lst) {
-
-  t_list *tmp;
-  t_buffer *bf;
-
-  tmp = lst;
-  while (tmp) {
-    if (tmp->content)
-      bf = (t_buffer *)tmp->content;
-    printf("str = %s type = %d\n", bf->str, bf->type);
-    tmp = tmp->next;
-  }
-}
-
-void close_files(t_list *lst) {
-  t_buffer *bf;
-
-  while (lst) {
-    bf = lst->content;
-    if (bf->type > 2 && bf->type < 7)
-      close(ft_atoi(bf->str));
-    lst = lst->next;
-  }
-}
-
 int	nbr_keys(t_list *env)
 {
 	int		nbr;
 	t_list	*tmp;
-	
+
 	nbr = 0;
 	tmp = env;
 	while (tmp)
@@ -95,7 +82,6 @@ int	main(int ac, char **av, char **env)
 		buffer = main_parse(_env);
 		if (buffer)
 		{
-			// sh(buffer);
 			envp = shared_env(_env);
 			tree = build_tree(buffer, _env);
 			execution(tree, &_env, env);
