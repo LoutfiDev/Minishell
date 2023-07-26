@@ -6,7 +6,7 @@
 #    By: anaji <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/26 15:17:20 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/26 16:21:28 by anaji            ###   ########.fr        #
+#    Updated: 2023/07/26 16:52:38 by anaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,15 +59,15 @@ libft:
 	@$(MAKE) -C libft bonus -s
 
 $(NAME): $(MAIN_OBJS) $(EXEC_OBJS) $(EXEC_OBJS_HELPERS) $(EXEC_OBJS_BUILTINS) $(PARSE_OBJS)
-	$(CC) $(CFLAGS) $(DFLAGS) $(RDLFLAGS) $(OBJS_HELPERS) $(OBJS_BUILTINS) $(EXEC_OBJS) $(MAIN_OBJS) $(PARSE_OBJS) -o $(NAME)
+	$(CC) $(EXEC_OBJS_HELPERS) $(EXEC_OBJS_BUILTINS) $(EXEC_OBJS) $(MAIN_OBJS) $(PARSE_OBJS) $(CFLAGS) $(DFLAGS) $(RDLFLAGS) -o $(NAME)
 
 clean:
 	@$(MAKE) -C libft clean -s
-	-rm -f $(EXEC_OBJS) $(EXEC_OBJS_HELPERS) $(EXEC_OBJS_BUILTINS)
+	rm -f $(EXEC_OBJS) $(EXEC_OBJS_HELPERS) $(EXEC_OBJS_BUILTINS) 
 
 fclean: clean
 	@$(MAKE) -C libft fclean -s
-	-rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
