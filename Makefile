@@ -6,12 +6,12 @@
 #    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/26 15:17:20 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/26 15:21:20 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/07/26 15:28:41 by yloutfi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS = #-Wall -Wextra -Werror -fsanitize=address -g3
 DFLAGS = -Llibft -lft -L$(HOME)/Desktop/rdln
 RDLFLAGS = -lreadline -lcurses
 CC = cc
@@ -58,7 +58,7 @@ $(NAME): $(MAIN_OBJS) $(EXEC_OBJS) $(EXEC_OBJS_HELPERS) $(EXEC_OBJS_BUILTINS)
 
 clean:
 	@$(MAKE) -C libft clean -s
-	-rm -f $(OBJS) $(OBJS_HELPERS) $(OBJS_BUILTINS)
+	-rm -f $(EXEC_OBJS) $(EXEC_OBJS_HELPERS) $(EXEC_OBJS_BUILTINS)
 
 fclean: clean
 	@$(MAKE) -C libft fclean -s

@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 15:02:16 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 15:26:47 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 16:11:25 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@
 #include <sys/unistd.h>
 #include <sys/wait.h>
 #include <unistd.h>
-
-void sh(t_list *lst) {
-
-  t_list *tmp;
-  t_buffer *bf;
-
-  tmp = lst;
-  while (tmp) {
-    if (tmp->content)
-      bf = (t_buffer *)tmp->content;
-    printf("str = %s type = %d\n", bf->str, bf->type);
-    tmp = tmp->next;
-  }
-}
 
 int	nbr_keys(t_list *env)
 {
@@ -96,6 +82,7 @@ int	main(int ac, char **av, char **env)
 		buffer = main_parse(_env);
 		if (buffer)
 		{
+			sh(buffer);
 			envp = shared_env(_env);
 			tree = build_tree(buffer, _env);
 			execution(tree, &_env, env);
