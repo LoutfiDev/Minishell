@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/27 12:29:03 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/27 12:52:08 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	is_digit(char *arg)
 }
 
 void	exec_exit(char **args)
-{	
+{
 	if (!args || !args[0])
 	{
-		ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("exit\n", 2);
 		g_exit_status = 0;
 		exit(0);
 	}
