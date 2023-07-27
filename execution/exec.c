@@ -6,12 +6,13 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/27 12:24:55 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/27 12:41:55 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/exec.h"
 #include "../includes/buffer.h"
+#include <sys/unistd.h>
 #include <sys/wait.h>
 
 int	is_dir(char **path)
@@ -67,16 +68,14 @@ char	*join_path(char *cmd, t_list *_env)
 	int		i;
 
 	i = 0;
-	if (!is_builtin(cmd))
+	if (!is_builtin(cmd) || cmd[0] == '\0' || !_env)
 		return (ft_strdup(cmd));
-	if (!_env)
-		return (0);
 	array = ft_split(get_path("PATH", _env), ':');
 	while (array && array[i])
 	{
 		path = ft_strjoin(array[i++], ft_strdup("/"));
 		path = ft_strjoin(path, ft_strdup(cmd));
-		status = access(path, F_OK);
+		status = access(path, F_OK | X_OK);
 		if (status != -1)
 		{
 			ft_free_array(array, i);

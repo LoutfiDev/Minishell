@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:06:42 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 20:42:18 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/27 16:24:15 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,22 @@ int	check_pipe_node(t_list *lst)
 	if (!check)
 		return (0);
 	write(2, "syntax error near unexpected token `|'\n", 39);
-	g_exit_status = 2;
+	g_exit_status = 258;
 	return (-1);
 }
 
-int	check_parse(t_list **buffer, t_list *env, t_quote *quotes)
+int	check_parse(t_list **buffer, t_list *env, t_quote *quotes, int init_parse)
 {
-	if (check_pipe_node(*buffer) == -1)
-		return (error_protocol(buffer, quotes));
-	else if (open_heredoc(*buffer, env) == -1)
+	if (open_heredoc(*buffer, env) == -1)
 	{
 		g_exit_status = 1;
 		clear_heredoc(*buffer);
 		return (error_protocol(buffer, quotes));
 	}
+	else if (check_pipe_node(*buffer) == -1)
+		return (error_protocol(buffer, quotes));
+	if (init_parse == -1)
+		return (error_protocol(buffer, quotes));
 	else if (check_num_quotes(quotes) == -1)
 		return (error_protocol(buffer, quotes));
 	open_files(*buffer);
@@ -88,6 +90,7 @@ t_list	*main_parse(t_list *env)
 	t_quote	*quotes;
 	char	*tmp;
 	char	*line;
+	int		check;
 
 	tmp = ft_readline();
 	eof_exit(tmp);
@@ -97,15 +100,14 @@ t_list	*main_parse(t_list *env)
 	quotes -> num_dquote = 0;
 	quotes -> num_squote = 0;
 	buffer = NULL;
-	if (parsing(line, 0, quotes, &buffer) == -1)
-		return (free(tmp), free(line), NULL);
+	check = parsing(line, 0, quotes, &buffer);
 	free(line);
 	expanding(&buffer, env);
 	if (buffer)
 		add_history(tmp);
 	free(tmp);
 	buffer = re_arrange_buffer(buffer, 0);
-	if (check_parse(&buffer, env, quotes) == -1)
+	if (check_parse(&buffer, env, quotes, check) == -1)
 		return (NULL);
 	return (buffer);
 }
@@ -143,7 +145,7 @@ int	parsing(char *str, int delim, t_quote *quote, t_list **head)
 		i[1] = i[0];
 		i[0] = get_next_delim(str, i[0], &delim, quote);
 		if (i[0] == -1)
-			return (error_protocol(head, quote));
+			return (-1);
 		tmp = ft_substr(str, i[1], i[0] - i[1]);
 		buf = ft_lstnew(new_buffer(tmp, type));
 		free(tmp);
