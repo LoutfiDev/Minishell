@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:41:52 by anaji             #+#    #+#             */
-/*   Updated: 2023/07/26 16:32:18 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/26 21:09:43 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	open_file(char **file, int type, int fd)
 	else if (type == 5)
 	{
 		if (access(file[0], F_OK) != -1)
-			fd = open(file[0], O_APPEND);
+			fd = open(file[0], O_APPEND | O_WRONLY);
 		else
-			fd = open(file[0], O_CREAT | O_APPEND, 0644);
+			fd = open(file[0], O_CREAT | O_APPEND | O_WRONLY, 0644);
 	}
 	if (fd == -1)
 	{

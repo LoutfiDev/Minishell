@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 10:16:21 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 10:35:52 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 21:10:14 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	dup_files(int infile, int outfile)
 	if (infile == -1 || outfile == -1)
 		exit(1);
 	if (infile != 0)
-		if (dup2(infile, READ_END))
+		if (dup2(infile, READ_END) == -1)
 			printf("infile dup failed\n");
 	if (outfile != 1)
-		if (dup2(outfile, WRITE_END))
+		if (dup2(outfile, WRITE_END) == -1)
 			printf("dup outfile failed\n");
 }
 

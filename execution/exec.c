@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 20:20:02 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/26 21:41:23 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ char	*join_path(char *cmd, t_list *_env)
 	int		i;
 
 	i = 0;
+	if (!_env)
+		return (0);
 	if (!is_builtin(cmd))
 		return (ft_strdup(cmd));
 	array = ft_split(get_path("PATH", _env), ':');
-	while (array[i])
+	while (array && array[i])
 	{
 		path = ft_strjoin(array[i++], ft_strdup("/"));
 		path = ft_strjoin(path, ft_strdup(cmd));
