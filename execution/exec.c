@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 14:22:31 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/24 20:20:02 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/27 12:24:55 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ char	*join_path(char *cmd, t_list *_env)
 	i = 0;
 	if (!is_builtin(cmd))
 		return (ft_strdup(cmd));
+	if (!_env)
+		return (0);
 	array = ft_split(get_path("PATH", _env), ':');
-	while (array[i])
+	while (array && array[i])
 	{
 		path = ft_strjoin(array[i++], ft_strdup("/"));
 		path = ft_strjoin(path, ft_strdup(cmd));

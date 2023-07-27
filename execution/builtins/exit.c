@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 16:09:58 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/27 12:29:03 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	is_digit(char *arg)
 	int	i;
 
 	i = 0;
+	if (arg[0] == '+' || arg[0] == '-')
+		i++;
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
@@ -48,8 +50,11 @@ void	exec_exit(char **args)
 		print_error("exit\nexit: ", args[0],
 			": numeric argument required\n", 255);
 	else if (nbr_args(args) > 1)
+	{
 		print_error("exit\nexit: ", NULL,
 			"too many arguments\n", 1);
+		return ;
+	}
 	else
 	{
 		g_exit_status = ft_atoi(args[0]) % 256;

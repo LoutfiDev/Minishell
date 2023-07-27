@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+         #
+#    By: anaji <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/26 15:17:20 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/26 17:01:57 by yloutfi          ###   ########.fr        #
+#    Updated: 2023/07/27 12:13:43 by anaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 DFLAGS = -Llibft -lft -L$(HOME)/Desktop/rdln
 RDLFLAGS = -lreadline -lcurses
 CC = cc
