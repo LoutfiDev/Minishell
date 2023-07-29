@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"__tuple": "c",
-		"array": "c",
-		"__node_handle": "c",
-		"buffer.h": "c"
-	}
-}
