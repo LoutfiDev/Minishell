@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:11:38 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/22 18:55:04 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:20:49 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	export_print(char *key, char *value, int fd)
 {
+	write(fd, "declare -x ", 12);
 	if (value)
 	{
 		write(fd, key, ft_strlen(key));
 		write(fd, "=", 1);
+		write(fd, "\"", 1);
 		write(fd, value, ft_strlen(value));
+		write(fd, "\"", 1);
 		write(fd, "\n", 1);
 	}
 	else

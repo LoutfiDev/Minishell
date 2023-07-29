@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/27 12:52:08 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/27 16:27:48 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	exec_exit(char **args)
 		g_exit_status = 0;
 		exit(0);
 	}
-	else if (is_digit(args[0]))
+	else if (is_digit(args[0]) || ft_atoi(args[0]) > INT_MAX
+		|| ft_atoi(args[0]) < INT_MIN)
 		print_error("exit\nexit: ", args[0],
 			": numeric argument required\n", 255);
 	else if (nbr_args(args) > 1)

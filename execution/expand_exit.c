@@ -6,7 +6,7 @@
 /*   By: anaji <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/21 15:35:50 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 14:25:32 by anaji            ###   ########.fr       */
+/*   Updated: 2023/07/29 16:24:16 by anaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*get_value(char *str)
 		free(str);
 		return (ft_itoa(g_exit_status));
 	}
+	else
+		return (str);
 	free(str);
 	return (ft_strdup("\0"));
 }
@@ -55,7 +57,7 @@ char	*get_expanded(char *str, int i)
 	lst = NULL;
 	while (str[i])
 	{
-		tmp = get_var(str, &i, &q);
+		tmp = get_var(str + i, &i, &q);
 		tmp = get_value(tmp);
 		head = ft_lstnew(new_buffer(tmp, 0));
 		free(tmp);

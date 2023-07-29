@@ -6,7 +6,7 @@
 #    By: anaji <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/26 15:17:20 by yloutfi           #+#    #+#              #
-#    Updated: 2023/07/27 12:13:43 by anaji            ###   ########.fr        #
+#    Updated: 2023/07/28 15:52:23 by anaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,5 +65,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
-.PHONY : all libft bonus clean fclean re
+					
+.PHONY : all libft clean fclean re

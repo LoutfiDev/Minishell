@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:08:36 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/26 14:47:00 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/27 16:36:27 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	exec_cd(char **args, t_list **env, int fd)
 {
 	DIR		*directory;
 
-	if (!ft_strncmp(args[0], "~", 0))
+	if (!ft_strncmp(args[0], "~", 0) || !args[0])
 	{
 		if (!get_path("HOME", *env))
 			chdir(getenv("HOME"));
