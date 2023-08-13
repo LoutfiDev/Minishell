@@ -6,7 +6,7 @@
 /*   By: yloutfi <yloutfi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 10:12:05 by yloutfi           #+#    #+#             */
-/*   Updated: 2023/07/27 16:27:48 by yloutfi          ###   ########.fr       */
+/*   Updated: 2023/07/29 11:03:50 by yloutfi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	exec_exit(char **args)
 	if (!args || !args[0])
 	{
 		ft_putstr_fd("exit\n", 2);
-		g_exit_status = 0;
-		exit(0);
+		exit(g_exit_status);
 	}
 	else if (is_digit(args[0]) || ft_atoi(args[0]) > INT_MAX
 		|| ft_atoi(args[0]) < INT_MIN)
